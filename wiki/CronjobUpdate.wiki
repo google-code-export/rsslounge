@@ -1,0 +1,12 @@
+#labels Featured
+=Cronjob Update=
+
+For updating rsslounge feeds via cronjob point your cronjob to open 
+    http://<rsslounge url>/update/silent
+via wget or curl.
+
+----
+
+Um die Feeds von rsslounge mittels Cronjob zu aktualisieren, einfach einen cronjob anlegen, der die URL
+    http://<rsslounge url>/update/silent
+mittels wget oder curl aufruft.
