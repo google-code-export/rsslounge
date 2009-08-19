@@ -1,0 +1,12 @@
+#labels Featured
+=OPML Import=
+
+The most RSS reader offers an OPML export. You can export all your feeds in a single XML File. This file can be imported in rsslounge. Open the menue on the header (right) and chose "OPML Import". rsslounge will import all feeds.
+
+*Important:* The feed icons will be set after the first update of the feeds!
+
+----
+
+Die meisten RSS Reader bieten eine OPML Exportfunktion. Damit kannst du alle abonnierten Feeds in einer einzelnen XML Datei exportieren. Diese Datei kann dann in rsslounge importiert werden. Öffne hierzu das Menü im Kopfbereich (rechts) und wähle "OPML Import". rssloung wird dann alle Feeds importieren.
+
+*Wichtig:* Die Icons der Feeds werden erst nach einem ersten Update gesetzt!
