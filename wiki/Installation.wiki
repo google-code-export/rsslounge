@@ -1,0 +1,12 @@
+#labels Featured
+=Installation=
+
+  # Upload all files in the ZIP archive
+  # make the directories {{{config, data/cache, data/favicons and data/thumbnails}}} writeable (use your FTP client and change the rights of the directories)
+  # open rsslounge in your browser and follow install instructions
+
+----
+
+  # lade alle Dateien des ZIP Archivs hoch
+  # setze die Schreibrechte für die Verzeichnisse {{{config, data/cache, data/favicons und data/thumbnails}}} (nutze hierfür deinen FTP Client)
+  # öffne rsslounge im Browser und folge den weiteren Anweisungen
