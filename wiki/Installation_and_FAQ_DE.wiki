@@ -1,0 +1,20 @@
+#labels Featured
+=Installation=
+
+  # lade alle Dateien des ZIP Archivs hoch
+  # setze die Schreibrechte für die Verzeichnisse {{{config, data/cache, data/favicons und data/thumbnails}}} (nutze hierfür deinen FTP Client)
+  # öffne rsslounge im Browser und folge den weiteren Anweisungen
+
+
+=OPML Import=
+
+Die meisten RSS Reader bieten eine OPML Exportfunktion. Damit kannst du alle abonnierten Feeds in einer einzelnen XML Datei exportieren. Diese Datei kann dann in rsslounge importiert werden. Öffne hierzu das Menü im Kopfbereich (rechts) und wähle "OPML Import". rssloung wird dann alle Feeds importieren. Anschließend wird rsslounge dann die Feeds aktualisieren. Dieser erste Update benötigt etwas mehr Zeit als die dann darauf folgenden.
+
+*Wichtig:* Die Icons der Feeds werden erst nach einem ersten Update gesetzt!
+
+
+=Update via Cronjob=
+
+Um die Feeds von rsslounge mittels Cronjob zu aktualisieren, einfach einen cronjob anlegen, der die URL
+    {{{http://<rsslounge url>/update/silent}}}
+mittels wget oder curl aufruft.
