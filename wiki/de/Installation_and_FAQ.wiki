@@ -18,3 +18,8 @@ Die meisten RSS Reader bieten eine OPML Exportfunktion. Damit kannst du alle abo
 Um die Feeds von rsslounge mittels Cronjob zu aktualisieren, einfach einen cronjob anlegen, der die URL
     {{{http://<rsslounge url>/update/silent}}}
 mittels wget oder curl aufruft.
+
+
+=Nach der Installation sieht alles merkwürdig aus=
+
+MacOS und Linux Benutzer müssen sicherstellen, dass alle Dateien hochgeladen werden. Auch die Datei .htaccess, welche per default auf Unix basierenden Systemen ausgeblendet wird.
