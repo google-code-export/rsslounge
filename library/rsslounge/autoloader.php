@@ -18,19 +18,19 @@ class rsslounge_autoloader implements Zend_Loader_Autoloader_Interface {
      */
     public function autoload($class) {
         if($class=='wiImage')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/Image.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/Image.class.php');
         if($class=='wiTrueColorImage')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/TrueColorImage.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/TrueColorImage.class.php');
         if($class=='wiPaletteImage')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/PaletteImage.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/PaletteImage.class.php');
         if($class=='wiException')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/Exception.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/Exception.class.php');
         if($class=='wiDimension')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/Dimension.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/Dimension.class.php');
         if($class=='wiOpFactory')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/OpFactory.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/OpFactory.class.php');
         if($class=='wiFileMapperFactory')
-            require_once(Zend_Registry::get('config')->includepaths->library . '/wideimage/FileMapperFactory.class.php');
+            require_once(Zend_Registry::get('config')->includePaths->library . '/wideimage/FileMapperFactory.class.php');
     }
     
 }
