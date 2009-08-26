@@ -1,0 +1,288 @@
+<?php
+
+/**
+ * Base bootstrap class for the hole application
+ *
+ * @package    application
+ * @copyright  Copyright (c) Tobias Zeising (http://www.aditu.de)
+ * @license    GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html)
+ */
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
+    
+    /** version */
+    public $version = "0.1 beta 1c";
+    
+    /** database version */
+    public $dbversion = "1";
+    
+    /** language file */
+    protected $language;
+    
+    /** session */
+    protected $session;
+    
+    /** cache */
+    protected $cache;
+    
+    /** logger */
+    protected $logger;
+    
+    
+    /**
+     * ctor saves the bootstrap object in Zend Registry
+     * saves also the config
+     */
+    public function __construct($app) {
+        parent::__construct($app);
+        Zend_Registry::set('bootstrap',$this);
+        Zend_Registry::set('config', new Zend_Config($this->getOptions()));
+        Zend_Registry::set('version', $this->version);
+    }
+    
+    
+    /**
+     * returns current database version
+     */
+    public function getCurrentVersion() {
+        $db = $this->getPluginResource('db')->getDbAdapter();
+        $p = Zend_Registry::get('config')->resources->db->prefix;
+        return $db->fetchOne(
+            $db->select()->from($p.'version', 'version')
+        );
+    }
+    
+    
+    /**
+     * set current database version
+     */
+    public function updateCurrentVersion($val) {
+        $db = $this->getPluginResource('db')->getDbAdapter();
+        $p = Zend_Registry::get('config')->resources->db->prefix;
+        $db->update($p.'version', array('version' => $val ) );
+    }
+    
+    
+    /**
+     * returns current application version
+     */
+    public function getApplicationVersion() {
+        return $this->dbversion;
+    }
+    
+    
+    /**
+     * init additional routes
+     */
+    protected function _initRoutes() {
+        // get front controller instance
+        $front = Zend_Controller_Front::getInstance();
+         
+        // get router
+        $router = $front->getRouter();
+         
+        // add install.php route
+        $router->addRoute(
+            'install',
+            new Zend_Controller_Router_Route(
+                    'install.php',
+                    array(
+                        'controller' => 'index',
+                        'action'     => 'index'
+                    )
+                )
+        );
+    }
+    
+    
+    /**
+     * init additional plugins
+     */
+    protected function _initPlugins() {
+        // get front controller instance
+        $front = Zend_Controller_Front::getInstance();
+        
+        // create loader
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Plugin', Zend_Registry::get('config')->resources->frontController->pluginsDirectory);
+        $pluginAuthentication = $loader->load('Authentication');
+        
+        // register plugin
+        $front->registerPlugin(new $pluginAuthentication());
+    }
+    
+    
+    /**
+     * init helper classes
+     */
+    protected function _initHelper() {
+        Zend_Controller_Action_HelperBroker::addPath(
+            Zend_Registry::get('config')->helpers->path,
+            'Helper'
+        );
+    }
+    
+    
+    /**
+     * create special autoloader for extern libraries
+     */
+    protected function _initAutoloader() {
+        $autoloader = Zend_Loader_Autoloader::getInstance();
+        $loader = new rsslounge_autoloader();
+        
+        // register additional autoloader for wideimage library
+        $autoloader->pushAutoloader($loader, 'wi');
+    }
+    
+        
+    /**
+     * initialize language file
+     */
+    protected function _initLanguage() {
+        $this->language = new Zend_Translate(
+            'csv', 
+            APPLICATION_PATH . '/locale', 
+            null, 
+            array(
+                'scan' => Zend_Translate::LOCALE_DIRECTORY, 
+                'delimiter' => "|"
+            ));
+        
+        // save language object for further use
+        Zend_Registry::set('language',$this->language);
+        return $this->language;
+    }
+    
+    
+    /**
+     * initialize cache
+     */
+    protected function _initCache() {
+        
+        $optionsBackend = array(
+            cache_dir => Zend_Registry::get('config')->rss->cache->path,
+            file_locking => true,
+            read_control => false
+        );
+        
+        $this->cache = Zend_Cache::factory('Core', 'File', array(), $optionsBackend);
+        
+        // set cache for all locale and translate
+        Zend_Locale::setCache($this->cache);
+        Zend_Translate::setCache($this->cache);
+        
+        // save cache object for further use
+        Zend_Registry::set('cache',$this->cache);
+        return $this->cache;
+    }
+    
+    
+    /**
+     * init logger
+     */
+    protected function _initLogger() {
+        $writer = new Zend_Log_Writer_Stream(Zend_Registry::get('config')->logger->path);
+        $this->logger = new Zend_Log($writer);
+        
+        // set priority
+        switch (strtoupper(Zend_Registry::get('config')->logger->level)) {
+            case 'EMERG':
+                $level = Zend_Log::EMERG;
+                break;
+            case 'ALERT':
+                $level = Zend_Log::ALERT;
+                break;
+            case 'CRIT':
+                $level = Zend_Log::CRIT;
+                break;
+            case 'ERR':
+                $level = Zend_Log::ERR;
+                break;
+            case 'WARN':
+                $level = Zend_Log::WARN;
+                break;
+            case 'NOTICE':
+                $level = Zend_Log::NOTICE;
+                break;
+            case 'INFO':
+                $level = Zend_Log::INFO;
+                break;
+            case 'DEBUG':
+                $level = Zend_Log::DEBUG;
+                break;
+        }
+        
+        $this->logger->addFilter(
+            new Zend_Log_Filter_Priority($level)
+        );
+        
+        // save logger for further use
+        Zend_Registry::set('logger', $this->logger);
+        return $this->logger;
+    }
+    
+    
+    /**
+     * initialize session
+     */
+    protected function _initSession() {
+        // get session object
+        $this->session = new Zend_Session_Namespace("base");
+        
+        // get default values
+        $default = Zend_Registry::get('bootstrap')->getOptions();
+        $default = $default["session"]["default"];
+        
+        // initialize values using values in database or default values
+        foreach ($default as $key => $value)
+            if($this->session->__isset($key)===false)
+                $this->session->__set(
+                    $key,
+                    $this->initializeSessionValue($key, $value)
+                );
+        
+        // set language
+        $this->language->setLocale(new Zend_Locale($this->session->language));
+        
+        // save session object for further use
+        Zend_Registry::set('session',$this->session);
+        return $this->session;
+    }
+    
+    
+    /**
+     * reads settings from database
+     *
+     * @return value for this setting
+     * @param name the name of the setting
+     * @param default the default value of this setting
+     */
+    protected function initializeSessionValue($name, $default) {
+        // get database settings object
+        $settings = new application_models_settings();
+
+        // get value from database
+        $result = $settings->fetchAll(
+                            $settings->select()
+                                     ->where('name=?',$name));
+        
+        // value found?
+        if($result->count()>0) {
+            return $result->current()->value;
+        
+        // value not found
+        } else {
+                
+            // save default value in database
+            $settings->insert(
+                array(
+                    'name'  => $name, 
+                    'value' => $default
+                )
+            );
+            
+            // return default value
+            return $default;
+        }
+    }
+}
+

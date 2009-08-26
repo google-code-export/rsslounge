@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>rsslounge aggregator</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="language" content="<?PHP echo Zend_Registry::get('session')->language ?>" />
+    
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <!-- jquery and jquery ui -->
+    <script type="text/javascript" src="javascript/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery-ui-1.7.2.custom.min.js"></script>
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/ui-lightness/jquery-ui-1.7.2.custom.css" />
+    
+    <!-- datepicker -->
+    <script type="text/javascript" src="javascript/datepicker.js"></script>
+    <link rel="stylesheet" href="stylesheets/datepicker/datepicker.css" type="text/css" />
+    
+    <!-- impromptu -->    
+    <script type="text/javascript" src="javascript/jquery-impromptu.2.7.min.js"></script>
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/impromptu.css" />
+    
+    <!-- jGrowl -->
+    <script type="text/javascript" src="javascript/jquery.jgrowl_minimized.js"></script>
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/jquery.jgrowl.css" />
+    
+    <!-- ajaxupload -->
+    <script type="text/javascript" src="javascript/ajaxupload.3.5.js"></script>
+    
+    <!-- tipsy -->
+    <script type="text/javascript" src="javascript/jquery.tipsy.js"></script>
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/tipsy.css" />
+    
+    <!-- rsslounge -->
+    <script type="text/javascript" src="javascript/base.js"></script>
+    <script type="text/javascript" src="javascript/events.js"></script>
+    <script type="text/javascript" src="javascript/dialogs.js"></script>
+    <script type="text/javascript" src="javascript/refresh.js"></script>
+    <script type="text/javascript" src="javascript/locale/<?PHP echo Zend_Registry::get('session')->language ?>.js"></script>
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/style.css" />
+    
+    
+    <!-- base initialization -->
+    <script type="text/javascript">
+        // rss lounge settings
+        rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
+        
+        // initialize js
+        rsslounge.init('<?PHP echo $this->newfeed ?>');
+    </script>
+</head>
+
+<body>
+<div id="container">
+
+    <!-- header -->
+    <div id="header">
+        <h1><span>rssLounge aggregator</span></h1>
+        
+        <div id="prio">
+            <label><?PHP echo $this->translate('Priority'); ?>: <span></span></label>
+            <div id="slider"></div>
+        </div>
+        
+        <a id="menue-button"><span><?PHP echo $this->translate('main menue'); ?></span></a>
+        
+        <ul id="menue" class="ui-corner-all ui-widget-content">
+              <li><a class="settings"><?PHP echo $this->translate('Settings'); ?></a></li>
+              <li><a class="categories"><?PHP echo $this->translate('Categories'); ?></a></li>
+              <li><a id="opml-import">OPML Import</a></li>
+              <li><a id="opml-export">OPML Export</a></li>
+              <li><a id="errormessages"><?PHP echo $this->translate('Errormessages'); ?></a></li>
+              <li class="<?PHP if(!isset($this->logout)) echo 'last'; ?>"><a class="about"><?PHP echo $this->translate('About'); ?></a></li>
+              
+              <?PHP if(isset($this->logout)) : ?>
+              <li class="last"><a class="logout"><?PHP echo $this->translate('Logout'); ?></a></li>
+              <?PHP endif; ?>
+        </ul>
+    </div>
+    
+
+    <!-- main area -->
+    <div id="wrapper">
+        <div id="content">
+            
+            <!-- top filter settings -->
+            <div id="filter">
+                <ul id="actions">
+                    <li><input type="button" value="<?PHP echo $this->translate('mark all as read'); ?>" id="markall" /></li>
+                    <li><input type="button" value="<?PHP echo $this->translate('unstarr all'); ?>" id="unstarrall" /></li>
+                    <li class="search"><?PHP echo $this->translate('Search for'); ?> '<span class="search-term"></span>' <a title="<?PHP echo $this->translate('remove search'); ?>"><span><?PHP echo $this->translate('remove search'); ?></span></a></li>
+                </ul>
+                
+                <ul id="view">
+                    <li><a class="date <?PHP if(Zend_Registry::get('session')->dateFilter==1) echo 'active' ?>"><span><?PHP echo $this->translate('date'); ?></span></a></li>
+                    <li><a class="all <?PHP if(Zend_Registry::get('session')->unread==0) echo 'active' ?>"><?PHP echo $this->translate('all'); ?></a></li>
+                    <li><a class="unread <?PHP if(Zend_Registry::get('session')->unread==1) echo 'active' ?>"><?PHP echo $this->translate('only unread'); ?></a></li>
+                    <li><a class="images <?PHP if(Zend_Registry::get('session')->view=='multimedia') echo 'active' ?>" title="<?PHP echo $this->translate('only images'); ?>"><span><?PHP echo $this->translate('only images'); ?></span></a></li>
+                    <li><a class="messages <?PHP if(Zend_Registry::get('session')->view=='messages') echo 'active' ?>" title="<?PHP echo $this->translate('only messages'); ?>"><span><?PHP echo $this->translate('only messages'); ?></span></a></li>
+                    <li><a class="both <?PHP if(Zend_Registry::get('session')->view=='both') echo 'active' ?>" title="<?PHP echo $this->translate('images and messages'); ?>"><span><?PHP echo $this->translate('images and messages'); ?></span></a></li>
+                </ul>
+            </div>
+            
+            
+            <div id="items">
+                <?PHP echo $this->render("item/list." . Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()); ?>
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <!-- feed navigation -->
+    <div id="feeds">
+    
+        <!-- calendar filter -->
+        <div id="calendar">
+        
+        </div>
+    
+        <!-- add show hide feeds -->
+		<ul id="showhide">
+			<li><a class="add"><span><?PHP echo $this->translate('add new feed'); ?></span></a></li>
+			<li><a class="show" title="<?PHP echo $this->translate('Show all Feeds'); ?>"><span><?PHP echo $this->translate('Show all Feeds'); ?></span></a></li>
+			<li><a class="hide" title="<?PHP echo $this->translate('Hide all Feeds'); ?>"><span><?PHP echo $this->translate('Hide all Feeds'); ?></span></a></li>
+		</ul>
+
+		
+		
+        <!-- feed list -->
+        <ul id="feeds-list">
+            <?PHP echo $this->render("index/feedlist." . Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()); ?>
+        </ul>
+        
+        <!-- progressbar -->
+        <div id="progress">
+            <div id="progress-feed"></div>
+            <div id="progressbar"></div>
+        </div>
+        
+        <!-- stats -->
+        <ul id="stats">
+            <li><?PHP echo $this->translate('all items'); ?> <span class="all"><?PHP echo $this->all; ?></span></li>
+            <li><?PHP echo $this->translate('unread items'); ?> <span class="unread"><?PHP echo $this->unread; ?></span></li>
+            <li><?PHP echo $this->translate('read items'); ?> <span class="read"><?PHP echo $this->read; ?></span></li>
+            <li><?PHP echo $this->translate('feeds'); ?> <span class="feeds"><?PHP echo $this->amountfeeds; ?></span></li>
+        </ul>
+    </div>
+    
+    
+    <div id="extra">
+        
+    </div>
+    
+    
+    <div id="footer">
+        rsslounge aggregator <?PHP echo $this->version ?><br />
+        <a href="http://rsslounge.aditu.de">http://rsslounge.aditu.de</a><br />
+        icons by <a href="http://dryicons.com/">dryicons.com</a>
+    </div>
+</div>
+
+</body>
+</html>

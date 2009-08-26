@@ -1,0 +1,21 @@
+<div     id="images" 
+        class="small" 
+        style="<?PHP 
+            if(Zend_Registry::get('session')->view=='both' && count($this->messages)!=0)
+                echo 'height:'.(Zend_Registry::get('session')->imagesHeight * 195).'px' 
+        ?>"
+>
+    <?PHP 
+            if($this->search)
+                for($i=0;$i<count($this->multimedia);$i++)
+                    $this->multimedia[$i]['search'] = $this->search;
+                    
+            echo $this->partialLoop(
+                'item/multimedia-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(), 
+                $this->multimedia
+            ); ?>
+    <?PHP if($this->moreMultimedia && count($this->messages)==0) : ?>
+    <div class="more"><span><?PHP echo $this->translate('more'); ?></span></div>
+    <?PHP endif; ?>
+    <hr />
+</div>
