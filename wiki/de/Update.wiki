@@ -1,0 +1,10 @@
+#labels Featured
+=Update=
+
+Während der beta 1 Phase muss rsslounge neu installiert werden:
+
+  # lösche alle Dateien, ausgenommen dem Verzeichnis 'data'
+  # lade alle Dateien aus der aktuellen ZIP Datei hoch
+  # öffne deine rsslounge url und folge den Installationsanweisungen
+  
+*Wichtig:* Wenn du deine bisherigen Datenbankeinstellungen angibst, übernimmt rsslounge die bisherigen Einstellungen und Daten
