@@ -421,16 +421,16 @@ rsslounge.dialogs = {
                     loaded: function() {
                         $('#settings-data .bookmark a').attr('href', 'javascript:document.location="'+document.location+'?url="+document.location');
                         
-						// enable/disable login fields
+                        // enable/disable login fields
                         $('#activate_login').click(function() {
                             var disabled = true;
                             if($(this).is(':checked'))
                                 disabled = false;
                             $('#username, #password, #password_again').attr('disabled', disabled);
                         });
-						
-						// activate tipsy
-						$('#deleteItems').tipsy({fade: true});
+                        
+                        // activate tipsy
+                        $('#deleteItems').tipsy({fade: true});
                     },
                     submit: rsslounge.dialogs.submitSettings,
                 });

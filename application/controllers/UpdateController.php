@@ -44,6 +44,7 @@ class UpdateController extends Zend_Controller_Action {
         
         // delete orphaned thumbnails
         $updater->cleanup();
+        $logger->log('finished silent update', Zend_Log::DEBUG);
     }
 
     
@@ -84,7 +85,7 @@ class UpdateController extends Zend_Controller_Action {
     
     
     /**
-     * updates a given feed
+     * updates a given feed (for executing via ajax call)
      *
      * @return void
      */

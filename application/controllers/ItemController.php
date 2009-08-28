@@ -40,10 +40,13 @@ class ItemController extends Zend_Controller_Action {
         // read settings
         $settings = $this->getRequest()->getPost();
         
-        // insert items from db into view (as template vars)
-        $result = Zend_Controller_Action_HelperBroker::getStaticHelper('list')->direct($this->view, $settings);
-        if($result!==true) {
-            echo Zend_Json::encode(array( 'error' => $result));
+        // get list template vars
+        $listHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('list');
+        try {
+            $listHelper->readItems($settings);
+            $listHelper->setTemplateVars($this->view);
+        } catch(Exception $e) {
+            echo Zend_Json::encode(array( 'error' => $e->getMessage()));
             return;
         }
         
@@ -261,17 +264,20 @@ class ItemController extends Zend_Controller_Action {
     
     
     /**
-     * list more items (will be written in by $this->view->...)
+     * list more items
      *
      * @return array with items
      * @param array $settings current settings
      */
     public function listItems($settings) {
     
-        // insert items from db into view (as template vars)
-        $result = Zend_Controller_Action_HelperBroker::getStaticHelper('list')->direct($this->view, $settings);
-        if($result!==true)
-            return array( 'error' => $result);
+        // get items
+        $listHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('list');
+        try {
+            $listHelper->readItems($settings);
+        } catch(Exception $e) {
+            return array( 'error' => $e->getMessage());
+        }
         
         // create html for message and return as json
         $return = array();
@@ -279,11 +285,11 @@ class ItemController extends Zend_Controller_Action {
             // render message items
             $return['messages'] = $this->view->partialLoop(
                                     'item/message-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(),
-                                    $this->view->messages
+                                    $listHelper->getMessages()
                                 );
                                 
             // indicates whether more items available or not
-            $return['more']    = $this->view->moreMessages; 
+            $return['more']    = $listHelper->hasMoreMessages();
         }
         
         // create html for multimedia and return as json
@@ -291,11 +297,11 @@ class ItemController extends Zend_Controller_Action {
             // render multimedia items
             $return['multimedia'] = $this->view->partialLoop(
                                     'item/multimedia-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(),
-                                    $this->view->multimedia
+                                    $listHelper->getMultimedia()
                                 );
                                 
             // indicates whether more items available or not                    
-            $return['more'] = $this->view->moreMultimedia;
+            $return['more'] = $listHelper->hasMoreMultimedia();
         }
         
         return $return;

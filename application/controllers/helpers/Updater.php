@@ -28,7 +28,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         $messagesModel = new application_models_messages();
         $plugin = Zend_Controller_Action_HelperBroker::getStaticHelper('pluginloader')->getPlugin($feed->source);
         if($plugin===false) {
-            $logger->log('error loading feed plugin', Zend_Log::ERR);
+            $logger->log('error loading feed plugin ' . $feed->source, Zend_Log::ERR);
             return $messagesModel->add($feed, 'unknown plugin');
         }
         
@@ -62,34 +62,20 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             }
             
             // filter match?
-            if(strlen(trim($feed->filter))!=0) {
-                $resultTitle = @preg_match($feed->filter, $item->getTitle());
-                $resultContent = @preg_match($feed->filter, $item->getContent());
-                
-                // wrong filter
-                if(!$resultTitle || !$resultContent) {
-                    $logger->log('filter error', Zend_Log::ERR);
-                    return $messagesModel->add($feed, 'filter error');
-                }
-                
-                // test filter
-                if($resultTitle==0 && $resultContent==0)
+            try {
+                if($this->filter($feed, $item)===false)
                     continue;
-            }
-            
-            // item already in database?
-            $res = $itemsModel->fetchAll( 
-                $itemsModel->select()
-                     ->from($itemsModel, array('amount' => 'Count(*)'))
-                     ->where('uid="'.$item->getId().'"')
-            );
-            if($res[0]['amount']>0) {
-                $logger->log('item "' . $item->getTitle() . '" already fetched', Zend_Log::DEBUG);
+            } catch(Exception $e) {
+                $messagesModel->add($feed, 'filter error');
                 continue;
             }
             
+            // item already in database?
+            if($this->itemExists($item)===true)
+                continue;
+            
             // insert new item
-            $logger->log('insert new item', Zend_Log::DEBUG);
+            $logger->log('start insert new item', Zend_Log::DEBUG);
             $nitem = array(
                     'title'        => $this->stripAll( $item->getTitle() ),
                     'content'      => $this->stripContent( $item->getContent() ),
@@ -161,8 +147,8 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
      * @return void
      */
     public function cleanupOldItems() {
-		if(Zend_Registry::get('session')->deleteItems==0)
-			return;
+        if(Zend_Registry::get('session')->deleteItems==0)
+            return;
         $itemsModel = new application_models_items();
         $date = Zend_Date::now();
         $date->sub(Zend_Registry::get('session')->deleteItems, Zend_Date::DAY);
@@ -282,5 +268,54 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         $filter = new Zend_Filter_StripTags();
         return $filter->filter($content);
     }
+    
+    
+    /**
+     * check whether filter matches or not
+     *
+     * @return boolean true if filter match, false if not
+     * @param Zend_Db_Table_Row $feed the current feed
+     * @param mixed the current item
+     */
+    protected function filter($feed, $item) {
+        if(strlen(trim($feed->filter))!=0) {
+            $resultTitle = @preg_match($feed->filter, $item->getTitle());
+            $resultContent = @preg_match($feed->filter, $item->getContent());
+            
+            // wrong filter
+            if(!$resultTitle || !$resultContent) {
+                Zend_Registry::get('logger')->log('filter error ' . $feed->filter, Zend_Log::ERR);
+                throw new Exception();
+            }
+            
+            // test filter
+            if($resultTitle==0 && $resultContent==0)
+                return false;
+        }
+        
+        return true;
+    }
 
+    
+    /**
+     * item still in database?
+     *
+     * @return boolean true if item is already in database
+     * @param mixed the current item
+     */
+    protected function itemExists($item) {
+        $itemsModel = new application_models_items();
+        
+        $res = $itemsModel->fetchAll( 
+                $itemsModel->select()
+                     ->from($itemsModel, array('amount' => 'Count(*)'))
+                     ->where('uid="'.$item->getId().'"')
+                );
+        if($res[0]['amount']>0) {
+            Zend_Registry::get('logger')->log('item "' . $item->getTitle() . '" already fetched', Zend_Log::DEBUG);
+            return true;
+        }
+        
+        return false;
+    }
 }

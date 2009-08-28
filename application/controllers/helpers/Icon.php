@@ -126,12 +126,14 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
      * searches the first link tag in html page
      * with rel="shortcut icon" tag
      *
-     * @return string icon href as string
+     * @return string|bool icon href as string, 
+     *         false if no link tag was found
      * @param string $content of the html page
      */
     protected function getLinkTag($content) {
         if($content===false)
             return false;
+        
         try {
             $dom = new Zend_Dom_Query($content);  
             //$linkTags = $dom->query('link[rel="shortcut icon"]'); // don't work
@@ -143,6 +145,7 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
         } catch(Exception $e) {
         
         }
+        
         return false;
     }
 

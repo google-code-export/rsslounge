@@ -60,9 +60,13 @@ class IndexController extends Zend_Controller_Action {
         $settings = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->getSessionAsArray();
         
         // get list template vars
-        $result = Zend_Controller_Action_HelperBroker::getStaticHelper('list')->direct($this->view, $settings);
-        if($result!==true)
-            $view->messages = $result;
+        $listHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('list');
+        try {
+            $listHelper->readItems($settings);
+            $listHelper->setTemplateVars($this->view);
+        } catch(Exception $e) {
+            $this->view->messages = $e->getMessage();
+        }
         
         // set new timeout for rss refresh in session settings
         Zend_Controller_Action_HelperBroker::getStaticHelper('updater')->timeout();

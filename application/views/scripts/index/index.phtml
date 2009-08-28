@@ -120,14 +120,14 @@
         </div>
     
         <!-- add show hide feeds -->
-		<ul id="showhide">
-			<li><a class="add"><span><?PHP echo $this->translate('add new feed'); ?></span></a></li>
-			<li><a class="show" title="<?PHP echo $this->translate('Show all Feeds'); ?>"><span><?PHP echo $this->translate('Show all Feeds'); ?></span></a></li>
-			<li><a class="hide" title="<?PHP echo $this->translate('Hide all Feeds'); ?>"><span><?PHP echo $this->translate('Hide all Feeds'); ?></span></a></li>
-		</ul>
+        <ul id="showhide">
+            <li><a class="add"><span><?PHP echo $this->translate('add new feed'); ?></span></a></li>
+            <li><a class="show" title="<?PHP echo $this->translate('Show all Feeds'); ?>"><span><?PHP echo $this->translate('Show all Feeds'); ?></span></a></li>
+            <li><a class="hide" title="<?PHP echo $this->translate('Hide all Feeds'); ?>"><span><?PHP echo $this->translate('Hide all Feeds'); ?></span></a></li>
+        </ul>
 
-		
-		
+
+
         <!-- feed list -->
         <ul id="feeds-list">
             <?PHP echo $this->render("index/feedlist." . Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()); ?>

@@ -10,16 +10,89 @@
  */
 class Helper_List extends Zend_Controller_Action_Helper_Abstract {
 
-
     /**
-     * append template vars at given view for
-     * rendering the item list
+     * list of multimedia items
      *
-     * @return string|bool errormessage on failure, true on success
-     * @param Zend_View $view current view object
+     * @var array
+     */
+    private $multimedia;
+    
+    
+    /**
+     * indicates whether more multimedia
+     * items available
+     *
+     * @var boolean
+     */
+    private $moreMultimedia;
+    
+    
+    /**
+     * message items
+     *
+     * @var array
+     */
+    private $messages;
+    
+    
+    /**
+     * indicates whether more message
+     * items available
+     *
+     * @var boolean
+     */
+    private $moreMessages;
+    
+    
+    /**
+     * returns all message items
+     *
+     * @return array message items
+     */
+    public function getMessages() {
+        return $this->messages;
+    }
+    
+    
+    /**
+     * returns all multimedia items
+     *
+     * @return array multimedia items
+     */
+    public function getMultimedia() {
+        return $this->multimedia;
+    }
+    
+    
+    /**
+     * indicates whether more message
+     * items available
+     *
+     * @return boolean true if more mm items available
+     */
+    public function hasMoreMessages() {
+        return $this->moreMessages;
+    }
+    
+    
+    /**
+     * indicates whether more multimedia
+     * items available
+     *
+     * @return boolean true if more mm items available
+     */
+    public function hasMoreMultimedia() {
+        return $this->moreMultimedia;
+    }
+    
+    
+    /**
+     * read items from database
+     *
+     * @return void
      * @param array $settings the current settings
      */
-    public function direct($view, $settings) {
+    public function readItems($settings) {
         $itemsModel = new application_models_items();
         $settingsModel = new application_models_settings();
         
@@ -28,25 +101,37 @@ class Helper_List extends Zend_Controller_Action_Helper_Abstract {
         
         // validate settings
         if(is_array($settingsModel->validate($settings)))
-            return $view->translate('an error occured');
+            throw new Exception(Zend_Registy::get('language')->translate('an error occured'));
         
         // load messages
         if($settings['view']=='both' || $settings['view']=='messages') {
-            $view->messages = $itemsModel->get($settings,'messages');
-            $view->moreMessages = $itemsModel->hasMore($settings,'messages');
+            $this->messages = $itemsModel->get($settings,'messages');
+            $this->moreMessages = $itemsModel->hasMore($settings,'messages');
         }
         
         // load multimedia
         if($settings['view']=='both' || $settings['view']=='multimedia') {
             // set amount of images (which will be loaded)
-            if($settings['view']=='both' && count($view->messages)!=0)
+            if($settings['view']=='both' && count($this->messages)!=0)
                 $settings['itemsperpage'] = $settings['imagesHeight'] * Zend_Registry::get('config')->thumbnails->imagesperline;
         
-            $view->multimedia = $itemsModel->get($settings,'multimedia');
-            $view->moreMultimedia = $itemsModel->hasMore($settings,'multimedia');
+            $this->multimedia = $itemsModel->get($settings,'multimedia');
+            $this->moreMultimedia = $itemsModel->hasMore($settings,'multimedia');
         }
-        
-        return true;
+    }
+    
+    
+    /**
+     * write items in template vars of the given view
+     *
+     * @return void
+     * @param Zend_View $view the current view
+     */
+    public function setTemplateVars($view) {
+        $view->messages = $this->getMessages();
+        $view->moreMessages = $this->hasMoreMessages();
+        $view->multimedia = $this->getMultimedia();
+        $view->moreMultimedia = $this->hasMoreMultimedia();
     }
 
 }
