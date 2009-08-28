@@ -36,7 +36,7 @@ class Helper_Pluginloader extends Zend_Controller_Action_Helper_Abstract {
     /**
      * returns a given plugin source object
      *
-     * @return mixed an instance of the plugin
+     * @return mixed|boolean an instance of the plugin, false if this plugin doesn't exist
      * @param string $plugin a given plugin source type
      */
     public function getPlugin($plugin) {
@@ -64,7 +64,6 @@ class Helper_Pluginloader extends Zend_Controller_Action_Helper_Abstract {
      */
     protected function readPlugins() {
         if($this->plugins===false) {
-            
             // load plugins
             $this->plugins = $this->loadClass(Zend_Registry::get('config')->plugins->path, 'rsslounge_source');
             

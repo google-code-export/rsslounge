@@ -9,22 +9,51 @@
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
-    /** version */
+    /**
+     * version
+     *
+     * @var string
+     */
     public $version = "0.1 beta 1c";
     
-    /** database version */
+    
+    /**
+     * database version
+     *
+     * @var string
+     */
     public $dbversion = "1";
     
-    /** language file */
+    
+    /**
+     * translate object
+     *
+     * @var Zend_Translate
+     */
     protected $language;
     
-    /** session */
+    
+    /**
+     * session
+     *
+     * @var Zend_Session_Namespace
+     */
     protected $session;
     
-    /** cache */
+    
+    /**
+     * cache
+     *
+     * @var Zend_Cache_Core
+     */
     protected $cache;
     
-    /** logger */
+    
+    /**
+     * logger
+     *
+     * @var Zend_Log
+     */
     protected $logger;
     
     
@@ -133,7 +162,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $autoloader->pushAutoloader($loader, 'wi');
     }
     
-        
+    
     /**
      * initialize language file
      */
