@@ -73,7 +73,7 @@ class UpdateController extends Zend_Controller_Action {
         
         // return new timeout and unread items
         $itemCounter = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter');
-        echo Zend_Json::encode(
+        $this->_helper->json(
                 array(
                     'timeout'      => $updater->timeout(),
                     'lastrefresh'  => $lastrefresh,
@@ -101,12 +101,10 @@ class UpdateController extends Zend_Controller_Action {
         $feedModel = new application_models_feeds();
         $feeds = $feedModel->find($this->getRequest()->getParam('id'));
         
-        if($feeds->count()==0) {
-            echo Zend_Json::encode(array(
+        if($feeds->count()==0)
+            $this->_helper->json(array(
                 'error' => $this->view->translate('No feed with given ID found')
             ));
-            return;
-        }
         
         // update feed (fetch new data from source)
         $feed = $feeds->current();
@@ -119,12 +117,12 @@ class UpdateController extends Zend_Controller_Action {
         
         // create answer
         if(!is_numeric($result)) {
-            echo Zend_Json::encode(array(
+            $this->_helper->json(array(
                 'error' => $result
             ));
         } else {
             // return category and feed unread items
-            echo Zend_Json::encode(
+            $this->_helper->json(
                 array(
                     'success'       => true,
                     'icon'          => $updateIcon,

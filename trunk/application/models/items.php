@@ -41,7 +41,7 @@ class application_models_items extends application_models_base {
     /**
      * get items for listing on mainpage
      *
-     * @return array of items (items in array themself 
+     * @return array of items (items in array as 
      * arrays, not row objects)
      * @param array $settings array of filter etc.
      * @param string $type of media (messages or multimedia)

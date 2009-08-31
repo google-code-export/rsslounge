@@ -79,7 +79,7 @@ class SettingsController extends Zend_Controller_Action {
         }
         
         // return result (errors or success)
-        echo Zend_Json::encode($result);
+        $this->_helper->json($result);
     }
     
 
@@ -88,7 +88,7 @@ class SettingsController extends Zend_Controller_Action {
      *
      * @return void
      */
-    public function saveLogin($username, $password) {
+    private function saveLogin($username, $password) {
         $config = file_get_contents(CONFIG_PATH);
         if(strlen($username)!=0)
             $config = str_replace('login.username = ' . Zend_Registry::get('config')->login->username, 'login.username = '.trim($username), $config);
@@ -108,7 +108,7 @@ class SettingsController extends Zend_Controller_Action {
      *
      * @return void
      */
-    public function removeLogin() {
+    private function removeLogin() {
         $config = file_get_contents(CONFIG_PATH);
         $config = str_replace('login.username = ' . Zend_Registry::get('config')->login->username, 'login.username = ', $config);
         $config = str_replace('login.password = ' . Zend_Registry::get('config')->login->password, 'login.password = ', $config);

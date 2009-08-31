@@ -41,21 +41,14 @@ class CategoryController extends Zend_Controller_Action {
      * @return void
      */
     public function saveAction() {
-        // suppress view rendering
-        Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
-    
         // get new categories
         $newcategories = $this->getRequest()->getParam('categories');
         
         // validate parameter
-        if(!is_array($newcategories)) {
-            echo Zend_Json::encode( 
-                    array( 
+        if(!is_array($newcategories))
+            $this->_helper->json( array( 
                         'error' => Zend_Registry::get('language')->translate('no data given') 
-                    )
-            );
-            return;
-        }
+                    ) );
         
         // prepare categories for insertion and update
         $newcategories = array_chunk($newcategories, 2);
@@ -78,7 +71,7 @@ class CategoryController extends Zend_Controller_Action {
         $categories = new application_models_categories();
         $result = $categories->setCategories($categorieList);
         
-        echo Zend_Json::encode($result);
+        $this->_helper->json($result);
     }
 
     
@@ -88,13 +81,9 @@ class CategoryController extends Zend_Controller_Action {
      * @return void
      */
     public function openAction() {
-        // suppress view rendering
-        Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);        
-        
         $settingsModel = new application_models_settings();
         $settingsModel->save($this->getRequest()->getParams());
-        
-        echo Zend_Json::encode(true);
+        $this->_helper->json(true);
     }
 }
 

@@ -2,6 +2,7 @@
 
 /**
  * This abstract class defines the interface of a source (plugin)
+ * template pattern
  *
  * @package    library
  * @subpackage rsslounge

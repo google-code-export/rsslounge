@@ -18,6 +18,9 @@ div.jqi{
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	padding: 7px;
+	height:400px;
+	top:50% !important;
+	margin-top:-200px;
 }
 div.jqi .jqicontainer{ 
 	font-weight: bold; 

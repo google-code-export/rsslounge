@@ -1091,7 +1091,7 @@ div#header {
 
 #categories-list {
     overflow:auto;
-    height:200px;
+    height:290px;
     margin:10px;
     font-size:14px;
 }
@@ -1220,7 +1220,7 @@ div#header {
 
 #errormessages {
     overflow:auto;
-    height:200px;
+    height:300px;
 }
 
     #errormessages li ul li {
@@ -1251,7 +1251,7 @@ div#header {
 
 #about {
     overflow:auto;
-    height:400px;
+    height:300px;
     background:url(images/logo.png) 500px -10px no-repeat;
 }
 

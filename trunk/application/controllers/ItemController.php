@@ -46,8 +46,7 @@ class ItemController extends Zend_Controller_Action {
             $listHelper->readItems($settings);
             $listHelper->setTemplateVars($this->view);
         } catch(Exception $e) {
-            echo Zend_Json::encode(array( 'error' => $e->getMessage()));
-            return;
+            $this->_helper->json(array( 'error' => $e->getMessage()));
         }
         
         // save settings
@@ -66,7 +65,7 @@ class ItemController extends Zend_Controller_Action {
         
         // return items
         $feedModel = new application_models_feeds();
-        echo Zend_Json::encode(array( 
+        $this->_helper->json(array( 
             'html'           => $this->view->render('item/list.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()),
             'categories'     => $itemCounter->unreadItemsCategories($settings),
             'feeds'          => $itemCounter->unreadItemsFeeds($settings),
@@ -92,7 +91,7 @@ class ItemController extends Zend_Controller_Action {
         $result = $this->listItems($settings);
         
         // show items
-        echo Zend_Json::encode($result);
+        $this->_helper->json($result);
     }
     
     
@@ -131,7 +130,7 @@ class ItemController extends Zend_Controller_Action {
         $result['categories'] = $itemCounter->unreadItemsCategories();
         $result['feeds'] = $itemCounter->unreadItemsFeeds();
         
-        echo Zend_Json::encode($result);
+        $this->_helper->json($result);
     }
     
     
@@ -142,10 +141,8 @@ class ItemController extends Zend_Controller_Action {
      */
     public function markallAction() {
         $items = $this->getRequest()->getParam('items');
-        if(!is_array($items)) {
-            echo Zend_Json::encode(true);
-            return;
-        }
+        if(!is_array($items))
+            $this->_helper->json(true);
             
         $items = array_unique($items);
         
@@ -166,13 +163,11 @@ class ItemController extends Zend_Controller_Action {
         $items = $itemCounter->unreadItemsCategories();
         
         // no more unread items available?
-        if(count($items)==1) {
-            echo Zend_Json::encode(array(
+        if(count($items)==1)
+            $this->_helper->json(array(
                 'success'    => true,
                 'next'       => '0'
             ));
-            return;
-        }
         
         // get current selected cat or feed
         $selected = Zend_Registry::get('session')->selected;
@@ -195,15 +190,14 @@ class ItemController extends Zend_Controller_Action {
         // other unread items found and current has no more unread items
         if(!array_key_exists($current, $items) && count($items)>0) {
             $keys = array_keys($items);
-            echo Zend_Json::encode(array(
+            $this->_helper->json(array(
                 'success'    => true,
                 'next'       => $type.$keys[0]
             ));
-            return;
         
         // current has more unread items
         } else
-            echo Zend_Json::encode(array(
+            $this->_helper->json(array(
                 'success'  => true,
                 'next'     => $selected
             ));
@@ -232,7 +226,7 @@ class ItemController extends Zend_Controller_Action {
         $itemCounter = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter');
         $result['starred'] = $itemCounter->starredItems();
         
-        echo Zend_Json::encode($result);
+        $this->_helper->json($result);
     }
     
     
@@ -243,10 +237,8 @@ class ItemController extends Zend_Controller_Action {
      */
     public function unstarrallAction() {
         $items = $this->getRequest()->getParam('items');
-        if(!is_array($items)) {
-            echo Zend_Json::encode(true);
-            return;
-        }
+        if(!is_array($items))
+            $this->_helper->json(true);
         $items = array_unique($items);
         
         // mark items as unstarred
@@ -259,7 +251,7 @@ class ItemController extends Zend_Controller_Action {
             }
         }
         
-        echo Zend_Json::encode(true);
+        $this->_helper->json(true);
     }
     
     
@@ -320,12 +312,11 @@ class ItemController extends Zend_Controller_Action {
         // search and validate given id
         $itemModel = new application_models_items();
         $item = $itemModel->find($id);
-        if($item->count()==0) {
-            echo Zend_Json::encode(array(
+        if($item->count()==0)
+            $this->_helper->json(array(
                 'error'     => $this->view->translate('invalid item id')
             ));
-            return false;
-        } else
+        else
             return $item->current();
     }
 }
