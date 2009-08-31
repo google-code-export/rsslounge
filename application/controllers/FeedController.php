@@ -42,6 +42,7 @@ class FeedController extends Zend_Controller_Action {
         $categoriesModel = new application_models_categories();
         $category = $categoriesModel->find($category);
         
+        // no category found: abort
         if($category->count()==0)
             return;
         
@@ -55,7 +56,7 @@ class FeedController extends Zend_Controller_Action {
         // send new unread items
         $unread = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->unreadItemsCategories();
         
-        echo Zend_Json::encode($unread);
+        $this->_helper->json($unread);
     }
     
     
@@ -135,10 +136,10 @@ class FeedController extends Zend_Controller_Action {
 
         // error
         if(is_array($result)) {
-            $result = array(
+            $this->_helper->json( array(
                 'success' => false,
                 'errors'  => $result
-            );
+            ) );
         
         // success
         } else {
@@ -213,10 +214,10 @@ class FeedController extends Zend_Controller_Action {
                 'feeds'      => $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
                                                    Zend_Registry::get('session')->currentPriorityEnd)
             );
+            
+            $this->_helper->json($result);
         }
         
-        // send feed for update or append to client
-        echo Zend_Json::encode($result);
     }
     
     
@@ -248,7 +249,7 @@ class FeedController extends Zend_Controller_Action {
         $return['all'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->allItems();
         
         // send result
-        echo Zend_Json::encode($return);
+        $this->_helper->json($return);
     }
     
     
