@@ -17,8 +17,9 @@ class Plugin_Authentication extends Zend_Controller_Plugin_Abstract {
      * @return void
      */
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
-        // check whether user loggedin
-        if(!Zend_Registry::get('session')->authenticated) {
+        // check whether user loggedin (allow update/silent without login for cronjob)
+        if(!Zend_Registry::get('session')->authenticated 
+            && !($request->getControllerName()=='update' && $request->getActionName()=='silent') ) {
         
             // no login required?
             if(!Zend_Registry::get('config')->login->username) {
