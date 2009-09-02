@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $version = "0.1 beta 1d";
+    public $version = "0.1 beta 2";
     
     
     /**
