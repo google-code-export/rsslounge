@@ -175,6 +175,8 @@ class FeedController extends Zend_Controller_Action {
                 $newSettings['currentPriorityStart'] = $min;
             if(Zend_Registry::get('session')->currentPriorityEnd > $max)
                 $newSettings['currentPriorityEnd'] = $max;
+            if(Zend_Registry::get('session')->currentPriorityEnd < $min)
+                $newSettings['currentPriorityEnd'] = $min;
             
             // save new settings
             $settings = new application_models_settings();

@@ -1,12 +1,12 @@
 rsslounge.dialogs = {
 
-	/**
+    /**
      * mutex for send
-	 * prevent double post
+     * prevent double post
      */
     sending: false,
 
-	
+    
     //
     // add and edit feeds
     //
@@ -174,7 +174,7 @@ rsslounge.dialogs = {
                     // errors: show errors
                     else {
                         $('.jqibuttons').removeClass('loading');
-						rsslounge.dialgos.sending = false;
+						rsslounge.dialogs.sending = false;
                         rsslounge.showErrors($('#feed-data'), response.errors);
                     }
                     
