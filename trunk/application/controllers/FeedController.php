@@ -76,7 +76,7 @@ class FeedController extends Zend_Controller_Action {
         // set predefined feed url
         $this->view->newfeed = $this->getRequest()->getParam('newfeed','');
     }
-
+    
     
     /**
      * show edit dialog
@@ -150,42 +150,19 @@ class FeedController extends Zend_Controller_Action {
             if($new) {
                 $updater = Zend_Controller_Action_HelperBroker::getStaticHelper('updater');
                 $updater->feed($newFeed);
-            }
             
             // delete old icon (on edit feed)
-            if(!$new)
+            } else {
                 $feedModel->deleteIcon($newFeed);
-        
+            }
+            
             // save new icon
             $feedModel->saveIcon($newFeed);
             
-            
-            //
             // set new priorities
-            //
-            $min = $feedModel->minPriority();
-            $max = $feedModel->maxPriority();
-            $newSettings = array(
-                    'priorityStart'  => $min,
-                    'priorityEnd'    => $max
-            );
+            $this->resetPriorities();
             
-            // reset current priority if necessary 
-            if(Zend_Registry::get('session')->currentPriorityStart < $min)
-                $newSettings['currentPriorityStart'] = $min;
-            if(Zend_Registry::get('session')->currentPriorityEnd > $max)
-                $newSettings['currentPriorityEnd'] = $max;
-            if(Zend_Registry::get('session')->currentPriorityEnd < $min)
-                $newSettings['currentPriorityEnd'] = $min;
-            
-            // save new settings
-            $settings = new application_models_settings();
-            $settings->set($newSettings);
-            
-            
-            //    
             // build result
-            //
             $result = array(
                 'success'    => true,
                 
@@ -239,16 +216,17 @@ class FeedController extends Zend_Controller_Action {
         // return unread items or error
         $return = array();
         if($result===true) {
+            // count unread items per category
             $return['categories'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->unreadItemsCategories();
+            
+            // count all feeds
+            $return['feeds'] = $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
+                                                 Zend_Registry::get('session')->currentPriorityEnd);
+            
+            // count all items
+            $return['all'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->allItems();
         } else 
             $return['error'] = $result;
-        
-        // count feeds
-        $return['feeds'] = $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
-                                             Zend_Registry::get('session')->currentPriorityEnd);
-        
-        // count all items
-        $return['all'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->allItems();
         
         // send result
         $this->_helper->json($return);
@@ -285,6 +263,34 @@ class FeedController extends Zend_Controller_Action {
     }
     
     
+    /**
+     * reset priorities depending on the current
+     * max and min priorities of all feeds
+     *
+     * @return void
+     */
+    protected function resetPriorities() {
+        // set min and max priority
+        $feedModel = new application_models_feeds();
+        $min = $feedModel->minPriority();
+        $max = $feedModel->maxPriority();
+        $newSettings = array(
+                'priorityStart'  => $min,
+                'priorityEnd'    => $max
+        );
+        
+        // reset current priority if necessary 
+        if(Zend_Registry::get('session')->currentPriorityStart < $min)
+            $newSettings['currentPriorityStart'] = $min;
+        if(Zend_Registry::get('session')->currentPriorityEnd > $max)
+            $newSettings['currentPriorityEnd'] = $max;
+        if(Zend_Registry::get('session')->currentPriorityEnd < $min)
+            $newSettings['currentPriorityEnd'] = $min;
+        
+        // save new settings
+        $settings = new application_models_settings();
+        $settings->set($newSettings);
+    }
     
 }
 
