@@ -41,7 +41,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             return $messagesModel->add($feed, $e->getMessage());
         }
         
-        // save html url
+        // update html url of the feed
         $feed->htmlurl = $plugin->getHtmlUrl();
         $feed->save();
         
@@ -89,7 +89,6 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             
             // multimedia item: get and save thumbnail
             if($plugin->multimedia) {
-                
                 try {
                     // download and generate thumbnail
                     $thumbnail = $this->generateThumbnail($item->getThumbnail());
@@ -135,11 +134,11 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
      *
      * @return void
      */
-    public function cleanup() {
-        // cleanup orphaned thumbnails
+    public function cleanupThumbnails() {
         $itemsModel = new application_models_items();
-        $itemsModel->cleanup();
+        $itemsModel->cleanupThumbnails();
     }
+    
     
     /**
      * clean up old items
@@ -271,7 +270,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
     
     
     /**
-     * check whether filter matches or not
+     * check whether filter match or not
      *
      * @return boolean true if filter match, false if not
      * @param Zend_Db_Table_Row $feed the current feed

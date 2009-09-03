@@ -195,7 +195,7 @@ class application_models_items extends application_models_base {
      *
      * @return void
      */
-    public function cleanup() {
+    public function cleanupThumbnails() {
         // scan all thumbnails
         foreach(scandir(Zend_Registry::get('config')->thumbnails->path) as $file) {
             if(is_file(Zend_Registry::get('config')->thumbnails->path . '/' . $file)) {

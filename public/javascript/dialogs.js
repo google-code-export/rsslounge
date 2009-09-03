@@ -58,9 +58,9 @@ rsslounge.dialogs = {
      * initializes the elements in the add/edit dialog
      */
     initializeDialogAddEdit: function() {
-		// reset sending mutex
-		rsslounge.dialogs.sending = false;
-	
+        // reset sending mutex
+        rsslounge.dialogs.sending = false;
+        
         // make feed type selection as accordion
         $('#feed-source').accordion({autoHeight:false});
 
@@ -117,20 +117,20 @@ rsslounge.dialogs = {
      */
     submitAddEdit: function(button){
         
-		// get sending mutex or abort
-		if(rsslounge.dialogs.sending==true)
-			return false;
-		else
-			rsslounge.dialogs.sending = true;
-		
-		
+        // get sending mutex or abort
+        if(rsslounge.dialogs.sending==true)
+            return false;
+        else
+            rsslounge.dialogs.sending = true;
+        
+        
         //
         // add edit
         //
         if(button==1) {
         
             $('.jqibuttons').addClass('loading');
-			
+            
             // parse form data
             var data = rsslounge.getValues('#add');
             
@@ -174,7 +174,7 @@ rsslounge.dialogs = {
                     // errors: show errors
                     else {
                         $('.jqibuttons').removeClass('loading');
-						rsslounge.dialogs.sending = false;
+                        rsslounge.dialogs.sending = false;
                         rsslounge.showErrors($('#feed-data'), response.errors);
                     }
                     
@@ -192,8 +192,8 @@ rsslounge.dialogs = {
             
             if(confirm(lang.really_delete_this_feed)==false) {
                 rsslounge.dialogs.sending = false;
-				return false;
-			}
+                return false;
+            }
             
             $('.jqibuttons').addClass('loading');
             
@@ -206,9 +206,9 @@ rsslounge.dialogs = {
                     
                     // errors: show errors
                     if(typeof response.error != 'undefined') {
-                        rsslounge.showErrors($('#feed-data'), response);
+                        rsslounge.showError(response.error);
                         $('.jqibuttons').removeClass('loading');
-						rsslounge.dialogs.sending = false;
+                        rsslounge.dialogs.sending = false;
                     // success
                     } else {
                     
@@ -238,7 +238,8 @@ rsslounge.dialogs = {
                 },
                 'json'
             );
-        
+            
+            return false;
         }
         
         // cancel
