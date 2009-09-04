@@ -7,7 +7,9 @@ data/cache is not writeable|Verzeichnis data/cache ist schreibgesch&uuml;tzt
 data/favicons is not writeable|Verzeichnis data/favicons ist schreibgesch&uuml;tzt
 data/thumbnails is not writeable|Verzeichnis data/thumbnails ist schreibgesch&uuml;tzt
 data/logs is not writeable|Verzeichnis data/logs ist schreibgesch&uuml;tzt
-you need at least php version 5.2|es ist mindestens php version 5.2 erforderlich
+the Apache Module mod_rewrite is not enabled|das Apache Modul mod_rewrite ist nicht aktiviert
+you need at least php version 5.2.4|es ist mindestens php version 5.2.4 erforderlich
+rsslounge needs the '%s' extension|rsslounge ben&ouml;tigt die '%s' Erweiterung
 please select a valid language|bitte g&uuml;ltige Sprache w&auml;hlen
 please enter an host|bitte Host angeben
 please enter an username|bitte Benutzername angeben

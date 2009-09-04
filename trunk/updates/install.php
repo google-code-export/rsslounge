@@ -12,7 +12,6 @@
     $autoloader = Zend_Loader_Autoloader::getInstance();
     $autoloader->registerNamespace('Zend');
     
-    
     // prepare language object
     $locale = new Zend_Translate('csv', 'application/locale', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY, 'delimiter' => "|"));
     
@@ -42,8 +41,34 @@
     if(!is_writable(APPLICATION_PATH . '/../data/logs/'))
         $errors['data/logs'] = $locale->translate('data/logs is not writeable');
     if(substr(PHP_VERSION,0,1)<5 || (substr(PHP_VERSION,0,1)==5 && substr(PHP_VERSION,2,1)<2))
-        $errors['php'] = $locale->translate('you need at least php version 5.2');
+        $errors['php'] = $locale->translate('you need at least php version 5.2.4');
     
+    // check mod_rewrite
+    if(!isset($_GET['mod_rewrite']) || $_GET['mod_rewrite']!=1)
+        $errors['mod_rewrite'] = $locale->translate('the Apache Module mod_rewrite is not enabled');
+    
+    // check extensions
+    $extensions = array(
+        // zend framework
+        'ctype',
+        'Reflection',
+        'session',
+        'pdo',
+        'pdo_mysql',
+        'dom',
+        
+        // wideimage
+        'gd',
+        
+        // simplepie
+        'xml',
+        'pcre',
+        'mbstring'
+    );
+    
+    foreach($extensions as $ext) 
+        if(!extension_loaded($ext))
+            $errors[$ext] = sprintf($locale->translate("rsslounge needs the '%s' extension"),$ext);
     
     
     //
@@ -142,10 +167,10 @@
         return true;
     }
     
-    
+    $success = false;
     if(count($_POST)>0)
-        if(install())
-            $success = true;
+        $success = install();
+         
     
 
     
@@ -158,8 +183,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/style.css" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/install.css" />
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="public/stylesheets/style.css" />
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="public/stylesheets/install.css" />
     
     <script type="text/javascript" src="javascript/jquery-1.3.2.min.js"></script>
     <script type="text/javascript">
@@ -230,7 +255,7 @@
             
             <select name="language" id="language" class="<?PHP echo isset($errors['host']) ? 'error' : 'success' ?>">
             <?PHP foreach($languages as $val => $lang) : ?>
-                <option value="<?PHP echo $val; ?>" <?PHP if($_POST['language']==$val) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $lang; ?></option>
+                <option value="<?PHP echo $val; ?>" <?PHP if(isset($_POST['language']) && $_POST['language']==$val) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $lang; ?></option>
             <?PHP endforeach; ?>
             </select>
             
@@ -238,11 +263,11 @@
             <!-- 3. database -->
             <h2><?PHP echo $locale->translate('3. Enter database settings'); ?></h2>
             <ul>
-                <li class="<?PHP echo isset($errors['host']) ? 'error' : 'success' ?>"><label><?PHP echo $locale->translate('Host'); ?>:</label><input type="text" value="<?PHP echo $_POST['host']?>" name="host" /></li>
-                <li class="<?PHP echo isset($errors['username']) ? 'error' : 'success' ?>"><label><?PHP echo $locale->translate('Username'); ?>:</label><input type="text" value="<?PHP echo $_POST['username']?>" name="username" /></li>
-                <li><label><?PHP echo $locale->translate('Password'); ?>:</label><input type="password" value="<?PHP echo $_POST['password']?>" name="password" /></li>
-                <li class="<?PHP echo isset($errors['database']) ? 'error' : 'success' ?>"><label><?PHP echo $locale->translate('Database'); ?>:</label><input type="text" value="<?PHP echo $_POST['database']?>" name="database" /></li>
-                <li><label><?PHP echo $locale->translate('Prefix'); ?>:</label><input type="text" value="<?PHP echo $_POST['prefix']?>" name="prefix" /></li>
+                <li class="<?PHP echo isset($errors['host']) ? 'error' : 'success' ?>"><label><?PHP echo $locale->translate('Host'); ?>:</label><input type="text" value="<?PHP echo isset($_POST['host']) ? $_POST['host'] : '' ?>" name="host" /></li>
+                <li class="<?PHP echo isset($errors['username']) ? 'error' : 'success' ?>"><label><?PHP echo $locale->translate('Username'); ?>:</label><input type="text" value="<?PHP echo isset($_POST['username']) ? $_POST['username'] : '' ?>" name="username" /></li>
+                <li><label><?PHP echo $locale->translate('Password'); ?>:</label><input type="password" value="<?PHP echo isset($_POST['password']) ? $_POST['password'] : '' ?>" name="password" /></li>
+                <li class="<?PHP echo isset($errors['database']) ? 'error' : 'success' ?>"><label><?PHP echo $locale->translate('Database'); ?>:</label><input type="text" value="<?PHP echo isset($_POST['database']) ? $_POST['database'] : '' ?>" name="database" /></li>
+                <li><label><?PHP echo $locale->translate('Prefix'); ?>:</label><input type="text" value="<?PHP echo isset($_POST['prefix']) ? $_POST['prefix'] : '' ?>" name="prefix" /></li>
             </ul>
             
             
@@ -252,9 +277,9 @@
                 <span><?PHP echo $locale->translate('optional: leave the fields clear for no password protection'); ?></span>
             </h2>
              <ul>
-                <li><label><?PHP echo $locale->translate('Username'); ?>:</label><input type="text" value="<?PHP echo $_POST['login_username']?>" name="login_username" /></li>
-                <li><label><?PHP echo $locale->translate('Password'); ?>:</label><input type="password" value="<?PHP echo $_POST['login_password']?>" name="login_password" /></li>
-                <li><label><?PHP echo $locale->translate('again Password'); ?>:</label><input type="password" value="<?PHP echo $_POST['login_password_again']?>" name="login_password_again" /></li>
+                <li><label><?PHP echo $locale->translate('Username'); ?>:</label><input type="text" value="<?PHP echo isset($_POST['login_username']) ? $_POST['login_username'] : '' ?>" name="login_username" /></li>
+                <li><label><?PHP echo $locale->translate('Password'); ?>:</label><input type="password" value="<?PHP echo isset($_POST['login_password']) ? $_POST['login_password'] : '' ?>" name="login_password" /></li>
+                <li><label><?PHP echo $locale->translate('again Password'); ?>:</label><input type="password" value="<?PHP echo isset($_POST['login_password_again']) ? $_POST['login_password_again'] : '' ?>" name="login_password_again" /></li>
             </ul>
             
             <br />
