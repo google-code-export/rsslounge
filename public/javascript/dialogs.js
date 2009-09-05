@@ -106,7 +106,7 @@ rsslounge.dialogs = {
         }
         
         // activate tipsy tooltip
-        $('#feed-data #filter, #feed-data #favicon, #feed-data #name, #feed-data #url, #feed-data #priority').tipsy({fade: true});
+        $('#feed-data #filter, #feed-data #favicon, #feed-data #name, #feed-data #url, #feed-data #priority').tipsy({fade: true, gravity: 'w'});
     },
     
     
@@ -452,7 +452,7 @@ rsslounge.dialogs = {
                         });
                         
                         // activate tipsy
-                        $('#deleteItems').tipsy({fade: true});
+                        $('#deleteItems').tipsy({fade: true, gravity: 'w'});
                     },
                     submit: rsslounge.dialogs.submitSettings,
                 });
