@@ -191,7 +191,8 @@ class FeedController extends Zend_Controller_Action {
                 
                 // count feeds
                 'feeds'      => $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
-                                                   Zend_Registry::get('session')->currentPriorityEnd)
+                                                  Zend_Registry::get('session')->currentPriorityEnd,
+                                                  Zend_Registry::get('session')->view)
             );
             
             $this->_helper->json($result);
@@ -221,7 +222,8 @@ class FeedController extends Zend_Controller_Action {
             
             // count all feeds
             $return['feeds'] = $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
-                                                 Zend_Registry::get('session')->currentPriorityEnd);
+                                                 Zend_Registry::get('session')->currentPriorityEnd,
+                                                 Zend_Registry::get('session')->view);
             
             // count all items
             $return['all'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->allItems();

@@ -123,6 +123,9 @@ rsslounge.dialogs = {
         else
             rsslounge.dialogs.sending = true;
         
+        // force tipsy remove
+        $('.tipsy').remove();
+        
         
         //
         // add edit
@@ -465,6 +468,9 @@ rsslounge.dialogs = {
      * save new settings
      */
     submitSettings: function(button) {
+        // force tipsy remove
+        $('.tipsy').remove();
+        
         if(button) {
             $('.jqibuttons').addClass('loading');
             

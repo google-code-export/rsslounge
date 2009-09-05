@@ -192,7 +192,8 @@ class IndexController extends Zend_Controller_Action {
         
         // count feeds
         $this->view->amountfeeds = $feedsModel->count(Zend_Registry::get('session')->currentPriorityStart, 
-                                                        Zend_Registry::get('session')->currentPriorityEnd);
+                                                      Zend_Registry::get('session')->currentPriorityEnd,
+                                                      Zend_Registry::get('session')->view);
         
     }
     
