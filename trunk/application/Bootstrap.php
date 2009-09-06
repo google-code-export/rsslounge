@@ -188,9 +188,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected function _initCache() {
         
         $optionsBackend = array(
-            cache_dir => Zend_Registry::get('config')->rss->cache->path,
-            file_locking => true,
-            read_control => false
+            'cache_dir' => Zend_Registry::get('config')->rss->cache->path,
+            'file_locking' => true,
+            'read_control' => false
         );
         
         $this->cache = Zend_Cache::factory('Core', 'File', array(), $optionsBackend);

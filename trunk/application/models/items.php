@@ -51,7 +51,7 @@ class application_models_items extends application_models_base {
         $select = $this->prepareSelect($settings, $type);
         
         // set offset (if given)
-        if($settings['offset'])
+        if(isset($settings['offset']))
             $select->limit($settings['itemsperpage'], $settings['offset']);
         else
             $select->limit($settings['itemsperpage']);
@@ -85,7 +85,7 @@ class application_models_items extends application_models_base {
         $select->columns('count(*)');
         
         // index of first element of the next page
-        $nextPage = $settings['offset'] + Zend_Registry::get('session')->itemsperpage;
+        $nextPage = (isset($settings['offset']) ? $settings['offset'] : 0) + Zend_Registry::get('session')->itemsperpage;
         
         // less elements than needed for a new page?
         if($this->getAdapter()->fetchOne($select) <= $nextPage)
@@ -242,19 +242,19 @@ class application_models_items extends application_models_base {
             $select->where('f.multimedia=0');
 
         // category
-        if(strlen($settings['selected'])>4 && substr($settings['selected'],0,4)=='cat_')
+        if(isset($settings['selected']) && strlen($settings['selected'])>4 && substr($settings['selected'],0,4)=='cat_')
             $select->where( $db->quoteInto('c.id=?',substr($settings['selected'],4)) );
         
         // feed
-        if(strlen($settings['selected'])>5 && substr($settings['selected'],0,5)=='feed_')
+        if(isset($settings['selected']) && strlen($settings['selected'])>5 && substr($settings['selected'],0,5)=='feed_')
             $select->where( $db->quoteInto('f.id=?',substr($settings['selected'],5)) );
         
         // unread
-        if($settings['unread']!=0)
+        if(isset($settings['unread']) && $settings['unread']!=0)
             $select->where('i.unread=1');
         
         // starred
-        if($settings['starred']!=0)
+        if(isset($settings['starred']) && $settings['starred']!=0)
             $select->where('i.starred=1');
         
         // priority
@@ -268,7 +268,7 @@ class application_models_items extends application_models_base {
         }
         
         // search
-        if(strlen(trim($settings['search']))) {
+        if(isset($settings['search']) && strlen(trim($settings['search']))) {
             $select->where( 
                 'i.title LIKE ' . $db->quote("%".$settings['search']."%")
                 . ' OR i.content LIKE ' . $db->quote("%".$settings['search']."%")

@@ -63,7 +63,8 @@
     RewriteRule plugins/([^/]+)/(.*)$ plugins/$1/public/$2 [L]
 
     # rule for front controller
-    RewriteRule !.(js|ico|gif|jpg|png|css|asc|txt)$ index.php?mod_rewrite=1
+    RewriteCond %{QUERY_STRING} ^(.*)$
+    RewriteRule !.(js|ico|gif|jpg|png|css|asc|txt)$ index.php?mod_rewrite=1&%1
 
     # rule for files
     RewriteRule !favicons - [C]

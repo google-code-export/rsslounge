@@ -60,11 +60,11 @@ class UpdateController extends Zend_Controller_Action {
      * @return void
      */
     public function finishAction() {
-        // set lastrefresh if timeout is still 0
+        // set lastrefresh if timeout is already 0
         $updater = Zend_Controller_Action_HelperBroker::getStaticHelper('updater');
         if($updater->timeout()==0) {
         
-            // save last refresh (session will also be updated by models save)
+            // save last refresh (current session will also be updated by models save)
             $lastrefresh = Zend_Date::now()->get(Zend_Date::TIMESTAMP);
             $settingsModel = new application_models_settings();
             $settingsModel->save(array(
@@ -80,7 +80,7 @@ class UpdateController extends Zend_Controller_Action {
         $this->_helper->json(
                 array(
                     'timeout'      => $updater->timeout(),
-                    'lastrefresh'  => $lastrefresh,
+                    'lastrefresh'  => isset($lastrefresh) ? $lastrefresh : Zend_Registry::get('session')->lastrefresh,
                     'categories'   => $itemCounter->unreadItemsCategories(),
                     'feeds'        => $itemCounter->unreadItemsFeeds()
                 )
