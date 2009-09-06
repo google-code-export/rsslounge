@@ -55,7 +55,6 @@ class FeedController extends Zend_Controller_Action {
         
         // send new unread items
         $unread = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->unreadItemsCategories();
-        
         $this->_helper->json($unread);
     }
     
@@ -160,7 +159,7 @@ class FeedController extends Zend_Controller_Action {
             $feedModel->saveIcon($newFeed);
             
             // set new priorities
-            $this->resetPriorities();
+            $newSettings = $this->resetPriorities();
             
             // build result
             $result = array(
@@ -173,10 +172,7 @@ class FeedController extends Zend_Controller_Action {
                                 'position'    => $newFeed->position,
                                 'html'        => $this->view->partial(
                                                     'feed/feed.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(), 
-                                                    array_merge(
-                                                        $newFeed->toArray(),
-                                                        array( 'unread' => $unread )
-                                                    )
+                                                    $newFeed->toArray()
                                                 )
                                 ),
                 
@@ -292,6 +288,8 @@ class FeedController extends Zend_Controller_Action {
         // save new settings
         $settings = new application_models_settings();
         $settings->set($newSettings);
+        
+        return $newSettings;
     }
     
 }

@@ -123,10 +123,6 @@ rsslounge.dialogs = {
         else
             rsslounge.dialogs.sending = true;
         
-        // force tipsy remove
-        $('.tipsy').remove();
-        
-        
         //
         // add edit
         //
@@ -171,6 +167,7 @@ rsslounge.dialogs = {
                         rsslounge.setFeedVisibility();
                         
                         // close window
+                        $('.tipsy').remove();
                         $.prompt.close();
                     }
                     
@@ -231,6 +228,7 @@ rsslounge.dialogs = {
                         rsslounge.refreshCategories(response.categories);
                     
                         // close window
+                        $('.tipsy').remove();
                         $.prompt.close();
                         
                         // refresh list
@@ -246,6 +244,7 @@ rsslounge.dialogs = {
         }
         
         // cancel
+        $('.tipsy').remove();
         return true;
     },
     
@@ -468,9 +467,6 @@ rsslounge.dialogs = {
      * save new settings
      */
     submitSettings: function(button) {
-        // force tipsy remove
-        $('.tipsy').remove();
-        
         if(button) {
             $('.jqibuttons').addClass('loading');
             
@@ -501,7 +497,8 @@ rsslounge.dialogs = {
             return false;
         }
         
-        // cancel button pressed        
+        // cancel button pressed
+        $('.tipsy').remove();        
         return true;
     },
 
