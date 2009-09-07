@@ -149,34 +149,32 @@ class plugins_rss_feed extends rsslounge_source {
     
     /**
      * loads content for given source
-     * I supress all Warnings of SimplePie for ensuring
-     * working plugin in PHP Strict mode
      *
      * @return void
      * @param string $url the source of the current feed
      */
     public function load($url) {
         // initialize simplepie feed loader
-        $this->feed = @new SimplePie();
-        @$this->feed->set_cache_location(Zend_Registry::get('config')->rss->cache->path);
-        @$this->feed->set_cache_duration(Zend_Registry::get('config')->rss->cache->timeout);
-        @$this->feed->set_feed_url(htmlspecialchars_decode($url));
+        $this->feed = new SimplePie();
+        $this->feed->set_cache_location(Zend_Registry::get('config')->rss->cache->path);
+        $this->feed->set_cache_duration(Zend_Registry::get('config')->rss->cache->timeout);
+        $this->feed->set_feed_url(htmlspecialchars_decode($url));
         
         // fetch items
-        @$this->feed->init();
+        $this->feed->init();
         
         // check for error
-        if(@$this->feed->error()) {
+        if($this->feed->error()) {
             Zend_Registry::get('logger')->log('plugins_rss_feed: feed fetch error - ' . $this->feed->error(), Zend_Log::ERR);
             throw new Exception($this->feed->error());
         } else {
             // save fetched items
-            $this->items = @$this->feed->get_items();
+            $this->items = $this->feed->get_items();
             Zend_Registry::get('logger')->log('plugins_rss_feed: '.count($this->items).' items fetched', Zend_Log::DEBUG);
         }
         
         // return html url
-        $this->htmlUrl = @$this->feed->get_link();
+        $this->htmlUrl = $this->feed->get_link();
     }
     
     
@@ -198,7 +196,7 @@ class plugins_rss_feed extends rsslounge_source {
      */
     public function getId() {
         if($this->items!==false && $this->valid())
-            return @current($this->items)->get_id();
+            return current($this->items)->get_id();
     }
     
     
@@ -209,7 +207,7 @@ class plugins_rss_feed extends rsslounge_source {
      */
     public function getTitle() {
         if($this->items!==false && $this->valid())
-            return @current($this->items)->get_title();
+            return current($this->items)->get_title();
     }
     
     
@@ -220,7 +218,7 @@ class plugins_rss_feed extends rsslounge_source {
      */
     public function getContent() {
         if($this->items!==false && $this->valid())
-            return @current($this->items)->get_content();
+            return current($this->items)->get_content();
     }
     
     
@@ -231,7 +229,7 @@ class plugins_rss_feed extends rsslounge_source {
      */
     public function getLink() {
         if($this->items!==false && $this->valid())
-            return @current($this->items)->get_link();
+            return current($this->items)->get_link();
     }
     
     
@@ -242,7 +240,7 @@ class plugins_rss_feed extends rsslounge_source {
      */
     public function getDate() {
         if($this->items!==false && $this->valid())
-            $date = @current($this->items)->get_date('Y-m-d H:i:s');
+            $date = current($this->items)->get_date('Y-m-d H:i:s');
         if(strlen($date)==0)
             $date = date('Y-m-d H:i:s');
         return $date;

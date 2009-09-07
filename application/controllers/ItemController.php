@@ -72,8 +72,7 @@ class ItemController extends Zend_Controller_Action {
             'starred'        => $itemCounter->starredItems($settings),
             'all'            => $itemCounter->allItems($settings),
             'countfeeds'     => $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
-                                                  Zend_Registry::get('session')->currentPriorityEnd,
-                                                  Zend_Registry::get('session')->view)
+                                                  Zend_Registry::get('session')->currentPriorityEnd)
         ));
     }
     

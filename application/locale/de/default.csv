@@ -7,9 +7,7 @@ data/cache is not writeable|Verzeichnis data/cache ist schreibgesch&uuml;tzt
 data/favicons is not writeable|Verzeichnis data/favicons ist schreibgesch&uuml;tzt
 data/thumbnails is not writeable|Verzeichnis data/thumbnails ist schreibgesch&uuml;tzt
 data/logs is not writeable|Verzeichnis data/logs ist schreibgesch&uuml;tzt
-the Apache Module mod_rewrite is not enabled|das Apache Modul mod_rewrite ist nicht aktiviert
-you need at least php version 5.2.4|es ist mindestens php version 5.2.4 erforderlich
-rsslounge needs the '%s' extension|rsslounge ben&ouml;tigt die '%s' Erweiterung
+you need at least php version 5.2|es ist mindestens php version 5.2 erforderlich
 please select a valid language|bitte g&uuml;ltige Sprache w&auml;hlen
 please enter an host|bitte Host angeben
 please enter an username|bitte Benutzername angeben
@@ -37,12 +35,6 @@ Username|Benutzername
 Password|Passwort
 again Password|erneut Passwort
 Database|Datenbank
-
-
-#
-# Update
-#
-The current rsslounge database is out of date. Click the button below for updating it.|Die aktuelle rsslounge Datenbank ist nicht mehr aktuell. Bitte den untenstehenden Button klicken, um die Datenbank zu aktualisieren.
 
 
 
@@ -99,7 +91,6 @@ Value must be bigger than 0|Der Wert muss gr&ouml;sser als 0 sein
 feed already exists|Feed existiert bereits
 Please choose a value between 0 and 2000 days|Bitte w&auml;hle einen Wert zwischen 0 und 2000 Tagen
 Please choose a value between 0 and 200 items per page|Bitte w&auml;hle einen Wert zwischen 0 und 200 Eintr&auml;ge pro Seite
-
 
 #
 # Category edit

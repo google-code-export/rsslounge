@@ -43,7 +43,7 @@ class OpmlController extends Zend_Controller_Action {
                             $categoriesModel->select()->order('position ASC') 
                         );
         foreach($categoriesDb as $category) {
-            $xml = $xml . "\t<outline text=\"".htmlentities($category->name)."\">\n";
+            $xml = $xml . "\t<outline text=\"".$category->name."\">\n";
             
             $feedRowset = $category->findDependentRowset('application_models_feeds', null, $feedsModel->select()->order('position ASC'));
             foreach($feedRowset as $feed) {
@@ -74,12 +74,10 @@ class OpmlController extends Zend_Controller_Action {
     
         // parse given opml file
         $xml = @simplexml_load_string(file_get_contents($_FILES['userfile']['tmp_name']));
-        if(!$xml) {
-            echo Zend_Json::encode( array(
+        if(!$xml)
+            $this->_helper->json( array(
                 'error' => Zend_Registry::get('language')->translate('opml file parse error')
             ) );
-            return;
-        }
         
         // load first instance
         $parsedFeeds = array(
@@ -110,7 +108,7 @@ class OpmlController extends Zend_Controller_Action {
             'lastrefresh' => 0
         ) );
         
-        echo Zend_Json::encode( array(
+        $this->_helper->json( array(
             'success' => true
         ) );
         

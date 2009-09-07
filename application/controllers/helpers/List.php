@@ -97,7 +97,7 @@ class Helper_List extends Zend_Controller_Action_Helper_Abstract {
         $settingsModel = new application_models_settings();
         
         // set current search as global var
-        Zend_Registry::set('search', isset($settings['search']) ? $settings['search'] : '');
+        Zend_Registry::set('search', $settings['search']);
         
         // validate settings
         if(is_array($settingsModel->validate($settings)))

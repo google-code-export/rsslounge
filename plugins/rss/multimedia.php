@@ -54,19 +54,19 @@ class plugins_rss_multimedia extends plugins_rss_feed {
         $item = current($this->items);
         
         // search enclosures (media tags)
-        if(count(@$item->get_enclosures()) > 0) {
+        if(count($item->get_enclosures()) > 0) {
         
             // thumbnail given?
-            if(@$item->get_enclosure(0)->get_thumbnail())
-                return @$item->get_enclosure(0)->get_thumbnail();
+            if($item->get_enclosure(0)->get_thumbnail())
+                return $item->get_enclosure(0)->get_thumbnail();
             
             // link given?
-            elseif(@$item->get_enclosure(0)->get_link())
-                return @$item->get_enclosure(0)->get_link();
+            elseif($item->get_enclosure(0)->get_link())
+                return $item->get_enclosure(0)->get_link();
         
         // no enclosures: search image link in content
         } else {
-            $dom = new Zend_Dom_Query(@$item->get_content());  
+            $dom = new Zend_Dom_Query($item->get_content());  
             $imgTags = $dom->query('img');
             if(count($imgTags))
                 return $imgTags->current()->getAttribute('src');

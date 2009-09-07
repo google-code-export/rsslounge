@@ -193,10 +193,11 @@ div#header {
 #login {
     position:absolute;
     left:50%;
-    top:15%;
+    top:50%;
     width:500px;
     height:300px;
     margin-left:-250px;
+    margin-top:-250px;
     font-size:14px;
     background:url(images/header-bg.png) repeat-x;
     border:1px solid #ccc;

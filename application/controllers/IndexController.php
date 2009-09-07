@@ -94,7 +94,7 @@ class IndexController extends Zend_Controller_Action {
             if(     $username==Zend_Registry::get('config')->login->username
                 &&  sha1($password)==Zend_Registry::get('config')->login->password) {
                 Zend_Registry::get('session')->authenticated=true;
-                $this->_redirect('');
+                $this->_forward('index','index');
             } else {
                 $this->view->error = true;
             }
@@ -161,7 +161,7 @@ class IndexController extends Zend_Controller_Action {
             $newcat['feeds'] = array();
             foreach($feedRowset as $feed) {
                 $newfeed = $feed->toArray();
-                $newfeed['unread'] = isset($unreadFeed[$feed->id]) ? $unreadFeed[$feed->id] : 0;
+                $newfeed['unread'] = $unreadFeed[$feed->id];
                 $newcat['feeds'][] = $newfeed;
             }
         
@@ -192,8 +192,7 @@ class IndexController extends Zend_Controller_Action {
         
         // count feeds
         $this->view->amountfeeds = $feedsModel->count(Zend_Registry::get('session')->currentPriorityStart, 
-                                                      Zend_Registry::get('session')->currentPriorityEnd,
-                                                      Zend_Registry::get('session')->view);
+                                                        Zend_Registry::get('session')->currentPriorityEnd);
         
     }
     

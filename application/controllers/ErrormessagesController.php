@@ -41,7 +41,7 @@ class ErrormessagesController extends Zend_Controller_Action {
                                           ->order('datetime DESC')
                                           ->limit( Zend_Registry::get('config')->errormessages, $offset )
                     );
-        
+                    
         // load feedname
         $this->view->messages = array();
         foreach($messages as $message) {

@@ -19,7 +19,6 @@ class UpdateController extends Zend_Controller_Action {
         // suppress view rendering
         Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
     }
-    
 
     /**
      * cronjob silent update
@@ -33,11 +32,8 @@ class UpdateController extends Zend_Controller_Action {
         
         // update feeds
         $updater = Zend_Controller_Action_HelperBroker::getStaticHelper('updater');
-        
-        // get all feeds
         $feedModel = new application_models_feeds();
         $feeds = $feedModel->fetchAll();
-        
         $logger->log('update '.$feeds->count().' feeds', Zend_Log::DEBUG);
         foreach($feeds as $feed)
             $updater->feed($feed);
@@ -47,10 +43,10 @@ class UpdateController extends Zend_Controller_Action {
         $settingsModel->write('lastrefresh',Zend_Date::now()->get(Zend_Date::TIMESTAMP));
         
         // delete orphaned thumbnails
-        $updater->cleanupThumbnails();
+        $updater->cleanup();
         $logger->log('finished silent update', Zend_Log::DEBUG);
     }
-    
+
     
     /**
      * will be executed by the javascript ajax call
@@ -60,11 +56,11 @@ class UpdateController extends Zend_Controller_Action {
      * @return void
      */
     public function finishAction() {
-        // set lastrefresh if timeout is already 0
+        // set lastrefresh if timeout is still 0
         $updater = Zend_Controller_Action_HelperBroker::getStaticHelper('updater');
         if($updater->timeout()==0) {
         
-            // save last refresh (current session will also be updated by models save)
+            // save last refresh (session will also be updated by models save)
             $lastrefresh = Zend_Date::now()->get(Zend_Date::TIMESTAMP);
             $settingsModel = new application_models_settings();
             $settingsModel->save(array(
@@ -72,7 +68,7 @@ class UpdateController extends Zend_Controller_Action {
             ));
             
             // delete orphaned thumbnails
-            $updater->cleanupThumbnails();
+            $updater->cleanup();
         }
         
         // return new timeout and unread items
@@ -80,7 +76,7 @@ class UpdateController extends Zend_Controller_Action {
         $this->_helper->json(
                 array(
                     'timeout'      => $updater->timeout(),
-                    'lastrefresh'  => isset($lastrefresh) ? $lastrefresh : Zend_Registry::get('session')->lastrefresh,
+                    'lastrefresh'  => $lastrefresh,
                     'categories'   => $itemCounter->unreadItemsCategories(),
                     'feeds'        => $itemCounter->unreadItemsFeeds()
                 )

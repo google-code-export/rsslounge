@@ -64,9 +64,9 @@ class SettingsController extends Zend_Controller_Action {
             // any data changed?
             if($username!=Zend_Registry::get('config')->login->username || strlen($password)!=0 ) {
                 if($password!=$passwordAgain)
-                    $result = array('password_again' => Zend_Registry::get('language')->translate('given passwords not equal'));
+                    $result = array('password_again' => 'given passwords not equal');
                 else if(strlen(trim($password))!=0 && strlen(trim($username))==0)
-                    $result = array('username' => Zend_Registry::get('language')->translate('if you set a password you must set an username') );
+                    $result = array('username' => 'if you set a password you must set an username');
                 else 
                     $this->saveLogin($username, $password);
             }

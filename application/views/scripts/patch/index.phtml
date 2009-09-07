@@ -24,12 +24,11 @@
     
 
     <!-- main area -->
-    <form id="install" action="" method="get">
+    <form id="install" action="" method="post">
         <h1><?PHP echo $this->translate('Update'); ?></h1>
         
         <?PHP echo $this->translate('The current rsslounge database is out of date. Click the button below for updating it.'); ?>
         <br /><br />
-        <input type="hidden" name="execute" value="1" />
         <input type="submit" value="<?PHP echo $this->translate('update rsslounge') ?>" />
     </form>
 </body>
