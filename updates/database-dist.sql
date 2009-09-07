@@ -33,12 +33,6 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `position` (`position`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Daten für Tabelle `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `position`) VALUES
-(-1, 'unkategorisiert', 0);
 
 -- --------------------------------------------------------
 

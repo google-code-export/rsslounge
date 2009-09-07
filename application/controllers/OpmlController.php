@@ -43,7 +43,7 @@ class OpmlController extends Zend_Controller_Action {
                             $categoriesModel->select()->order('position ASC') 
                         );
         foreach($categoriesDb as $category) {
-            $xml = $xml . "\t<outline text=\"".$category->name."\">\n";
+            $xml = $xml . "\t<outline text=\"".htmlentities($category->name)."\">\n";
             
             $feedRowset = $category->findDependentRowset('application_models_feeds', null, $feedsModel->select()->order('position ASC'));
             foreach($feedRowset as $feed) {
