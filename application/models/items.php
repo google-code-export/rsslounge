@@ -85,7 +85,7 @@ class application_models_items extends application_models_base {
         $select->columns('count(*)');
         
         // index of first element of the next page
-        $nextPage = (isset($settings['offset']) ? $settings['offset'] : 0) + Zend_Registry::get('session')->itemsperpage;
+        $nextPage = (isset($settings['offset']) ? $settings['offset'] : 0) + $settings['itemsperpage'];
         
         // less elements than needed for a new page?
         if($this->getAdapter()->fetchOne($select) <= $nextPage)
@@ -104,8 +104,6 @@ class application_models_items extends application_models_base {
     public function countPerCategory($settings) {
         // count items
         $categories = $this->count($settings, 'c');
-        
-        // get all unread items
         
         // prepare select
         $select = $this->prepareSelect($settings, $settings['view']);
@@ -131,9 +129,9 @@ class application_models_items extends application_models_base {
     
     
     /**
-     * count all unread items
+     * count all items
      *
-     * @return int all unread items
+     * @return int all items
      * @param array $settings as array
      */
     public function countAll($settings) {

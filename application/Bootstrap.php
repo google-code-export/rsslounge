@@ -115,6 +115,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             new Zend_Controller_Router_Route(
                     'install.php',
                     array(
+                        'module'     => 'default',
                         'controller' => 'index',
                         'action'     => 'index'
                     )
