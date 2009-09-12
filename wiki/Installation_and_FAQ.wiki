@@ -23,3 +23,9 @@ via wget or curl.
 =After installation all looks weird=
 
 Mac OS and Linux users must ensure that all files will be uploaded. Also the file .htaccess which is hidden by default on Unix based Systems.
+
+
+=Password protected rss feeds=
+
+You can also subscribe to password protected rss feeds. Just enter the username and passwort before the url:
+    {{{http://user:password@example.com/rss}}}

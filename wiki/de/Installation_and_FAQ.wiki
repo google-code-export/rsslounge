@@ -23,3 +23,9 @@ mittels wget oder curl aufruft.
 =Nach der Installation sieht alles merkwürdig aus=
 
 MacOS und Linux Benutzer müssen sicherstellen, dass alle Dateien hochgeladen werden. Auch die Datei .htaccess, welche per default auf Unix basierenden Systemen ausgeblendet wird.
+
+
+=Passwortgeschützte RSS Feeds=
+
+Es können auch passwortgeschützte RSS Feeds abonniert werden. Einfach den Benutzernamen und das Passwort vor der URL angeben:
+    {{{http://benutzername:passwort@beispiel.de/rss}}}
