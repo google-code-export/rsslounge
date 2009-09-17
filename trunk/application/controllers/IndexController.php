@@ -179,7 +179,7 @@ class IndexController extends Zend_Controller_Action {
         }
         
         // count starred items
-        $this->view->starred = $itemCounter->starredItems();;
+        $this->view->starred = $itemCounter->starredItems();
         
         // count unread items
         $this->view->unread = $unreadCategory[0];

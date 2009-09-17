@@ -165,25 +165,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     
     /**
-     * initialize language file
-     */
-    protected function _initLanguage() {
-        $this->language = new Zend_Translate(
-            'csv', 
-            APPLICATION_PATH . '/locale', 
-            null, 
-            array(
-                'scan' => Zend_Translate::LOCALE_DIRECTORY, 
-                'delimiter' => "|"
-            ));
-        
-        // save language object for further use
-        Zend_Registry::set('language',$this->language);
-        return $this->language;
-    }
-    
-    
-    /**
      * initialize cache
      */
     protected function _initCache() {
@@ -203,6 +184,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         // save cache object for further use
         Zend_Registry::set('cache',$this->cache);
         return $this->cache;
+    }
+    
+    
+    /**
+     * initialize language file
+     */
+    protected function _initLanguage() {
+        $this->language = new Zend_Translate(
+            'csv', 
+            APPLICATION_PATH . '/locale', 
+            null, 
+            array(
+                'scan' => Zend_Translate::LOCALE_DIRECTORY, 
+                'delimiter' => "|"
+            ));
+        
+        // save language object for further use
+        Zend_Registry::set('language',$this->language);
+        return $this->language;
     }
     
     
