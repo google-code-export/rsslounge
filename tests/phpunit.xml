@@ -6,6 +6,9 @@
     <testsuite name="models">
         <directory>models</directory>
     </testsuite>
+    <testsuite name="controller">
+        <directory>controllers</directory>
+    </testsuite>
     <logging>
         <log type="testdox-html" target="./log/testdox.html" />
     </logging>
