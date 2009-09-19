@@ -136,5 +136,59 @@ class UpdateController extends Zend_Controller_Action {
         }
     }
 
+    
+    /**
+     * reset the demo (only for reseting 
+     * the demo on rsslounge.aditu.de)
+     *
+     * @return void
+     */
+    public function demoresetAction() {
+        die("only for rsslounge.aditu.de - you will destroy all your data with this action");
+        exit();
+        return;
+        
+        /*
+        // delete all files
+        $folders = array(
+            Zend_Registry::get('config')->thumbnails->path,
+            Zend_Registry::get('config')->favicons->path,
+            Zend_Registry::get('config')->rss->cache->path
+        );
+        
+        foreach($folders as $folder) {
+            $handle = opendir($folder);
+            while ($file = readdir($handle)) {
+                if($file != "." && $file != ".." && $file != '.htaccess') {
+                    if(!is_dir($folder."/".$file))
+                        unlink($folder."/".$file);
+                }
+            }
+            closedir($handle);
+        }
+
+        // delete database
+        $sql = 'DROP TABLE `categories`, `feeds`, `items`, `messages`, `settings`, `version`;';
+        
+        // insert new database
+        $sql = $sql . file_get_contents(APPLICATION_PATH . '/../updates/database-demo.sql');
+        
+        // execute (with new connection because of PDO::MYSQL_ATTR_USE_BUFFERED_QUERY Bug)
+        $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
+        $db = Zend_Db::factory('Pdo_Mysql', $db->getConfig());
+        $db->getConnection();
+        $db->exec($sql);
+        
+        // get feed icons
+        $feedModel = new application_models_feeds();
+        $feeds = $feedModel->fetchAll();
+        foreach($feeds as $feed)
+            if($feed->dirtyicon)
+                $feedModel->saveIcon($feed);
+        
+        // update data
+        $this->_forward('silent');
+        */
+    }
 }
 
