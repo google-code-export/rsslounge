@@ -297,10 +297,8 @@ var rsslounge = {
      * @param feeds, an array of feeds
      */
     refreshFeedsExecute: function() {
-        $('#feeds-list li').each(function(i, item) {
-            $(this).find('a.feed span').html('');
-            $(this).removeClass('unread');
-        });
+        $('#feeds-list li a.feed span').html('');
+        $('#feeds-list li').removeClass('unread');
         
         $.each(rsslounge.feeds, function(key, unread) {
             var feed = $('#feed_'+key);

@@ -71,6 +71,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * returns current database version
+     *
+     * @return string version
      */
     public function getCurrentVersion() {
         $db = $this->getPluginResource('db')->getDbAdapter();
@@ -83,6 +85,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * set current database version
+     *
+     * @return void
+     * @param string val new version
      */
     public function updateCurrentVersion($val) {
         $db = $this->getPluginResource('db')->getDbAdapter();
@@ -101,6 +106,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * init additional routes
+     *
+     * @return void
      */
     protected function _initRoutes() {
         // get front controller instance
@@ -126,6 +133,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * init additional plugins
+     *
+     * @return void
      */
     protected function _initPlugins() {
         // get front controller instance
@@ -143,6 +152,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * init helper classes
+     *
+     * @return void
      */
     protected function _initHelper() {
         Zend_Controller_Action_HelperBroker::addPath(
@@ -154,6 +165,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * create special autoloader for extern libraries
+     *
+     * @return void
      */
     protected function _initAutoloader() {
         $autoloader = Zend_Loader_Autoloader::getInstance();
@@ -166,9 +179,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * initialize cache
+     *
+     * @return void
      */
     protected function _initCache() {
-        
         $optionsBackend = array(
             'cache_dir' => Zend_Registry::get('config')->rss->cache->path,
             'file_locking' => true,
@@ -189,6 +203,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * initialize language file
+     *
+     * @return void
      */
     protected function _initLanguage() {
         $this->language = new Zend_Translate(
@@ -208,6 +224,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * init logger
+     *
+     * @return void
      */
     protected function _initLogger() {
         $writer = new Zend_Log_Writer_Stream(Zend_Registry::get('config')->logger->path);
@@ -253,6 +271,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     /**
      * initialize session
+     *
+     * @return void
      */
     protected function _initSession() {
         // get session object

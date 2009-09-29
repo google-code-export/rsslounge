@@ -16,7 +16,7 @@ class Zend_View_Helper_Lazyimg {
      * loading it later
      *
      * @return string with replaced img tags
-       * @param string $content which contains img tags
+     * @param string $content which contains img tags
      */
     public function lazyimg($content) {
         return preg_replace("/<img([^<]+)src=(['\"])([^\"']*)(['\"])([^<]*)>/i","<img$1ref='$3'$5>",$content);

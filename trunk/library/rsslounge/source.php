@@ -143,6 +143,8 @@ abstract class rsslounge_source implements Iterator {
     
     /**
      * destroy the plugin (prevent memory issues)
+     *
+     * @return void
      */
     public function destroy() {
         

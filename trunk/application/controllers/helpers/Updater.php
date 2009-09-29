@@ -191,7 +191,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
     /**
      * download and create thumbnail
      *
-     * @return generated filename
+     * @return string generated filename
      * @param string $thumbnail url of the target image
      */
     protected function generateThumbnail($thumbnail) {

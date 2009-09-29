@@ -39,7 +39,8 @@ class plugins_images_visualizeus extends plugins_rss_multimedia {
      * source optional
      *
      * @var bool|string
-     */    public $sourceOptional = true;
+     */
+    public $sourceOptional = true;
     
     
     /**
