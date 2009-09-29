@@ -52,6 +52,7 @@ class application_models_base extends Zend_Db_Table {
      * returns the Zend_Filter_Input object
      *
      * @return Zend_Filter_Input|array
+     * @param Zend_Filter_Input $input
      */
      protected function validate($input) {
          if(!$input->isValid()) {

@@ -183,8 +183,7 @@ class UpdateController extends Zend_Controller_Action {
         $feedModel = new application_models_feeds();
         $feeds = $feedModel->fetchAll();
         foreach($feeds as $feed)
-            if($feed->dirtyicon)
-                $feedModel->saveIcon($feed);
+            $feedModel->saveIcon($feed);
         
         // update data
         $this->_forward('silent');

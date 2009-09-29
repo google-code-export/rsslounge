@@ -265,7 +265,7 @@ class FeedController extends Zend_Controller_Action {
      * reset priorities depending on the current
      * max and min priorities of all feeds
      *
-     * @return void
+     * @return array new settings
      */
     protected function resetPriorities() {
         // set min and max priority

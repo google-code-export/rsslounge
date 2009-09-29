@@ -17,18 +17,23 @@ class application_validate_duplicatefeed extends Zend_Validate_Abstract {
     
     /** 
      * current source type
+     * @var string
      */
     protected $source;
     
     
     /** 
      * current feed id
+     * @var int
      */
     protected $id;
     
     
     /** 
      * save also the current source and feed id
+     *
+     * @param string source
+     * @param int id
      */
     public function __construct($source,$id) {
         $this->source = $source;
