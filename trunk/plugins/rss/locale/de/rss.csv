@@ -8,3 +8,6 @@ Source|Quelle
 Default|Standardquellen
 
 plugins_rss_multimedia|RSS Feed f&uuml;r Bilder
+
+plugins_rss_feedfix|RSS Feed f&uuml;r fehlerhafte Feeds
+An default RSS Feed which works without date in feeds. Use this if items appear twice.|Ein standard RSS Feed das auch ohne Datum im RSS Feed auskommt. Nutze dieses, wenn Beitr&auml;ge doppelt erscheinen.
