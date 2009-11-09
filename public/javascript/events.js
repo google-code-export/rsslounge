@@ -524,8 +524,13 @@ rsslounge.events = {
                                 $('#images').remove();
                 
                             // insert given image
-                            if(typeof response.multimedia != 'undefined')
-                                $('#images hr').before(response.multimedia);
+                            if(typeof response.multimedia != 'undefined') {
+                                var more = $('#images div.more');
+                                if(more.length>0) // more visible or not
+                                    more.before(response.multimedia);
+                                else
+                                    $('#images hr').before(response.multimedia);
+                            }
                             
                             // reset events
                             rsslounge.events.images();
@@ -536,6 +541,9 @@ rsslounge.events = {
                     
                         // update category unread items
                         rsslounge.refreshCategories(response.categories);
+                        
+                        // check no more items available
+                        rsslounge.checkNoItems();
                     }
                 }
             });

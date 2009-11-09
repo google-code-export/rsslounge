@@ -456,7 +456,7 @@ var rsslounge = {
      */
     checkNoItems: function() {
         if($('#images').length == 0 && $('#messages > li:not(.more)').length == 0)
-            rsslounge.showAllItems();
+            $('#markall').click(); // mark all will search for next unread category
     },
 
     
