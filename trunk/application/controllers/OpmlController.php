@@ -87,8 +87,18 @@ class OpmlController extends Zend_Controller_Action {
         );
         foreach ($xml->body->outline as $outline) {
             // category?
-            if(!isset($outline['xmlUrl']))
-                $parsedFeeds[(string)$outline['text']] = $this->importAllOutline($outline);
+            if(!isset($outline['xmlUrl'])) {
+                // read category title
+                $categoryTitle = "";
+                if(isset($outline['text']))
+                    $categoryTitle = (string)$outline['text'];
+                elseif(isset($outline['title']))
+                    $categoryTitle = (string)$outline['title'];
+                if(strlen($categoryTitle)==0)
+                    continue;
+                
+                $parsedFeeds[$categoryTitle] = $this->importAllOutline($outline);
+            }
                 
             // feed?
             else

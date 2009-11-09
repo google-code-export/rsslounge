@@ -120,6 +120,7 @@ class ItemController extends Zend_Controller_Action {
         $itemCounter = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter');
         $settings = $this->getRequest()->getParams();
         $result = array();
+        
         if($settings['unread'] == 1) {
             // load next item (if item exists)
             $settings['offset'] = $this->getRequest()->getParam('items');
@@ -143,7 +144,7 @@ class ItemController extends Zend_Controller_Action {
     public function markallAction() {
         $items = $this->getRequest()->getParam('items');
         if(!is_array($items))
-            $this->_helper->json(true);
+            $items = array();
             
         $items = array_unique($items);
         
