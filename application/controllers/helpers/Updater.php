@@ -50,6 +50,10 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         $now->sub(Zend_Registry::get('session')->deleteItems, Zend_Date::DAY);
         $logger->log('current date ' . $now, Zend_Log::DEBUG);
         
+        // include htmLawed
+        if(!function_exists('htmLawed'))
+            require(Zend_Registry::get('config')->includePaths->library . '/htmLawed.php');
+        
         // insert new items in database
         $logger->log('start item fetching', Zend_Log::DEBUG);
         $itemsModel = new application_models_items();
@@ -78,7 +82,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             $logger->log('start insert new item', Zend_Log::DEBUG);
             $nitem = array(
                     'title'        => $this->stripAll( $item->getTitle() ),
-                    'content'      => $this->stripContent( $item->getContent() ),
+                    'content'      => $this->stripContent( htmLawed($item->getContent()) ),
                     'feed'         => $feed->id,
                     'unread'       => 1,
                     'starred'      => 0,
