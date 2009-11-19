@@ -166,7 +166,7 @@ class IndexController extends Zend_Controller_Action {
             }
         
             // get unread items of cat
-            $newcat['unread'] = $unreadCategory[$cat->id];
+            $newcat['unread'] = isset($unreadCategory[$cat->id]) ? $unreadCategory[$cat->id] : 0;
             
             // set open (feeds visible) or not
             if(in_array($cat->id, $open))
