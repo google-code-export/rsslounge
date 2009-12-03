@@ -1,5 +1,5 @@
 # set developement mode
-# SetEnv APPLICATION_ENV development
+SetEnv APPLICATION_ENV development
 
 # show errors
 #php_flag register_globals off 

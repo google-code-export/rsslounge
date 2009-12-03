@@ -229,8 +229,8 @@ class application_models_items extends application_models_base {
         $select = $db->select()
                      ->from( array( 'i' => $p.'items' ), array('id','title','content','unread','starred','datetime','link') )
                      ->join( array( 'f' => $p.'feeds' ), 'i.feed = f.id', array('name','icon') )
-                     ->join( array( 'c' => $p.'categories' ), 'c.id=f.category', array());
-        
+                     ->join( array( 'c' => $p.'categories' ), 'c.id=f.category', array() )
+                     ->order('c.position ASC');
         // only multimedia content
         if($type=='multimedia')
             $select->where('f.multimedia=1');
