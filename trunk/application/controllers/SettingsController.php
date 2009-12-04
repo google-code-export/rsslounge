@@ -89,6 +89,10 @@ class SettingsController extends Zend_Controller_Action {
      * @return void
      */
     private function saveLogin($username, $password) {
+    
+        // for demo application
+        // return;
+        
         $config = file_get_contents(CONFIG_PATH);
         if(strlen($username)!=0)
             $config = str_replace('login.username = ' . Zend_Registry::get('config')->login->username, 'login.username = '.trim($username), $config);
