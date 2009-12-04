@@ -13,7 +13,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase {
      * test the framework
      */
     public function testFramework() {
-        $this->assertEquals('1.9.2', Zend_Version::VERSION);
+        $this->assertEquals('1.9.6', Zend_Version::VERSION);
     }
     
     
