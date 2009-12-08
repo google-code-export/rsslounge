@@ -80,15 +80,29 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             
             // insert new item
             $logger->log('start insert new item', Zend_Log::DEBUG);
+            
+            // sanitize content html
+            $content = htmLawed(
+                $item->getContent(), 
+                array(
+                    "safe"           => 1,
+                    "deny_attribute" => Zend_Registry::get('config')->rss->allowed->deniedattribs,
+                    "keep_bad"       => 0,
+                    "comment"        => 0,
+                    "cdata"          => 0,
+                    "elements"       => Zend_Registry::get('config')->rss->allowed->tags
+                )
+            );
+            
             $nitem = array(
-                    'title'        => $this->stripAll( $item->getTitle() ),
-                    'content'      => $this->stripContent( htmLawed($item->getContent()) ),
+                    'title'        => htmLawed($item->getTitle(), array("deny_attribute" => "*", "elements" => "-*")),
+                    'content'      => $content,
                     'feed'         => $feed->id,
                     'unread'       => 1,
                     'starred'      => 0,
                     'datetime'     => $item->getDate(),
                     'uid'          => $item->getId(),
-                    'link'         => $this->stripAll( $item->getLink() )
+                    'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*"))
                 );
             
             // multimedia item: get and save thumbnail
@@ -212,64 +226,6 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     );
         
         return md5($thumbnail) . '.jpg';
-    }
-    
-
-    /**
-     * strip unallowed tags
-     *
-     * @return string stripped content
-     * @param string $content unstripped content
-     */
-    protected function stripContent($content) {
-        $tags = '<' . str_replace(',','><',Zend_Registry::get('config')->rss->allowed->tags) . '>';
-        return $this->stripTags(
-            $content,
-            $tags,
-            Zend_Registry::get('config')->rss->allowed->attribs
-        );
-    }
-    
-    
-    /**
-     * strip unallowed tags and attributes
-     * from http://de.php.net/manual/en/function.strip-tags.php
-     * I use this instead Zend_Filter_StripTags because of an bug:
-     * on Windows Vista Apache crashes
-     *
-     * @return string stripped content
-     * @param string $string unstripped content
-     * @param array $allowedtags the allowed tags
-     * @param array $allowedattributes the allowed attributes
-     */
-    protected function stripTags($string, $allowtags=NULL, $allowattributes=NULL) {
-        $string = strip_tags($string, $allowtags);
-        
-        if (!is_null($allowattributes)) {
-            if(!is_array($allowattributes))
-                $allowattributes = explode(",",$allowattributes);
-            if(is_array($allowattributes))
-                $allowattributes = implode(")(?<!",$allowattributes);
-            if (strlen($allowattributes) > 0)
-                $allowattributes = "(?<!".$allowattributes.")";
-            $string = preg_replace_callback("/<[^>]*>/i",create_function(
-                '$matches',
-                'return preg_replace("/ [^ =]*'.$allowattributes.'=(\"[^\"]*\"|\'[^\']*\')/i", "", $matches[0]);'   
-            ),$string);
-        }
-        return $string;
-    } 
-    
-
-    /**
-     * strip all html from title
-     *
-     * @return string stripped content
-     * @param string $content unstripped content
-     */
-    protected function stripAll($content) {
-        $filter = new Zend_Filter_StripTags();
-        return $filter->filter($content);
     }
     
     
