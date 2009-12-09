@@ -88,8 +88,8 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     "safe"           => 1,
                     "deny_attribute" => Zend_Registry::get('config')->rss->allowed->deniedattribs,
                     "keep_bad"       => 0,
-                    "comment"        => 0,
-                    "cdata"          => 0,
+                    "comment"        => 1,
+                    "cdata"          => 1,
                     "elements"       => Zend_Registry::get('config')->rss->allowed->tags
                 )
             );
