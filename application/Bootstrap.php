@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base bootstrap class for the hole application
+ * Base bootstrap class for the whole application
  *
  * @package    application
  * @copyright  Copyright (c) Tobias Zeising (http://www.aditu.de)
@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $version = "0.1 beta 2b";
+    public $version = "1.0";
     
     
     /**
