@@ -1,7 +1,7 @@
 Used libraries:
 ---------------
 
-Zend Framework 1.9.1
+Zend Framework 1.9.6
 http://framework.zend.com/
 
 SimplePie 1.2

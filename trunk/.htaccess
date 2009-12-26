@@ -1,5 +1,5 @@
 # set developement mode
-SetEnv APPLICATION_ENV development
+# SetEnv APPLICATION_ENV development
 
 # show errors
 #php_flag register_globals off 
@@ -52,6 +52,10 @@ SetEnv APPLICATION_ENV development
 <IfModule mod_rewrite.c>
     RewriteEngine on
     
+    # rule for plugins
+    RewriteRule !plugins/([^/]+)/public/(.*)$ - [C]
+    RewriteRule plugins/([^/]+)/(.*)$ plugins/$1/public/$2 [L]
+    
     # rule for favicons
     RewriteRule !data/favicons/(.*)$ - [C]
     RewriteRule favicons/(.*)$ data/favicons/$1 [L]
@@ -59,10 +63,6 @@ SetEnv APPLICATION_ENV development
     # rule for thumbnails
     RewriteRule !data/thumbnails/(.*)$ - [C]
     RewriteRule thumbnails/(.*)$ data/thumbnails/$1 [L]
-
-    # rule for plugins
-    RewriteRule !plugins/([^/]+)/public/(.*)$ - [C]
-    RewriteRule plugins/([^/]+)/(.*)$ plugins/$1/public/$2 [L]
 
     # rule for front controller
     RewriteCond %{QUERY_STRING} ^(.*)$
