@@ -210,7 +210,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $this->language = new Zend_Translate(
             'csv', 
             APPLICATION_PATH . '/locale', 
-            null, 
+            'en', 
             array(
                 'scan' => Zend_Translate::LOCALE_DIRECTORY, 
                 'delimiter' => "|"
