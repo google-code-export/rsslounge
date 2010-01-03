@@ -29,3 +29,8 @@ Mac OS and Linux users must ensure that all files will be uploaded. Also the fil
 
 You can also subscribe to password protected rss feeds. Just enter the username and passwort before the url:
     {{{http://user:password@example.com/rss}}}
+    
+    
+=The page is empty or following php error occurs=
+    {{{PHP Parse error:  syntax error, unexpected T_CLASS in /home/bongzone/public_html/rsshat.com/application/models/settings.php on line 1}}}
+Choose the binary upload in your FTP Client software.

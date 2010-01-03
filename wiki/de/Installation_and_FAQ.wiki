@@ -29,3 +29,8 @@ MacOS und Linux Benutzer müssen sicherstellen, dass alle Dateien hochgeladen we
 
 Es können auch passwortgeschützte RSS Feeds abonniert werden. Einfach den Benutzernamen und das Passwort vor der URL angeben:
     {{{http://benutzername:passwort@beispiel.de/rss}}}
+
+    
+=Die Seite bleibt leer oder folgender PHP Fehler tritt auf=
+    {{{PHP Parse error:  syntax error, unexpected T_CLASS in /home/bongzone/public_html/rsshat.com/application/models/settings.php on line 1}}}
+In der FTP Client Software muss als Übertragungsmodus "binary" gewählt werden.
