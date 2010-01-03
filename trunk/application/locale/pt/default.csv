@@ -2,6 +2,11 @@
 # Install
 #
 
+Installation|Instalação
+System Check|Verificação do sistema
+PHP Version|Versão do PHP:
+Host|Servidor:
+Prefix|Prefixo da tabela:
 config is not writeable|Sem permissão de escrita para config
 data/cache is not writeable|Sem permissão de escrita para data/cache
 data/favicons is not writeable|Sem permissão de escrita para data/favicons
@@ -28,11 +33,11 @@ success|Sucesso
 4. Login|4. Login
 optional: leave the fields clear for no password protection|Opcional: deixe em branco para não ter proteção por senha
 install rsslounge|Instalar rssLounge
-data/cache writeable|Com permissão de escrita para data/cache
-data/favicons writeable|Com permissão de escrita para data/favicons
-data/thumbnails writeable|Com permissão de escrita para data/thumbnails
-data/logs writeable|Com permissão de escrita para data/logs
-config writeable|Com permissão de escrita para config
+data/cache writeable|Permissão de escrita para data/cache
+data/favicons writeable|Permissão de escrita para data/favicons
+data/thumbnails writeable|Permissão de escrita para data/thumbnails
+data/logs writeable|Permissão de escrita para data/logs
+config writeable|Permissão de escrita para config
 Username|Nome de Usuário
 Password|Senha
 again Password|Confirmar Senha
