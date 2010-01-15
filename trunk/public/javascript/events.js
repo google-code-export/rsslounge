@@ -357,7 +357,7 @@ rsslounge.events = {
             $.ajax({
                 type: "POST",
                 url: "item/markall",
-                data: { 'items[]': rsslounge.getVisibleItems({mark:true}) },
+                data: { 'items': rsslounge.getVisibleItems({mark:true}) },
                 dataType: 'json',
                 success: function(response){
                     // load next category or feed if no more unread items in selection
@@ -393,7 +393,7 @@ rsslounge.events = {
             $.ajax({
                 type: "POST",
                 url: "item/unstarrall",
-                data: { 'items[]': rsslounge.getVisibleItems({unstarr:true}) },
+                data: { 'items': rsslounge.getVisibleItems({unstarr:true}) },
                 dataType: 'json',
                 success: function(response){
                     // refresh only on starred filter

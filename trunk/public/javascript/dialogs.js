@@ -381,7 +381,7 @@ rsslounge.dialogs = {
             // save new data via ajax
             $.post(
                 'category/save', 
-                { 'categories[]': data },
+                { 'categories': data },
                 function(response, status) {
                     // success
                     if(response==true) {
