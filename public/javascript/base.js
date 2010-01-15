@@ -257,9 +257,10 @@ var rsslounge = {
      * @param categories, an array of categories
      */
     refreshCategories: function(categories) {
+        
         // remove all unread items counter
         $('#feeds-list h3').each(function(i, item) {
-            $(this).find('.items').html('');
+            $(this).find('.items').html('0');
             $(this).removeClass('unread');
         });
         

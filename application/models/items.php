@@ -165,7 +165,7 @@ class application_models_items extends application_models_base {
         $return = array();
         foreach($this->getAdapter()->fetchAll($select) as $res)
             $return[$res['id']] = $res['count(i.id)'];
-            
+        
         return $return;
     }
     
