@@ -18,7 +18,7 @@
  * @subpackage App
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: App.php 19513 2009-12-08 00:00:51Z tjohns $
+ * @version    $Id: App.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 /**
@@ -256,7 +256,7 @@ class Zend_Gdata_App
             )
         );
         $this->_httpClient = $client;
-        self::setStaticHttpClient($client);
+        Zend_Gdata::setStaticHttpClient($client);
         return $this;
     }
 
@@ -634,9 +634,9 @@ class Zend_Gdata_App
 
         // Make sure the HTTP client object is 'clean' before making a request
         // In addition to standard headers to reset via resetParameters(),
-        // also reset the Slug and If-Match headers
+        // also reset the Slug header
         $this->_httpClient->resetParameters();
-        $this->_httpClient->setHeaders(array('Slug', 'If-Match'));
+        $this->_httpClient->setHeaders('Slug', null);
 
         // Set the params for the new request to be performed
         $this->_httpClient->setHeaders($headers);

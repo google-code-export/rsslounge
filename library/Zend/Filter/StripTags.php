@@ -17,7 +17,7 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StripTags.php 20145 2010-01-08 15:18:56Z matthew $
+ * @version    $Id: StripTags.php 16870 2009-07-20 10:17:59Z mikaelkael $
  */
 
 
@@ -45,10 +45,8 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      *
      * If false (the default), then comments are removed from the input string.
      *
-     * This setting is now deprecated, and ignored internally.
-     *
-     * @deprecated
      * @var boolean
+     * @deprecated
      */
     public $commentsAllowed;
 
@@ -88,11 +86,6 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
 
     /**
      * Returns the commentsAllowed option
-     *
-     * This setting is now deprecated and ignored internally.
-     *
-     * @deprecated
-     * @return bool
      */
     public function getCommentsAllowed()
     {
@@ -102,10 +95,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
     /**
      * Sets the commentsAllowed option
      *
-     * This setting is now deprecated and ignored internally.
-     *
-     * @deprecated
-     * @param  boolean $commentsAllowed
+     * @param boolean $commentsAllowed
      * @return Zend_Filter_StripTags Provides a fluent interface
      */
     public function setCommentsAllowed($commentsAllowed)
@@ -211,8 +201,16 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        // Strip HTML comments first
-        $valueCopy = preg_replace('#<!--(?:[^<]+|<(?!\!--))*?(--\s*>)#us', '', (string) $value);
+        $valueCopy = (string) $value;
+
+        // If comments are allowed, then replace them with unique identifiers
+        if ($this->getCommentsAllowed()) {
+            preg_match_all('/<\!--.*?--\s*>/s' , (string) $valueCopy, $matches);
+            $comments = array_unique($matches[0]);
+            foreach ($comments as $k => $v) {
+                $valueCopy = str_replace($v, self::UNIQUE_ID_PREFIX . $k, $valueCopy);
+            }
+        }
 
         // Initialize accumulator for filtered data
         $dataFiltered = '';
@@ -234,6 +232,13 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
             }
             // Add the filtered pre-tag text and filtered tag to the data buffer
             $dataFiltered .= $preTag . $tagFiltered;
+        }
+
+        // If comments are allowed, then replace the unique identifiers with the corresponding comments
+        if ($this->getCommentsAllowed()) {
+            foreach ($comments as $k => $v) {
+                $dataFiltered = str_replace(self::UNIQUE_ID_PREFIX . $k, $v, $dataFiltered);
+            }
         }
 
         // Return the filtered data

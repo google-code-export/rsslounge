@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
     <!-- jquery and jquery ui -->
-    <script type="text/javascript" src="javascript/jquery-1.4.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="javascript/jquery-ui-1.7.2.custom.min.js"></script>
     <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/ui-lightness/jquery-ui-1.7.2.custom.css" />
     
@@ -68,8 +68,8 @@
         <ul id="menue" class="ui-corner-all ui-widget-content">
               <li><a class="settings"><?PHP echo $this->translate('Settings'); ?></a></li>
               <li><a class="categories"><?PHP echo $this->translate('Categories'); ?></a></li>
-              <li><a id="opml-import"><?PHP echo $this->translate('OPML Import'); ?></a></li>
-              <li><a id="opml-export"><?PHP echo $this->translate('OPML Export'); ?></a></li>
+              <li><a id="opml-import">OPML Import</a></li>
+              <li><a id="opml-export">OPML Export</a></li>
               <li><a id="errormessages"><?PHP echo $this->translate('Errormessages'); ?></a></li>
               <li class="<?PHP if(!isset($this->logout)) echo 'last'; ?>"><a class="about"><?PHP echo $this->translate('About'); ?></a></li>
               

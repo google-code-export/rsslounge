@@ -18,7 +18,7 @@
  * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 19916 2009-12-24 10:35:22Z yoshida@zend.co.jp $
+ * @version    $Id: Abstract.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 
@@ -44,7 +44,7 @@ require_once 'Zend/Validate/Hostname.php';
  * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 19916 2009-12-24 10:35:22Z yoshida@zend.co.jp $
+ * @version    $Id: Abstract.php 18951 2009-11-12 16:26:19Z alexander $
  * @todo Implement proxy settings
  */
 abstract class Zend_Mail_Protocol_Abstract
@@ -361,7 +361,6 @@ abstract class Zend_Mail_Protocol_Abstract
         $this->_response = array();
         $cmd = '';
         $msg = '';
-        $errMsg = '';
 
         if (!is_array($code)) {
             $code = array($code);
@@ -371,21 +370,15 @@ abstract class Zend_Mail_Protocol_Abstract
             $this->_response[] = $result = $this->_receive($timeout);
             sscanf($result, $this->_template, $cmd, $msg);
 
-            if ($errMsg !== '') {
-                $errMsg .= $msg;
-            } elseif ($cmd === null || !in_array($cmd, $code)) {
-                $errMsg =  $msg;
+            if ($cmd === null || !in_array($cmd, $code)) {
+                /**
+                 * @see Zend_Mail_Protocol_Exception
+                 */
+                require_once 'Zend/Mail/Protocol/Exception.php';
+                throw new Zend_Mail_Protocol_Exception($result);
             }
 
         } while (strpos($msg, '-') === 0); // The '-' message prefix indicates an information string instead of a response string.
-
-        if ($errMsg !== '') {
-            /**
-             * @see Zend_Mail_Protocol_Exception
-             */
-            require_once 'Zend/Mail/Protocol/Exception.php';
-            throw new Zend_Mail_Protocol_Exception($errMsg);
-        }
 
         return $msg;
     }

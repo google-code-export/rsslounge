@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: HeadMeta.php 19836 2009-12-21 15:01:20Z matthew $
+ * @version    $Id: HeadMeta.php 16971 2009-07-22 18:05:45Z mikaelkael $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -151,6 +151,10 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
                 return $this->offsetSet($index, $item);
             }
 
+            if ($action == 'set') {
+                //var_dump($this->getContainer());
+            }
+
             $this->$action($item);
             return $this;
         }
@@ -206,7 +210,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
     {
         if (!$this->_isValid($value)) {
             require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception('Invalid value passed to offsetSet; please use offsetSetName() or offsetSetHttpEquiv()');
+            throw new Zend_View_Exception('Invalid value passed to offsetSet; please use offsetSetMeta()');
         }
 
         return $this->getContainer()->offsetSet($index, $value);

@@ -242,7 +242,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             $resultContent = @preg_match($feed->filter, $item->getContent());
             
             // wrong filter
-            if($resultTitle===false || $resultContent===false) {
+            if(!$resultTitle || !$resultContent) {
                 Zend_Registry::get('logger')->log('filter error ' . $feed->filter, Zend_Log::ERR);
                 throw new Exception();
             }

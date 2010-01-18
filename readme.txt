@@ -1,15 +1,13 @@
 rsslounge aggregator
 http://rsslounge.aditu.de
 tobias.zeising@aditu.de
-Version 1.2
+Version 1.1
 
--------
-english
--------
+----
 
-INSTALLATION
+rsslounge aggregator installation
 
-1. upload all files of this folder (IMPORTANT: also upload the invisible .htaccess files)
+1. Upload all files of this folder (IMPORTANT: also upload the invisible .htaccess files)
 2. make the directories config, data/cache, data/favicons, data/logs and data/thumbnails writeable
 3. open rsslounge in your browser and follow install instructions
 
@@ -19,21 +17,7 @@ via wget or curl.
 
 ----
 
-UPDATE
-
-1. backup your database and your "data" folder
-2. (IMPORTANT: don't delete the "data" folder) delete all old files and folders (including "config") excluding the folder "data"
-3. upload all new files and folders excluding the data folder (IMPORTANT: also upload the invisible .htaccess files)
-4. open rsslounge in your browser and follow the install instructions
-5. use your old database connection, the new rsslounge version will update the old database automatically
-
-
-
--------
-deutsch
--------
-
-INSTALLATION
+rsslounge aggregator Installation
 
 1. lade alle Dateien dieses Ordners hoch (WICHTIG: auch die unsichtbaren .htaccess Dateien hochladen)
 2. setze die Schreibrechte für die Verzeichnisse config, data/cache, data/favicons, data/logs und data/thumbnails
@@ -42,15 +26,4 @@ INSTALLATION
 Um die Feeds von rsslounge mittels Cronjob zu aktualisieren, einfach einen cronjob anlegen, der die URL
     http://<rsslounge url>/update/silent
 mittels wget oder curl aufruft.
-
-
-----
-
-UPDATE
-
-1. die Datenbank sowie den "data" Ordner sichern
-2. (WICHTIG: nicht den "data" Ordner löschen) alle alten Dateien und Ordnern (einschließlich "config") aber ohne dem Ordner "data" löschen
-3. alle neuen Dateien und Ordner hochladen (ausgenommen dem "data" Ordner) (WICHTIG: auch die unsichtbaren .htaccess Dateien hochladen)
-4. rsslounge im Browser öffnen und den Anweisungen folgen
-5. die alte Datenbank für die neue rsslounge Version verwenden (die alte Datenbank wird automatisch aktualisiert)
 

@@ -17,7 +17,7 @@
  * @subpackage Gdata
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpClient.php 19512 2009-12-08 00:00:49Z tjohns $
+ * @version    $Id: HttpClient.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
 /**
@@ -320,11 +320,11 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
      *
      * @return Zend_Http_Client
      */
-    public function resetParameters($clearAll = false)
+    public function resetParameters()
     {
         $this->_streamingRequest = false;
 
-        return parent::resetParameters($clearAll);
+        return parent::resetParameters();
     }
 
     /**
