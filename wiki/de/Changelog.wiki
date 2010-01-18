@@ -1,0 +1,17 @@
+#labels Featured
+=Changelog=
+
+==Version 1.2==
+
+  * Zend Framework von 1.9.6 auf 1.9.7 aktualisiert
+  * jQuery von 1.3.2 auf 1.4 aktualisiert
+  * kleinere Designverbesserungen
+  * Portugisische Sprachdateien (vielen Dank an Jonnathan Soares Lima!!)
+  * Bugfix: 0 anzeigen falls keine ungelesenen Einträge
+  * Bugfix: htmlurl exception
+  * Bugfix: falsches Filter Handling
+
+  
+==Version 1.1==
+
+  * Bugfix: Sprachunterstützung
