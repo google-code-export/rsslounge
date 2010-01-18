@@ -7,11 +7,11 @@
   * jQuery von 1.3.2 auf 1.4 aktualisiert
   * kleinere Designverbesserungen
   * Portugisische Sprachdateien (vielen Dank an Jonnathan Soares Lima!!)
-  * Bugfix: 0 anzeigen falls keine ungelesenen Einträge
+  * Bugfix: 0 anzeigen falls keine ungelesenen EintrÃ¤ge
   * Bugfix: htmlurl exception
   * Bugfix: falsches Filter Handling
 
   
 ==Version 1.1==
 
-  * Bugfix: Sprachunterstützung
+  * Bugfix: SprachunterstÃ¼tzung
