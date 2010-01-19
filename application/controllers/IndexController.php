@@ -9,6 +9,7 @@
  */
 class IndexController extends Zend_Controller_Action {
 
+
     /**
      * Initialize controller (set language object, base etc.)
      *
@@ -119,6 +120,36 @@ class IndexController extends Zend_Controller_Action {
      */
     public function ieAction() {
         
+    }
+    
+    
+    /**
+     * returns all javascript files (see config)
+     *
+     * @return void
+     */
+    public function javascriptAction() {
+        $javascript = $this->readFiles('javascript');
+        $javascript = JSMin::minify($javascript);
+        $this->getResponse()
+             ->setHeader('Content-Type', 'text/javascript')
+             ->setBody($javascript);
+        $this->_helper->viewRenderer->setNoRender();
+    }
+    
+    
+    /**
+     * returns all stylesheets (see config)
+     *
+     * @return void
+     */
+    public function stylesheetsAction() {
+        $stylesheets = $this->readFiles('stylesheets');
+        $stylesheets = cssmin::minify($stylesheets);
+        $this->getResponse()
+             ->setHeader('Content-Type', 'text/css')
+             ->setBody($stylesheets);
+        $this->_helper->viewRenderer->setNoRender();
     }
     
     
@@ -234,5 +265,21 @@ class IndexController extends Zend_Controller_Action {
             $this->_forward('index','patch');
     }
 
+    
+    /**
+     * reads javascript or stylesheet files
+     *
+     * @return content of all files
+     * @param string $type the type of files (javascript or stylesheets)
+     */
+    protected function readFiles($type) {
+        if (!($output = Zend_Registry::get('cache')->load($type))) {
+            $output = "";
+            foreach(Zend_Registry::get('config')->$type->toArray() as $file)
+                $output = $output . "\n\n" . file_get_contents(Zend_Registry::get('config')->publicfolder->path . $file);
+            Zend_Registry::get('cache')->save($output,$type);
+        }
+        return $output;
+    }
 }
 
