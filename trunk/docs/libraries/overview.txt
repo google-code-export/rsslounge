@@ -33,9 +33,3 @@ http://onehackoranother.com/projects/jquery/tipsy/
 
 htmLawed 1.1.8.1
 http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/index.php
-
-jsmin 1.1.1
-http://github.com/rgrove/jsmin-php/
-
-cssmin 1.0.1.b3
-http://code.google.com/p/cssmin/

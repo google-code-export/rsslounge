@@ -13,12 +13,24 @@
     $autoloader->registerNamespace('Zend');
     
     // prepare language object
-    $locale = new Zend_Translate('csv', 'application/locale', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY, 'delimiter' => "|"));
+    if(isset($_POST['language']))
+        $currentLang = $_POST['language'];
+    else {
+        $currentLang = 'en';
+    }
+    $locale = new Zend_Translate('csv', 'application/locale', 'en', array('scan' => Zend_Translate::LOCALE_DIRECTORY, 'delimiter' => "|"));
     
     // get languages
     $languages = array();
     foreach($locale->getList() as $lang)
         $languages[$lang] = $locale->translate($lang);
+    
+    // set language
+    $languageLocale = new Zend_Locale(Zend_Locale::BROWSER);
+    if(in_array($languageLocale->getLanguage(),$locale->getList())) {
+        $currentLang = $languageLocale->getLanguage();
+        $locale->setLocale($languageLocale);
+    }
     
     // get config
     $configDist = new Zend_Config_Ini(CONFIG_DIST_PATH);
@@ -255,7 +267,7 @@
             
             <select name="language" id="language" class="<?PHP echo isset($errors['host']) ? 'error' : 'success' ?>">
             <?PHP foreach($languages as $val => $lang) : ?>
-                <option value="<?PHP echo $val; ?>" <?PHP if(isset($_POST['language']) && $_POST['language']==$val) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $lang; ?></option>
+                <option value="<?PHP echo $val; ?>" <?PHP if($currentLang==$val) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $lang; ?></option>
             <?PHP endforeach; ?>
             </select>
             

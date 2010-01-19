@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $version = "1.3";
+    public $version = "1.2";
     
     
     /**
@@ -128,32 +128,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                     )
                 )
         );
-        
-        // add stylesheets/all route
-        $router->addRoute(
-            'stylesheets',
-            new Zend_Controller_Router_Route(
-                    'stylesheets/all',
-                    array(
-                        'module'     => 'default',
-                        'controller' => 'index',
-                        'action'     => 'stylesheets'
-                    )
-                )
-        );
-        
-        // add javascript/all route
-        $router->addRoute(
-            'javascript',
-            new Zend_Controller_Router_Route(
-                    'javascript/all',
-                    array(
-                        'module'     => 'default',
-                        'controller' => 'index',
-                        'action'     => 'javascript'
-                    )
-                )
-        );
     }
     
     
@@ -210,17 +184,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      */
     protected function _initCache() {
         $optionsBackend = array(
-            'cache_dir'     => Zend_Registry::get('config')->cache->path,
-            'file_locking'  => true,
-            'read_control'  => false,
-            'lifetime'      => 3600
+            'cache_dir' => Zend_Registry::get('config')->rss->cache->path,
+            'file_locking' => true,
+            'read_control' => false
         );
         
-        $optionsFrontend = array(
-            'caching'       => Zend_Registry::get('config')->cache->enable=="1"
-        );
-        
-        $this->cache = Zend_Cache::factory('Core', 'File', $optionsFrontend, $optionsBackend);
+        $this->cache = Zend_Cache::factory('Core', 'File', array(), $optionsBackend);
         
         // set cache for all locale and translate
         Zend_Locale::setCache($this->cache);
