@@ -34,3 +34,15 @@ Es können auch passwortgeschützte RSS Feeds abonniert werden. Einfach den Benu
 =Die Seite bleibt leer oder folgender PHP Fehler tritt auf=
     {{{PHP Parse error:  syntax error, unexpected T_CLASS in /home/bongzone/public_html/rsshat.com/application/models/settings.php on line 1}}}
 In der FTP Client Software muss als Übertragungsmodus "binary" gewählt werden.
+
+
+=Es gibt Probleme beim Aktualisieren der Feeds, wo finde ich weitere Debug Informationen?=
+
+rsslounge bietet einen Logging Mechanismus, welcher über die Konfigurationsdatei
+    {{{config/config.ini}}}
+aktiviert werden kann. Ändere dort die Option
+    {{{logger.level = ALERT}}}
+auf
+    {{{logger.level = DEBUG}}}
+Dann sind alle informationen über den Cronjob oder Ajax Update in der Log Datei zu finden:
+    {{{data/logs/default}}}

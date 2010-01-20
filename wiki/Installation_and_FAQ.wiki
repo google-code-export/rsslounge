@@ -34,3 +34,15 @@ You can also subscribe to password protected rss feeds. Just enter the username 
 =The page is empty or following php error occurs=
     {{{PHP Parse error:  syntax error, unexpected T_CLASS in /home/bongzone/public_html/rsshat.com/application/models/settings.php on line 1}}}
 Choose the binary upload in your FTP Client software.
+
+
+=There are problems on the feed update process, where can I find more debug information?=
+
+rsslounge offers an logging mechanism which can be activated via the configuration file
+    {{{config/config.ini}}}
+Change there the option
+    {{{logger.level = ALERT}}}
+to
+    {{{logger.level = DEBUG}}}
+Then you can find detailed information about an cronjob or ajax update in the log file:
+    {{{data/logs/default}}}
