@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $version = "1.2";
+    public $version = "1.3";
     
     
     /**
@@ -184,12 +184,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      */
     protected function _initCache() {
         $optionsBackend = array(
-            'cache_dir' => Zend_Registry::get('config')->rss->cache->path,
+            'cache_dir'    => Zend_Registry::get('config')->cache->path,
             'file_locking' => true,
             'read_control' => false
         );
+        $optionsFrontend = array(
+            'caching'       => Zend_Registry::get('config')->cache->enable=="1"
+        );
         
-        $this->cache = Zend_Cache::factory('Core', 'File', array(), $optionsBackend);
+        $this->cache = Zend_Cache::factory('Core', 'File', $optionsFrontend, $optionsBackend);
         
         // set cache for all locale and translate
         Zend_Locale::setCache($this->cache);
