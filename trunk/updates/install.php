@@ -267,7 +267,7 @@
             
             <select name="language" id="language" class="<?PHP echo isset($errors['host']) ? 'error' : 'success' ?>">
             <?PHP foreach($languages as $val => $lang) : ?>
-                <option value="<?PHP echo $val; ?>" <?PHP if($currentLang==$val) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $lang; ?></option>
+                <option value="<?PHP echo $val; ?>" <?PHP if($currentLang==$val) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $locale->translate($val); ?></option>
             <?PHP endforeach; ?>
             </select>
             
