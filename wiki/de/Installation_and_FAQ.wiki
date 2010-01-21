@@ -53,5 +53,7 @@ Dann sind alle informationen über den Cronjob oder Ajax Update in der Log Datei
 Dieser Fehler tritt speziell beim Apache 1 auf. Füge in die Datei
     {{{.htaccess}}}
 folgende Zeile unter "RewriteEngine on" ein:
-    {{{RewriteEngine on
-    RewriteBase /path/to/rsslounge/}}}
+    {{{
+    RewriteEngine on
+    RewriteBase /path/to/rsslounge/
+    }}}

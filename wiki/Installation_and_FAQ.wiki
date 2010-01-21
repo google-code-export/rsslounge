@@ -53,5 +53,7 @@ Then you can find detailed information about an cronjob or ajax update in the lo
 This error occurs especially on Apache 1. Insert in the 
     {{{.htaccess}}}
 following line bellow "RewriteEngine on"
-    {{{RewriteEngine on
-    RewriteBase /path/to/rsslounge/}}}
+    {{{
+    RewriteEngine on
+    RewriteBase /path/to/rsslounge/
+    }}}
