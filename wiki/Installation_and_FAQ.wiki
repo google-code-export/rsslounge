@@ -46,3 +46,12 @@ to
     {{{logger.level = DEBUG}}}
 Then you can find detailed information about an cronjob or ajax update in the log file:
     {{{data/logs/default}}}
+    
+    
+=I only get an ServerError 500=
+
+This error occurs especially on Apache 1. Insert in the 
+    {{{.htaccess}}}
+following line bellow "RewriteEngine on"
+    {{{RewriteEngine on
+    RewriteBase /path/to/rsslounge/}}}
