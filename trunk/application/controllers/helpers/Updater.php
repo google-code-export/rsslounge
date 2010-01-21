@@ -19,6 +19,8 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
      */
     public function feed($feed) {
         
+        @set_time_limit(Zend_Registry::get('config')->rss->timelimit);
+        
         // logging
         $logger = Zend_Registry::get('logger');
         $logger->log('start feed fetching "' . $feed->name.'"', Zend_Log::DEBUG);
@@ -79,7 +81,8 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                 continue;
             
             // insert new item
-            $logger->log('start insert new item', Zend_Log::DEBUG);
+            $logger->log('---', Zend_Log::DEBUG);
+            $logger->log('start insertion of new item "'.$item->getTitle().'"', Zend_Log::DEBUG);
             
             // sanitize content html
             $content = htmLawed(
@@ -93,6 +96,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     "elements"       => Zend_Registry::get('config')->rss->allowed->tags
                 )
             );
+            $logger->log('item content sanitized', Zend_Log::DEBUG);
             
             $nitem = array(
                     'title'        => htmLawed($item->getTitle(), array("deny_attribute" => "*", "elements" => "-*")),
@@ -104,13 +108,15 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     'uid'          => $item->getId(),
                     'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*"))
                 );
+            $logger->log('item in database inserted', Zend_Log::DEBUG);
             
             // multimedia item: get and save thumbnail
             if($plugin->multimedia) {
                 try {
                     // download and generate thumbnail
                     $thumbnail = $this->generateThumbnail($item->getThumbnail());
-                
+                    $logger->log('thumbnail "'.$thumbnail.'" generated', Zend_Log::DEBUG);
+                    
                     // set thumbnailpath as content
                     $nitem = array_merge(
                                 $nitem,
