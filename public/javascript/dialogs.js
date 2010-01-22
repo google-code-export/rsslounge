@@ -443,7 +443,7 @@ rsslounge.dialogs = {
                 $.prompt(text, { 
                     buttons: buttons,
                     loaded: function() {
-                        $('#settings-data .bookmark a').attr('href', 'javascript:document.location="'+document.location+'?url="+document.location');
+                        $('#settings-data .bookmark a').attr('href', 'javascript:document.location="'+document.location+'?url="+escape(document.location)');
                         
                         // enable/disable login fields
                         $('#activate_login').click(function() {

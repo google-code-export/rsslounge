@@ -2,7 +2,7 @@
     <a href="<?PHP echo $this->link ?>" class="images-imagelink">
         <img src="<?PHP echo Zend_Registry::get('config')->thumbnails->url . $this->content ?>" alt="<?PHP echo $this->title ?>" title="<?PHP echo $this->title ?>" />
     </a>
-    <a class="mark-image <?PHP echo $this->unread==1 ? 'active' : '' ?>" title="<?PHP echo $this->translate('mark as read') ?>"><span><?PHP echo $this->translate('mark as read') ?></span></a> 
+    <a class="mark-image <?PHP echo $this->unread==1 ? 'active' : '' ?>"><span><?PHP echo $this->translate('mark as read') ?></span></a> 
     <a class="starr-image <?PHP echo $this->starred==1 ? 'active' : '' ?>" title="<?PHP echo $this->translate('starr') ?>"><span><?PHP echo $this->translate('starr') ?></span></a> 
     <a href="<?PHP echo $this->link ?>" title="<?PHP echo $this->title ?>" class="link">
         <?PHP 
