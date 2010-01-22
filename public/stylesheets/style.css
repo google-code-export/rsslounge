@@ -770,6 +770,18 @@ div#header {
         margin-bottom:10px;
     }
     
+    #images div img {
+        border:5px solid #f4f8f2;
+    }
+    
+    #images div.selected img {
+        border:5px solid #f6a828;
+    }
+    
+    #images div.selected.marking img {
+        border:0;
+    }
+    
     #images .images-feed {
         display:block;
         color:#999;
@@ -870,6 +882,14 @@ div#header {
             font-weight:bold;
         }
 
+        #messages > li.selected {
+            border:2px solid #f6a828;
+        }
+        
+        #messages > li.selected.marking {
+            border:0;
+        }
+        
     #messages .starr-message,
     #messages .mark-message {
         display:block;

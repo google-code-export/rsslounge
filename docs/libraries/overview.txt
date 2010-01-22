@@ -33,3 +33,6 @@ http://onehackoranother.com/projects/jquery/tipsy/
 
 htmLawed 1.1.8.1
 http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/index.php
+
+Javascript jQuery Hotkeys Plugin 0.7.9
+http://code.google.com/p/js-hotkeys/
