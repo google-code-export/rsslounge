@@ -889,6 +889,22 @@ rsslounge.events = {
         // select next
         next.addClass('selected');
         
+        // scroll down
+        if(params.open_next)
+            var contentsize = next.children('.content').length>0 ? next.children('.content').height()+50 : 0;
+        else
+            var contentsize = 35;
+        var fold = $(window).height() + $(window).scrollTop();
+        if(fold <= next.offset().top+contentsize)
+            $(window).scrollTop($(window).scrollTop()+contentsize);
+        
+        // scroll up
+        var top = $(window).scrollTop();
+        if(top >= next.offset().top + next.height())
+            $(window).scrollTop(next.offset().top);
+
+
+        
         // open next
         if(params.open_next) {
             rsslounge.showImages(next.children('.content'));

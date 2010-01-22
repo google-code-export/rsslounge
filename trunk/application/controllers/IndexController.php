@@ -15,6 +15,7 @@ class IndexController extends Zend_Controller_Action {
      * @return void
      */
     public function init() {
+        
         // initialize view
         $view = $this->initView();
         

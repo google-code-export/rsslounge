@@ -52,7 +52,7 @@ SetEnv APPLICATION_ENV development
 # mod_rewrite rules
 <IfModule mod_rewrite.c>
     RewriteEngine on
-    #RewriteBase /rsslounge/trunk/
+    #RewriteBase /path/to/rsslounge/
     
     # rule for plugins
     RewriteRule !plugins/([^/]+)/public/(.*)$ - [C]
