@@ -5,7 +5,7 @@
     <?PHP $date = new Zend_Date($this->datetime); ?>
     <span title="<?PHP echo $date->toString('d.MM.YYYY HH:mm'); ?>"><?PHP echo $date->toString('HH:mm'); ?></span>
     <h2><?PHP echo $this->highlite($this->title, Zend_Registry::get('search')) ?></h2>
-    <a href="<?PHP echo $this->link ?>">&raquo; <?PHP echo $this->name ?></a>
+    <a href="<?PHP echo $this->link ?>" class="link">&raquo; <?PHP echo $this->name ?></a>
     <span class="date">
     <?PHP echo $date->toString('d.MM.'); ?>
     </span>

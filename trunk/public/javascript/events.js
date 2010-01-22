@@ -604,6 +604,9 @@ rsslounge.events = {
             var content = $(this).parent('li').children(".content");
             content.slideToggle('medium');
             rsslounge.showImages(content);
+            
+            $('#messages li.selected').removeClass('selected');
+            $(this).parent('li').addClass('selected');
         });
         
         
@@ -704,7 +707,188 @@ rsslounge.events = {
                 }
             });
         });
-    }
-
-
+    },
+    
+    
+    /**
+     * register shortcuts
+     */
+    shortcuts: function() {    
+        // switch and open next
+        $(document).bind('keydown', 'space', function() {
+            rsslounge.events.shortcuts_next({
+                'open_next': true,
+                'close_current': true,
+                'down': true
+            });
+            return false;
+        });
+        
+        // switch and open prev
+        $(document).bind('keydown', 'Shift+space', function() {
+            rsslounge.events.shortcuts_next({
+                'open_next': true,
+                'close_current': true,
+                'down': false
+            });
+        });
+        
+        
+        // switch next
+        $(document).bind('keydown', 'n', function() {
+            rsslounge.events.shortcuts_next({
+                'open_next': false,
+                'close_current': true,
+                'down': true
+            });
+        });
+        
+        // switch prev
+        $(document).bind('keydown', 'p', function() {
+            rsslounge.events.shortcuts_next({
+                'open_next': false,
+                'close_current': true,
+                'down': false
+            });
+        });
+        
+        // switch and open next
+        $(document).bind('keydown', 'j', function() {
+            rsslounge.events.shortcuts_next({
+                'open_next': true,
+                'close_current': true,
+                'down': true
+            });
+        });
+        
+        // switch and open prev
+        $(document).bind('keydown', 'k', function() {
+            rsslounge.events.shortcuts_next({
+                'open_next': true,
+                'close_current': true,
+                'down': false
+            });
+        });
+        
+        // open/close article
+        openclose = function() {
+            var current = $('#messages li.selected');
+            if(current.length!=0)
+                current.children('.content').slideToggle('medium');
+        };
+        $(document).bind('keydown', 'return', openclose);
+        $(document).bind('keydown', 'o', openclose);
+        
+        // mark/unmark
+        $(document).bind('keydown', 'm', function() {
+            var current = $('#messages li.selected .mark-message, #images div.selected .mark-image');
+            
+            if(rsslounge.settings.unread==1) {
+                $('li.selected, div.selected').addClass('marking');
+                rsslounge.events.shortcuts_next({
+                    'open_next': false,
+                    'close_current': false,
+                    'down': true
+                });
+            }
+            
+            current.click();
+        });
+        
+        // star/unstar
+        $(document).bind('keydown', 's', function() {
+            $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
+        });
+        
+        // open target
+        $(document).bind('keydown', 'v', function() {
+            window.open($('#messages li.selected .link, #images div.selected .link').attr('href'));
+        });
+        
+        // mark all as read
+        $(document).bind('keydown', 'ctrl+m', function() {
+            $('#markall').click();
+        });
+        
+        // unstarr all
+        $(document).bind('keydown', 'ctrl+s', function() {
+            $('#unstarrall').click();
+            return false;
+        });
+        
+        // new feed
+        $(document).bind('keydown', 'ctrl+n', function() {
+            $('.add').click();
+            return false;
+        });
+    },
+    
+    
+    /**
+     * get next
+     */
+    shortcuts_next: function(params) { 
+        var current = $('#images div.selected, #messages li.selected');
+        
+        // select next item
+        if(params.down)
+            var next = current.next();
+        else
+            var next = current.prev();
+        
+        if(next.length!=0) {
+            // if image: only select visible images
+            if(next.parent('#images').length!=0) {
+                if( (next.position().top >= $('#images').height()) == true ) {
+                    next = $('#messages li:first');
+                }
+            }
+        }
+        
+        // last message item reached? Stop here
+        if(current.parent('#messages').length!=0 && next.length==0 && params.down)
+            return;
+            
+        // first message item reached? Switch to last image
+        if(current.parent('#messages').length!=0 && next.length==0 && !params.down) {
+            var image = $('#images div:last');
+            var height = $('#images').length!=0 ? $('#images').height() : 0;
+            while(image.length!=0 && image.position().top >= height)
+                image = image.prev();
+            if(image.length!=0)
+                next = image;
+        }
+        
+        // no next item? take first one
+        if(next.length==0)
+            var next = $('#images div:first');
+        if(next.length==0)
+            var next = $('#messages li:first');
+        
+        // more
+        if(next.hasClass('more')) {
+            next.click();
+            return;
+        }
+        
+        // close current item
+        if(current.length!=0) {
+            if(params.close_current) {
+                current.removeClass('selected');
+                current.children(".content").hide();
+            }
+        } 
+        
+        // select next
+        next.addClass('selected');
+        
+        // open next
+        if(params.open_next) {
+            rsslounge.showImages(next.children('.content'));
+            next.children('.content').show();
+        }
+        
+        
+    },
+    
 };

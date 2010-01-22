@@ -78,7 +78,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $db = $this->getPluginResource('db')->getDbAdapter();
         $p = Zend_Registry::get('config')->resources->db->prefix;
         return $db->fetchOne(
-            $db->select()->from($p.'version', 'version')
+            $db->select()->from($p.'version', 'MAX(version)')
         );
     }
     

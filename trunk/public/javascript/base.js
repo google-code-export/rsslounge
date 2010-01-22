@@ -44,6 +44,9 @@ var rsslounge = {
             rsslounge.events.images();
             rsslounge.events.messages();
             
+            // register shortcuts
+            rsslounge.events.shortcuts();
+            
             // set timeout for ajax refresh
             rsslounge.refresh.timeout(rsslounge.settings.timeout);
             

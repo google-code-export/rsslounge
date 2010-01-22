@@ -26,12 +26,16 @@
         $languages[$lang] = $locale->translate($lang);
     
     // set language
-    $languageLocale = new Zend_Locale(Zend_Locale::BROWSER);
-    if(in_array($languageLocale->getLanguage(),$locale->getList())) {
-        $currentLang = $languageLocale->getLanguage();
-        $locale->setLocale($languageLocale);
+    try {
+        $languageLocale = new Zend_Locale(Zend_Locale::BROWSER);
+        if(in_array($languageLocale->getLanguage(),$locale->getList())) {
+            $currentLang = $languageLocale->getLanguage();
+            $locale->setLocale($languageLocale);
+        }
+    } catch(Exception $e) {
+        $currentLang = 'en';
+        $locale->setLocale(new Zend_Locale('en'));
     }
-    
     // get config
     $configDist = new Zend_Config_Ini(CONFIG_DIST_PATH);
     
