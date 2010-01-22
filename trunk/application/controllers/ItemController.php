@@ -131,6 +131,7 @@ class ItemController extends Zend_Controller_Action {
         // return unread items
         $result['categories'] = $itemCounter->unreadItemsCategories();
         $result['feeds'] = $itemCounter->unreadItemsFeeds();
+        $result['starred'] = $itemCounter->starredItems();
         
         $this->_helper->json($result);
     }

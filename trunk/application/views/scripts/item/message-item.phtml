@@ -1,6 +1,6 @@
 <li id="item_<?PHP echo $this->id ?>" class="<?PHP echo $this->unread==1 ? 'unread' : '' ?>">
     <a class="starr-message <?PHP echo $this->starred==1 ? 'active' : '' ?>" title="<?PHP echo $this->translate('starr') ?>"><span><?PHP echo $this->translate('starr') ?></span></a>
-    <a class="mark-message <?PHP echo $this->unread==1 ? 'active' : '' ?>" title="<?PHP echo $this->translate('mark as read') ?>"><span><?PHP echo $this->translate('mark as read') ?></span></a>
+    <a class="mark-message <?PHP echo $this->unread==1 ? 'active' : '' ?>"><span><?PHP echo $this->translate('mark as read') ?></span></a>
     <img src="<?PHP echo Zend_Registry::get('config')->favicons->url . $this->icon ?>" alt="<?PHP echo $this->name ?>" title="<?PHP echo $this->name ?>" />
     <?PHP $date = new Zend_Date($this->datetime); ?>
     <span title="<?PHP echo $date->toString('d.MM.YYYY HH:mm'); ?>"><?PHP echo $date->toString('HH:mm'); ?></span>

@@ -542,6 +542,9 @@ rsslounge.events = {
                         // update category unread items
                         rsslounge.refreshCategories(response.categories);
                         
+                        // refresh starred items
+                        $('#feeds-list h3.starred').find('.items').html(response.starred);
+                    
                         // check no more items available
                         rsslounge.checkNoItems();
                     }
@@ -657,6 +660,9 @@ rsslounge.events = {
                     
                         // update category unread items
                         rsslounge.refreshCategories(response.categories);
+                        
+                        // refresh starred items
+                        $('#feeds-list h3.starred').find('.items').html(response.starred);
                     }
                 }
             });
@@ -825,7 +831,8 @@ rsslounge.events = {
     
     
     /**
-     * get next
+     * get next or previous item
+     * @param params options for the selection (open_next, close_current, down)
      */
     shortcuts_next: function(params) { 
         var current = $('#images div.selected, #messages li.selected');
