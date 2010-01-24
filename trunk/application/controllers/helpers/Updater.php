@@ -223,14 +223,13 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         $thumbnailFile = Zend_Registry::get('config')->thumbnails->path . md5($thumbnail);
         
         // load, resize and save
-        $image = wiImage::load($thumbnail)
+        $image = WideImage::load($thumbnail)
                 ->resize(
                     Zend_Registry::get('config')->thumbnails->width, 
                     Zend_Registry::get('config')->thumbnails->height)
                 ->saveToFile(
                     $thumbnailFile . '.jpg'
                     );
-        
         return md5($thumbnail) . '.jpg';
     }
     

@@ -78,7 +78,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $db = $this->getPluginResource('db')->getDbAdapter();
         $p = Zend_Registry::get('config')->resources->db->prefix;
         return $db->fetchOne(
-            $db->select()->from($p.'version', 'MAX(version)')
+            $db->select()->from($p.'version', 'MIN(version)')
         );
     }
     
@@ -173,7 +173,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $loader = new rsslounge_autoloader();
         
         // register additional autoloader for wideimage library
-        $autoloader->pushAutoloader($loader, 'wi');
+        $autoloader->pushAutoloader($loader, 'WideImage');
     }
     
     
