@@ -57,3 +57,23 @@ following line bellow "RewriteEngine on"
     RewriteEngine on
     RewriteBase /path/to/rsslounge/
     }}}
+    
+    
+=Installation on lighttpd=
+
+For user of lighttpd you have to set the rewrite rules in the lighttpd configuration:
+
+    {{{
+    url.rewrite-once = (
+      "^/rsslounge/favicon.ico$" => "/rsslounge/public/favicon.ico",          
+      "^/rsslounge/plugins/([^/]+)/(.*)$" => "/rsslounge/plugins/$1/public/$2",
+      "^/rsslounge/favicons/(.*)$" => "/rsslounge/data/favicons/$1",
+      "^/rsslounge/thumbnails/(.*)$" => "/rsslounge/data/thumbnails/$1",
+      "^/rsslounge/javascript/(.*)$" => "/rsslounge/public/javascript/$1",    
+      "^/rsslounge/stylesheets/(.*)$" => "/rsslounge/public/stylesheets/$1",  
+      "^/rsslounge/public/" => "$0",                                   
+      "^/rsslounge/(.*)" => "/rsslounge/index.php?mod_rewrite=1&$1"
+    )
+    }}}
+
+Modify the urls according to your directory structure.
