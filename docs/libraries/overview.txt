@@ -16,7 +16,7 @@ http://jquery.com/
 jQuery UI 1.7.2
 http://jqueryui.com/
 
-jQuery Impromptu 2.7
+jQuery Impromptu 2.8
 http://trentrichardson.com/Impromptu/index.php
 
 Date Picker 07/03/2009
