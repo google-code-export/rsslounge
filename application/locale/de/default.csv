@@ -140,6 +140,8 @@ Activate login|Login aktivieren
 Drag this link into your bookmarks bar. Everytime you want to subscribe an open feed, click on this bookmark.|Ziehe diesen Link in deine Lesezeichenleiste. Jedes mal wenn du ein ge&ouml;ffnetes Feed abonnieren willst, dann klicke auf dieses Bookmark!
 subscribe feed|Feed abonnieren
 Entries old than this value will be deleted. Enter 0 for never deleting items.|Eintr&auml;ge &auml;lter als dieser Wert werden gel&ouml;scht. Gib 0 ein, falls die Eintr&auml;ge nie gel&ouml;scht werden sollen.
+Open links in new window|Links in neuem Fenster &ouml;ffnen
+Anonymizer URL (e.g. http://anonym.to/?)|Anonymisierer (z.B. http://anonym.to/?)
 
 
 #

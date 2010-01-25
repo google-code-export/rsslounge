@@ -501,6 +501,36 @@ var rsslounge = {
             $('#feeds-list .multimedia').hide();
         else if(rsslounge.settings.view=="multimedia")
             $('#feeds-list .message').hide();
+    },
+    
+    
+    /**
+     * set target="_blank" on rsslounge.setting.newWindow==1
+     * set anonymizer before url
+     * @param type the current type (image or message)
+     */
+    prepareUrls: function(type) {
+        var anonymize = function(i,link) {
+            if($(link).attr('href').indexOf(rsslounge.settings.anonymizer)!=0)
+                $(link).attr('href', rsslounge.settings.anonymizer+$(link).attr('href'));
+        };
+    
+        // images
+        if(type=='images') {
+            var imageUrls = $('#images div a.link, #images div a.images-imagelink, #images div a.images-feed');
+            if(rsslounge.settings.newWindow==true)
+                imageUrls.attr('target','_blank');
+            if(rsslounge.settings.anonymizer.length!=0)
+                imageUrls.each(anonymize);
+                
+        // messages
+        } else if(type=='messages') {
+            var messageUrls = $('#messages a.link, #messages .content a');
+            if(rsslounge.settings.newWindow==true)
+                messageUrls.attr('target','_blank');
+            if(rsslounge.settings.anonymizer.length!=0)
+                messageUrls.each(anonymize);
+        }
     }
     
 };

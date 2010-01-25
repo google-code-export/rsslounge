@@ -602,6 +602,9 @@ rsslounge.events = {
                 }
             });
         });
+        
+        // set target="_blank" for open links in new window
+        rsslounge.prepareUrls('images');
     },
     
     
@@ -729,6 +732,9 @@ rsslounge.events = {
                 }
             });
         });
+        
+        // set target="_blank" for open links in new window
+        rsslounge.prepareUrls('messages');
     },
     
     
@@ -738,7 +744,7 @@ rsslounge.events = {
     shortcuts: function() {    
         // switch and open next
         $(document).bind('keydown', 'space', function() {
-            if($.prompt.getCurrentState().length==0) {
+            if(rsslounge.events.shortcuts_enabled()) {
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
                     'close_current': true,
@@ -750,7 +756,7 @@ rsslounge.events = {
         
         // switch and open prev
         $(document).bind('keydown', 'Shift+space', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
                     'close_current': true,
@@ -761,7 +767,7 @@ rsslounge.events = {
         
         // switch next
         $(document).bind('keydown', 'n', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': false,
                     'close_current': true,
@@ -771,7 +777,7 @@ rsslounge.events = {
         
         // switch prev
         $(document).bind('keydown', 'p', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': false,
                     'close_current': true,
@@ -781,7 +787,7 @@ rsslounge.events = {
         
         // switch and open next
         $(document).bind('keydown', 'j', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
                     'close_current': true,
@@ -791,7 +797,7 @@ rsslounge.events = {
         
         // switch and open prev
         $(document).bind('keydown', 'k', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
                     'close_current': true,
@@ -802,7 +808,7 @@ rsslounge.events = {
         // open/close article
         openclose = function() {
             var current = $('#messages li.selected');
-            if($.prompt.getCurrentState().length==0 && current.length!=0)
+            if(rsslounge.events.shortcuts_enabled() && current.length!=0)
                 current.children('.content').slideToggle('medium');
         };
         $(document).bind('keydown', 'return', openclose);
@@ -812,31 +818,35 @@ rsslounge.events = {
         $(document).bind('keydown', 'm', function() {
             var current = $('#messages li.selected .mark-message, #images div.selected .mark-image');
             
-            if($.prompt.getCurrentState().length==0 && rsslounge.settings.unread==1)
+            if(rsslounge.events.shortcuts_enabled())
                 current.click();
         });
         
         // star/unstar
         $(document).bind('keydown', 's', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
         });
         
         // open target
         $(document).bind('keydown', 'v', function() {
-            if($.prompt.getCurrentState().length==0)
-                window.open($('#messages li.selected .link, #images div.selected .link').attr('href'));
+            if(rsslounge.events.shortcuts_enabled()) {
+                if(rsslounge.settings.newWindow==true)
+                    window.open($('#messages li.selected .link, #images div.selected .link').attr('href'));
+                else
+                    document.location = $('#messages li.selected .link, #images div.selected .link').attr('href');
+            }
         });
         
         // mark all as read
         $(document).bind('keydown', 'ctrl+m', function() {
-            if($.prompt.getCurrentState().length==0)
+            if(rsslounge.events.shortcuts_enabled())
                 $('#markall').click();
         });
         
         // unstarr all
         $(document).bind('keydown', 'ctrl+s', function() {
-            if($.prompt.getCurrentState().length==0) {
+            if(rsslounge.events.shortcuts_enabled()) {
                 $('#unstarrall').click();
                 return false;
             }
@@ -844,7 +854,7 @@ rsslounge.events = {
         
         // new feed
         $(document).bind('keydown', 'ctrl+n', function() {
-            if($.prompt.getCurrentState().length==0) {
+            if(rsslounge.events.shortcuts_enabled()) {
                 $('.add').click();
                 return false;
             }
@@ -945,5 +955,13 @@ rsslounge.events = {
             $(window).scrollTop(next.offset().top);
 
       
+    },
+    
+    
+    /**
+     * returns whether shortcuts are active or not
+     */
+    shortcuts_enabled: function() {
+        return $.prompt.getCurrentState().length==0 && $('#search:focus').length==0;
     }
 };

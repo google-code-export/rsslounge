@@ -59,6 +59,14 @@
             <input type="checkbox" value='1' id="firstUnread" <?PHP echo Zend_Registry::get('session')->firstUnread==1 ? 'checked="checked"' : '' ?>/>
         </li>
         <li>
+            <label><?PHP echo $this->translate('Open links in new window'); ?></label> 
+            <input type="checkbox" value='1' id="newWindow" <?PHP echo Zend_Registry::get('session')->newWindow==1 ? 'checked="checked"' : '' ?>/>
+        </li>
+        <li>
+            <label><?PHP echo $this->translate('Anonymizer URL (e.g. http://anonym.to/?)'); ?></label> 
+            <input type="text" value="<?PHP echo Zend_Registry::get('session')->anonymizer ?>" id="anonymizer" />
+        </li>
+        <li>
             <label><?PHP echo $this->translate('Activate login'); ?></label> 
             <input type="checkbox" value="1" id="activate_login" <?PHP echo strlen($this->username)>0 ? 'checked="checked"' : '' ?>/>
         </li>
