@@ -798,14 +798,15 @@ rsslounge.events = {
             
             if($.prompt.getCurrentState().length==0 && rsslounge.settings.unread==1) {
                 $('li.selected, div.selected').addClass('marking');
+                
                 rsslounge.events.shortcuts_next({
                     'open_next': false,
                     'close_current': false,
                     'down': true
                 });
+                
+                current.click();
             }
-            
-            current.click();
         });
         
         // star/unstar
