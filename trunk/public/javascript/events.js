@@ -518,6 +518,14 @@ rsslounge.events = {
                         // hide and show on unread filter
                         if(rsslounge.settings.unread==1) {
 
+                            // select next item
+                            if(img.parent('div').hasClass('selected'))
+                                rsslounge.events.shortcuts_next({
+                                    'open_next': false,
+                                    'close_current': false,
+                                    'down': true
+                                });
+                        
                             // remove marked image
                             img.parent('div').remove();
                             if($('#images').children().length == 1)
@@ -640,6 +648,14 @@ rsslounge.events = {
                     else {
                         // hide and show on unread filter
                         if(rsslounge.settings.unread==1) {
+                        
+                            // select next item
+                            if(message.parent('li').hasClass('selected'))
+                                rsslounge.events.shortcuts_next({
+                                    'open_next': false,
+                                    'close_current': false,
+                                    'down': true
+                                });
                         
                             // remove marked message
                             message.parent('li').remove();
@@ -796,17 +812,8 @@ rsslounge.events = {
         $(document).bind('keydown', 'm', function() {
             var current = $('#messages li.selected .mark-message, #images div.selected .mark-image');
             
-            if($.prompt.getCurrentState().length==0 && rsslounge.settings.unread==1) {
-                $('li.selected, div.selected').addClass('marking');
-                
-                rsslounge.events.shortcuts_next({
-                    'open_next': false,
-                    'close_current': false,
-                    'down': true
-                });
-                
+            if($.prompt.getCurrentState().length==0 && rsslounge.settings.unread==1)
                 current.click();
-            }
         });
         
         // star/unstar
