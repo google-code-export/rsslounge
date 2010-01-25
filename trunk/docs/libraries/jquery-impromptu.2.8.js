@@ -1,8 +1,8 @@
 /*
  * jQuery Impromptu
  * By: Trent Richardson [http://trentrichardson.com]
- * Version 2.7
- * Last Modified: 6/7/2009
+ * Version 2.8
+ * Last Modified: 12/18/2009
  * 
  * Copyright 2009 Trent Richardson
  * Dual licensed under the MIT and GPL licenses.
@@ -81,7 +81,7 @@
 				$.each($jqi.find('#'+ options.prefix +'states :input').serializeArray(),function(i,obj){
 					if (forminputs[obj.name] === undefined) {
 						forminputs[obj.name] = obj.value;
-					} else if (typeof forminputs[obj.name] == Array) {
+					} else if (typeof forminputs[obj.name] == Array || typeof forminputs[obj.name] == 'object') {
 						forminputs[obj.name].push(obj.value);
 					} else {
 						forminputs[obj.name] = [forminputs[obj.name],obj.value];	
@@ -123,7 +123,7 @@
 			
 			//escape key closes
 			if(key==27) {
-				removePrompt();	
+				fadeClicked();	
 			}
 			
 			//constrain tabs
