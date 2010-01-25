@@ -722,64 +722,71 @@ rsslounge.events = {
     shortcuts: function() {    
         // switch and open next
         $(document).bind('keydown', 'space', function() {
-            rsslounge.events.shortcuts_next({
-                'open_next': true,
-                'close_current': true,
-                'down': true
-            });
-            return false;
+            if($.prompt.getCurrentState().length==0) {
+                rsslounge.events.shortcuts_next({
+                    'open_next': true,
+                    'close_current': true,
+                    'down': true
+                });
+                return false;
+            }
         });
         
         // switch and open prev
         $(document).bind('keydown', 'Shift+space', function() {
-            rsslounge.events.shortcuts_next({
-                'open_next': true,
-                'close_current': true,
-                'down': false
-            });
+            if($.prompt.getCurrentState().length==0)
+                rsslounge.events.shortcuts_next({
+                    'open_next': true,
+                    'close_current': true,
+                    'down': false
+                });
         });
         
         
         // switch next
         $(document).bind('keydown', 'n', function() {
-            rsslounge.events.shortcuts_next({
-                'open_next': false,
-                'close_current': true,
-                'down': true
-            });
+            if($.prompt.getCurrentState().length==0)
+                rsslounge.events.shortcuts_next({
+                    'open_next': false,
+                    'close_current': true,
+                    'down': true
+                });
         });
         
         // switch prev
         $(document).bind('keydown', 'p', function() {
-            rsslounge.events.shortcuts_next({
-                'open_next': false,
-                'close_current': true,
-                'down': false
-            });
+            if($.prompt.getCurrentState().length==0)
+                rsslounge.events.shortcuts_next({
+                    'open_next': false,
+                    'close_current': true,
+                    'down': false
+                });
         });
         
         // switch and open next
         $(document).bind('keydown', 'j', function() {
-            rsslounge.events.shortcuts_next({
-                'open_next': true,
-                'close_current': true,
-                'down': true
-            });
+            if($.prompt.getCurrentState().length==0)
+                rsslounge.events.shortcuts_next({
+                    'open_next': true,
+                    'close_current': true,
+                    'down': true
+                });
         });
         
         // switch and open prev
         $(document).bind('keydown', 'k', function() {
-            rsslounge.events.shortcuts_next({
-                'open_next': true,
-                'close_current': true,
-                'down': false
-            });
+            if($.prompt.getCurrentState().length==0)
+                rsslounge.events.shortcuts_next({
+                    'open_next': true,
+                    'close_current': true,
+                    'down': false
+                });
         });
         
         // open/close article
         openclose = function() {
             var current = $('#messages li.selected');
-            if(current.length!=0)
+            if($.prompt.getCurrentState().length==0 && current.length!=0)
                 current.children('.content').slideToggle('medium');
         };
         $(document).bind('keydown', 'return', openclose);
@@ -789,7 +796,7 @@ rsslounge.events = {
         $(document).bind('keydown', 'm', function() {
             var current = $('#messages li.selected .mark-message, #images div.selected .mark-image');
             
-            if(rsslounge.settings.unread==1) {
+            if($.prompt.getCurrentState().length==0 && rsslounge.settings.unread==1) {
                 $('li.selected, div.selected').addClass('marking');
                 rsslounge.events.shortcuts_next({
                     'open_next': false,
@@ -803,29 +810,36 @@ rsslounge.events = {
         
         // star/unstar
         $(document).bind('keydown', 's', function() {
-            $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
+            if($.prompt.getCurrentState().length==0)
+                $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
         });
         
         // open target
         $(document).bind('keydown', 'v', function() {
-            window.open($('#messages li.selected .link, #images div.selected .link').attr('href'));
+            if($.prompt.getCurrentState().length==0)
+                window.open($('#messages li.selected .link, #images div.selected .link').attr('href'));
         });
         
         // mark all as read
         $(document).bind('keydown', 'ctrl+m', function() {
-            $('#markall').click();
+            if($.prompt.getCurrentState().length==0)
+                $('#markall').click();
         });
         
         // unstarr all
         $(document).bind('keydown', 'ctrl+s', function() {
-            $('#unstarrall').click();
-            return false;
+            if($.prompt.getCurrentState().length==0) {
+                $('#unstarrall').click();
+                return false;
+            }
         });
         
         // new feed
         $(document).bind('keydown', 'ctrl+n', function() {
-            $('.add').click();
-            return false;
+            if($.prompt.getCurrentState().length==0) {
+                $('.add').click();
+                return false;
+            }
         });
     },
     
@@ -889,29 +903,39 @@ rsslounge.events = {
         // select next
         next.addClass('selected');
         
-        // scroll down
-        if(params.open_next)
-            var contentsize = next.children('.content').length>0 ? next.children('.content').height()+50 : 0;
-        else
-            var contentsize = 35;
-        var fold = $(window).height() + $(window).scrollTop();
-        if(fold <= next.offset().top+contentsize)
-            $(window).scrollTop($(window).scrollTop()+contentsize);
-        
-        // scroll up
-        var top = $(window).scrollTop();
-        if(top >= next.offset().top + next.height())
-            $(window).scrollTop(next.offset().top);
-
-
-        
         // open next
-        if(params.open_next) {
+        var content = next.children('.content');
+        if(params.open_next && content.length!=0) {
             rsslounge.showImages(next.children('.content'));
-            next.children('.content').show();
-        }
-        
+            content.show(0, rsslounge.events.shortcuts_autoscroll);
+        } else
+            rsslounge.events.shortcuts_autoscroll();
         
     },
     
+    
+    /**
+     * autoscroll
+     */
+    shortcuts_autoscroll: function() {
+        var next = $('#images div.selected, #messages li.selected');
+        
+        // scroll: get content size
+        var contentsize = next.height();
+        
+        // scroll down
+        var fold = $(window).height() + $(window).scrollTop();
+        if(fold <= next.offset().top+contentsize)
+            if(contentsize>$(window).height())
+                $(window).scrollTop(next.offset().top);
+            else
+                $(window).scrollTop($(window).scrollTop()+contentsize);
+        
+        // scroll up
+        var top = $(window).scrollTop();
+        if(top >= next.offset().top)
+            $(window).scrollTop(next.offset().top);
+
+      
+    }
 };
