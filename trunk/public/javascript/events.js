@@ -1,6 +1,12 @@
 rsslounge.events = {
 
     /**
+     * additional amount of pixel for scrolling up or down
+     */
+    SCROLL_TOLERANCE: 20,
+    
+
+    /**
      * initialize the events of the feedlist
      */
     feedlist: function() {
@@ -922,7 +928,8 @@ rsslounge.events = {
         
         // more
         if(next.hasClass('more')) {
-            next.click();
+            if(!next.hasClass('loading'))
+                next.click();
             return;
         }
         
@@ -955,7 +962,21 @@ rsslounge.events = {
         var next = $('#images div.selected, #messages li.selected');
         
         // scroll: get content size
-        var contentsize = next.height();
+        var contentsize = next.height()+rsslounge.events.SCROLL_TOLERANCE;
+        
+        var css = new Array(
+            'padding-top',
+            'padding-bottom',
+            'border-top',
+            'border-bottom',
+            'margin-top',
+            'margin-bottom'
+        );
+        
+        $(css).each(function(i, item) {
+            var val = parseInt(next.css(item));
+            contentsize = isNaN(val) == false ? contentsize+val : contentsize;
+        });
         
         // scroll down
         var fold = $(window).height() + $(window).scrollTop();
