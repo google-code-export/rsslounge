@@ -80,20 +80,27 @@ class plugins_news_heise extends plugins_rss_feed {
             
                 $content = utf8_decode($content);
                 
-                // remove ads from entry *** don't work :(  ***
-                // $content = preg_replace("/<div(.*)Anzeige[^(<\/div>)]*<\/div>/is","",$content);
-                
                 // parse content
                 $dom = new Zend_Dom_Query($content); 
                 $text = $dom->query('.meldung_wrapper');
                 
                 $innerHTML = '';
                 
+                // convert innerHTML from DOM to string
                 // taken from http://us2.php.net/domelement (patrick smith)
                 $children = $text->current()->childNodes;
                 foreach ($children as $child) {
                     $tmp_doc = new DOMDocument();
-                    $tmp_doc->appendChild($tmp_doc->importNode($child,true));       
+                    $tmp_doc->appendChild($tmp_doc->importNode($child,true));
+                    
+                    // make relative image src absolute
+                    $images = $tmp_doc->getElementsByTagName('img');
+                    foreach($images as $image) {
+                        if($image->hasAttribute('src') && strpos($image->getAttribute('src'), 'http://')===false)
+                            $image->setAttribute('src', 'http://www.heise.de'.$image->getAttribute('src'));
+                    }
+                    
+                    // convert to text
                     $innerHTML .= @$tmp_doc->saveHTML();
                 } 
                 
