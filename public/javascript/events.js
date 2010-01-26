@@ -490,6 +490,14 @@ rsslounge.events = {
      * initialize the events for the image list
      */
     images: function() {
+        // select image on click
+        $('#images div').unbind('click');
+        $('#images div').click(function() {
+            $('#images div.selected, #messages li.selected').removeClass('selected');
+            $(this).addClass('selected');
+        });
+    
+        // mark image as read
         $('.mark-image').unbind('click');
         $('.mark-image').click(function () {
             // clone settings
@@ -563,6 +571,8 @@ rsslounge.events = {
             
         });
         
+        
+        // starr image
         $('.starr-image').unbind('click');
         $('.starr-image').click(rsslounge.starItem);
         
@@ -623,6 +633,12 @@ rsslounge.events = {
             $(this).parent('li').addClass('selected');
         });
         
+        // select message on link click
+        $('#messages li .link').unbind('click');
+        $('#messages li .link').click(function() {
+            $('#images div.selected, #messages li.selected').removeClass('selected');
+            $(this).parent('li').addClass('selected');
+        });
         
         // mark a single message
         $('.mark-message').unbind('click');
