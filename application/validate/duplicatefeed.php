@@ -67,7 +67,7 @@ class application_validate_duplicatefeed extends Zend_Validate_Abstract {
             $select->where("id!=?",$this->id);
         
         if($feeds->fetchAll($select)->count()>0) {
-              $this->_error();
+              $this->_error(application_validate_duplicatefeed::ALREADY_EXISTS);
               return false;
         }
         

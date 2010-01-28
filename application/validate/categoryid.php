@@ -39,7 +39,7 @@ class application_validate_categoryid extends Zend_Validate_Abstract {
         $categories = new application_models_categories();
             
         if($categories->fetchAll($categories->select()->where("id=?",$value))->count()==0) {
-              $this->_error();
+              $this->_error(application_validate_categoryid::NOT_EXISTS);
               return false;
         }
         

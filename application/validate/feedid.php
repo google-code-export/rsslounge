@@ -36,7 +36,7 @@ class application_validate_feedid extends Zend_Validate_Abstract {
         $feeds = new application_models_feeds();
             
         if($feeds->fetchAll($feeds->select()->where("id=?",$value))->count()==0) {
-              $this->_error();
+              $this->_error(application_validate_feedid::NOT_EXISTS);
               return false;
         }
         
