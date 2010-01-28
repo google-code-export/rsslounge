@@ -189,7 +189,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'read_control' => false
         );
         $optionsFrontend = array(
-            'caching'       => Zend_Registry::get('config')->cache->enable=="1"
+            'caching'                 => Zend_Registry::get('config')->cache->enable=="1",
+            'automatic_serialization' => true
         );
         
         $this->cache = Zend_Cache::factory('Core', 'File', $optionsFrontend, $optionsBackend);

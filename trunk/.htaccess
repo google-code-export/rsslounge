@@ -4,7 +4,7 @@ SetEnv APPLICATION_ENV development
 
 # show errors
 #php_flag register_globals off
-#php_flag display_errors off
+#php_flag display_errors on
 
 # set cache expire for output
 <IfModule mod_expires.c>
