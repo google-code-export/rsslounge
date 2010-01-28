@@ -32,7 +32,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase {
      */
     public function setUp() {
         $this->model = new application_models_settings();
-        $this->db = $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
+        $this->db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
         
         // base settings for testing
         $this->settings = array(

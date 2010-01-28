@@ -196,8 +196,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             $now = Zend_Date::now();
             $last = new Zend_Date();  
             $last->set(Zend_Registry::get('session')->lastrefresh,Zend_Date::TIMESTAMP);
-            $diff = $now->sub($last);
-            
+            $diff = $now->sub($last)->toValue();
             $diff = (Zend_Registry::get('session')->refresh*60) - $diff;
             
             // set timeout 0 if refresh intervall was exceed

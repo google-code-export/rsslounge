@@ -34,7 +34,7 @@ class application_validate_source extends Zend_Validate_Abstract {
     public function isValid($value) {
         
         if(Zend_Controller_Action_HelperBroker::getStaticHelper('pluginloader')->getPlugin($value)===false) {
-              $this->_error();
+              $this->_error(application_validate_source::NOT_EXISTS);
               return false;
         }
         
