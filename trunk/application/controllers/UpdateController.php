@@ -144,11 +144,12 @@ class UpdateController extends Zend_Controller_Action {
      * @return void
      */
     public function demoresetAction() {
-        die("only for rsslounge.aditu.de - you will destroy all your data with this action");
-        exit();
-        return;
+        if(Zend_Registry::get('config')->demomode!="1") {
+            die("only for rsslounge.aditu.de - you will destroy all your data with this action");
+            exit();
+            return;
+        }
         
-        /*
         // delete all files
         $folders = array(
             Zend_Registry::get('config')->thumbnails->path,
@@ -188,7 +189,6 @@ class UpdateController extends Zend_Controller_Action {
         
         // update data
         $this->_forward('silent');
-        */
     }
 }
 
