@@ -91,7 +91,8 @@ class SettingsController extends Zend_Controller_Action {
     private function saveLogin($username, $password) {
     
         // for demo application
-        // return;
+        if(Zend_Registry::get('config')->demomode=="1")
+            return;
         
         $config = file_get_contents(CONFIG_PATH);
         if(strlen($username)!=0)

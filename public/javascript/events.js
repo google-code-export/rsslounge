@@ -612,7 +612,7 @@ rsslounge.events = {
                         if(response.more==false)
                             $('#images div.more').hide();
                             
-                        rsslounge.events.messages();
+                        rsslounge.events.images();
                     }
                     $('#images div.more').removeClass('loading');
                 }
@@ -634,9 +634,12 @@ rsslounge.events = {
             var content = $(this).parent('li').children(".content");
             content.slideToggle('medium');
             rsslounge.showImages(content);
-            
-            $('#messages li.selected').removeClass('selected');
-            $(this).parent('li').addClass('selected');
+        });
+        
+        $('#messages li').unbind('click');
+        $('#messages li').click(function () {
+            $('#images div.selected, #messages li.selected').removeClass('selected');
+            $(this).addClass('selected');
         });
         
         // select message on link click
@@ -991,7 +994,6 @@ rsslounge.events = {
         if(top >= next.offset().top)
             $(window).scrollTop(next.offset().top);
 
-      
     },
     
     
