@@ -366,6 +366,9 @@ rsslounge.events = {
                 data: { 'items': rsslounge.getVisibleItems({mark:true}) },
                 dataType: 'json',
                 success: function(response){
+                    // unfocus element
+                    $('#markall').blur();
+                    
                     // load next category or feed if no more unread items in selection
                     if(rsslounge.settings.unread==1) {
                         // no more unread items: select all
@@ -402,6 +405,9 @@ rsslounge.events = {
                 data: { 'items': rsslounge.getVisibleItems({unstarr:true}) },
                 dataType: 'json',
                 success: function(response){
+                    // unfocus element
+                    $('#unstarrall').blur();
+                    
                     // refresh only on starred filter
                     if(rsslounge.settings.starred==1)
                         rsslounge.refreshList();
