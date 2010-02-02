@@ -273,7 +273,7 @@ class FeedsTest extends PHPUnit_Framework_TestCase {
         
         // load icon by htmlurl page
         $this->model->saveIcon( $this->model->find(2)->current() );
-        $this->assertEquals($this->model->find(2)->current()->icon, md5('http://blog.aditu.de/favicon.ico') . '.ico');
+        $this->assertEquals($this->model->find(2)->current()->icon, md5('http://blog.aditu.de/wp-content/themes/blog.aditu.de/favicon.ico') . '.ico');
         
         // use plugin icon (invalid url, no htmlurl)
         $this->model->saveIcon( $this->model->find(3)->current() );
