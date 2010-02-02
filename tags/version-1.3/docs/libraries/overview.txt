@@ -1,0 +1,38 @@
+Used libraries:
+---------------
+
+Zend Framework 1.10.0
+http://framework.zend.com/
+
+SimplePie 1.2
+http://simplepie.org/
+
+WideImage 9.09.04
+http://wideimage.sourceforge.net/
+
+jQuery 1.4
+http://jquery.com/
+
+jQuery UI 1.7.2
+http://jqueryui.com/
+
+jQuery Impromptu 2.8
+http://trentrichardson.com/Impromptu/index.php
+
+Date Picker 07/03/2009
+http://www.eyecon.ro/datepicker/
+
+jGrowl 1.2.0
+http://www.stanlemon.net/projects/jgrowl.html#options
+
+Ajax Upload 3.5
+http://valums.com/ajax-upload/
+
+Tipsy 0.1.2
+http://onehackoranother.com/projects/jquery/tipsy/
+
+htmLawed 1.1.8.1
+http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/index.php
+
+Javascript jQuery Hotkeys Plugin 0.7.9
+http://code.google.com/p/js-hotkeys/
