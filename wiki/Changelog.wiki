@@ -1,6 +1,29 @@
 #labels Featured
 =Changelog=
 
+==Version 1.3==
+  
+  * New: [Shortcuts] available
+  * New Setting: open links in new window
+  * New Setting: define an anonymizer service
+  * More detailed debug log messages for feed updates
+  * Set a bigger timelimit for multimedia feeds which nees more time for fetching images
+  * New Config Params for enable/disable cache
+  * New Config Params for cache pathes
+  * Impromptu update from 2.7 to 2.8
+  * Wideimage update from 1.0 beta 2 to 9.09.04
+  * Zend Framework update from 1.9.7 to 1.10.1
+  * Bugfix: show correct amount of starred items after mark a single item (issue 10)
+  * Bugfix: using the bookmarklet for adding feeds will now take over the complete url (issue 9)
+  * Bugfix: wrong title for mark as read removed (issue 8)
+  * Bugfix: seleting correct language in installation script
+  * Bugfix: get correct installed database version
+  * Bugfix: on some rare situations the settings will not be written back correctly on first run after installation
+  * Bugfix: correct image frame height in safari
+  * Bugfix: images in entries by heise are working now
+  * Bugfix: mark photos as read which was loaded by "more" will now work correctly
+
+  
 ==Version 1.2==
 
   * Zend Framework update from 1.9.6 to 1.9.7

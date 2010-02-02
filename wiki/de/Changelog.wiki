@@ -1,6 +1,29 @@
 #labels Featured
 =Changelog=
 
+==Version 1.3==
+  
+  * Neu: Tastenkürzel ([Shortcuts]) sind verfügbar
+  * Neue Einstellung: Links in neuem Fenster öffnen
+  * Neue Einstellung: ein Anonymisierungsdienst kann festgelegt werden
+  * Genauere Debug Log Meldungen für Feed Aktualisierungen
+  * Ein größeres Zeitlimit wird für Multimedia Feeds gesetzt, welche mehr Zeit zum Sammeln der Bilder benötigen
+  * Neuer Konfigurationsparameter um das Caching zu aktivieren/deaktivieren
+  * Neuer Konfigurationsparameter um die Cache Pfade zu setzen
+  * Impromptu Aktualisierung von 2.7 auf 2.8
+  * Wideimage Aktualisierung von 1.0 beta 2 auf 9.09.04
+  * Zend Framework Aktualisierung von 1.9.7 auf 1.10.1
+  * Bugfix: Korrekte Anzahl an vorgemerkte Einträge, nachdem ein einzelner Eintrag als gelesen markiert wurde (issue 10)
+  * Bugfix: die Nutzung des Bookmarklet zum Hinzufügen von Feeds übernimmt nun die komplette URL (issue 9)
+  * Bugfix: falscher Titel für "als gelesen markieren" entfernt (issue 8)
+  * Bugfix: korrekte Vorauswahl der Sprache im Installationsskript
+  * Bugfix: korrektes Auslesen der aktuellen Datenbankversion
+  * Bugfix: in einigen seltenen, fehlerhaften Fällen, werden bei der ersten Nutzung die Einstellungen nun korrekt gespeichert
+  * Bugfix: korrekte Höhe für das Bildframe unter Safari
+  * Bugfix: Bilder in Einträgen des Heise Feeds werden nun angezeigt
+  * Bugfix: das Markieren von Fotos, die über "mehr" geladen wurden, funktioniert nun korrekt
+
+  
 ==Version 1.2==
 
   * Zend Framework von 1.9.6 auf 1.9.7 aktualisiert

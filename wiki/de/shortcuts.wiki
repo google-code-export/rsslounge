@@ -1,5 +1,5 @@
 #labels Featured
-=Tastenkürzel=
+=Shortcuts=
 
 Seit Version 1.3 unterstützt rsslounge Tastenkürzel, die den Tastenkürzel des Google Readers sehr ähnlich sind.
 
