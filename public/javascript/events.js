@@ -16,14 +16,31 @@ rsslounge.events = {
         //
         
         // add new feed
-        $('#showhide .add').unbind('click');
-        $('#showhide .add').click(function() {
+        $('#feedsmenue .add').unbind('click');
+        $('#feedsmenue .add').click(function() {
             rsslounge.dialogs.addEditFeed('');
         });
         
+        // date filter
+        $('#feedsmenue .date').click(function () {
+            // create calendar
+            rsslounge.calendar();
+        
+            $(this).toggleClass('active');
+            $('#calendar').toggle();
+            
+            if($(this).hasClass('active'))
+                rsslounge.settings.dateFilter = 1;
+            else
+                rsslounge.settings.dateFilter = 0;
+            
+            if(rsslounge.settings.dateEnd.length!=0)
+                rsslounge.refreshList();
+        });
+        
         // show all feeds
-        $('#showhide .show').unbind('click');
-        $('#showhide .show').click(function() {
+        $('#feedsmenue .show').unbind('click');
+        $('#feedsmenue .show').click(function() {
             $('#feeds-list h3 a').addClass('up');
             $('#feeds-list ul').slideDown('fast');
 
@@ -32,8 +49,8 @@ rsslounge.events = {
         });
         
         // hide all feeds
-        $('#showhide .hide').unbind('click');
-        $('#showhide .hide').click(function() {
+        $('#feedsmenue .hide').unbind('click');
+        $('#feedsmenue .hide').click(function() {
             $('#feeds-list h3 a').removeClass('up');
             $('#feeds-list ul').slideUp('fast');
             
@@ -220,17 +237,17 @@ rsslounge.events = {
         $('#feeds-list .search a').unbind('click');
         $('#feeds-list .search a').click(function() {
             // set search remove button
-            $('#actions .search .search-term').html($('#search').val());
-            $('#actions .search').show();
+            $('div.search .search-term').html($('#search').val());
+            $('div.search').show();
             
             // execute search
             rsslounge.settings.search = $('#search').val();
             rsslounge.refreshList();
         });
         
-        $('#actions .search a').unbind('click');
-        $('#actions .search a').click(function() {
-            $('#actions .search').hide();
+        $('div.search a').unbind('click');
+        $('div.search a').click(function() {
+            $('div.search').hide();
             rsslounge.settings.search = '';
             rsslounge.refreshList();
         });
@@ -415,85 +432,30 @@ rsslounge.events = {
             });
         });
         
-        // date filter
-        $('#view .date').click(function () {
-            $(this).toggleClass('active');
-            $('#calendar').toggle();
-            if($(this).hasClass('active'))
-                rsslounge.settings.dateFilter = 1;
-            else
-                rsslounge.settings.dateFilter = 0;
-            
-            if(rsslounge.settings.dateEnd.length!=0)
-                rsslounge.refreshList();
+        // sort field
+        $('#sort').selectmenu({width:100});
+        $('#unread').selectmenu({width:130});
+        $('#view').selectmenu({width:170});
+        
+        // select field events
+        
+        // sort
+        $('#sort').change(function () {
+            rsslounge.settings.sort = $(this).val();
+            rsslounge.refreshList();
         });
         
-        // all or unread
-        $('#view .all').click(function () {
-            if($(this).hasClass('active')==false) {
-                $('#view .unread').toggleClass('active');
-                $('#view .all').toggleClass('active');
-                rsslounge.settings.unread = 0;
-                rsslounge.refreshList();
-            }
-        });
-        
-        $('#view .unread').click(function () {
-            if($(this).hasClass('active')==false) {
-                $('#view .unread').toggleClass('active');
-                $('#view .all').toggleClass('active');
-                rsslounge.settings.unread = 1;
-                rsslounge.refreshList();
-            }
+        // unread
+        $('#unread').change(function () {
+            rsslounge.settings.unread = $(this).val();
+            rsslounge.refreshList();
         });
         
         // view
-        $('#view .images').click(function () {
-            if($(this).hasClass('active')==false) {
-                $('#view .messages').removeClass('active');
-                $('#view .both').removeClass('active');
-                $('#view .images').addClass('active');
-                
-                // set current view
-                rsslounge.settings.view = 'multimedia';
-                
-                // set feed visibility
-                rsslounge.setFeedVisibility();
-                
-                rsslounge.refreshList();
-            }
-        });
-
-        $('#view .messages').click(function () {
-            if($(this).hasClass('active')==false) {
-                $('#view .messages').addClass('active');
-                $('#view .both').removeClass('active');
-                $('#view .images').removeClass('active');
-                
-                // set current view
-                rsslounge.settings.view = 'messages';
-                
-                // set feed visibility
-                rsslounge.setFeedVisibility();
-                
-                rsslounge.refreshList();
-            }
-        });
-        
-        $('#view .both').click(function () {
-            if($(this).hasClass('active')==false) {
-                $('#view .messages').removeClass('active');
-                $('#view .images').removeClass('active');
-                $('#view .both').addClass('active');
-                
-                // set current view
-                rsslounge.settings.view = 'both';
-                
-                // set feed visibility
-                rsslounge.setFeedVisibility();
-                
-                rsslounge.refreshList();
-            }
+        $('#view').change(function () {
+            rsslounge.settings.view = $(this).val();
+            rsslounge.setFeedVisibility();
+            rsslounge.refreshList();
         });
     },
     
@@ -763,6 +725,12 @@ rsslounge.events = {
                 }
             });
         });
+        
+        // rate a single message
+        $('.rateup-message').unbind('click');
+        $('.rateup-message').click(rsslounge.rateItem);
+        $('.ratedown-message').unbind('click');
+        $('.ratedown-message').click(rsslounge.rateItem);
         
         // set target="_blank" for open links in new window
         rsslounge.prepareUrls('messages');

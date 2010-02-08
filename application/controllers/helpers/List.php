@@ -101,7 +101,7 @@ class Helper_List extends Zend_Controller_Action_Helper_Abstract {
         
         // validate settings
         if(is_array($settingsModel->validate($settings)))
-            throw new Exception(Zend_Registy::get('language')->translate('an error occured'));
+            throw new Exception(Zend_Registry::get('language')->translate('an error occured'));
         
         // load messages
         if($settings['view']=='both' || $settings['view']=='messages') {

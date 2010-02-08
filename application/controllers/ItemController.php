@@ -259,6 +259,42 @@ class ItemController extends Zend_Controller_Action {
     
     
     /**
+     * rate up
+     *
+     * @return void
+     */
+    public function rateAction() {
+        // get item
+        $item = $this->getItem();
+        if($item===false)
+            $this->_helper->json(false);
+        
+        // invalid learn target
+        $to = $this->getRequest()->getParam('to');
+        if($to!='up' && $to!='down')
+            $this->_helper->json(false);
+        
+        // dont learn twice
+        if($item->rated==$to)
+            $this->_helper->json(true);
+        
+        // learn bayes, learn
+        $bayes = Zend_Controller_Action_HelperBroker::getStaticHelper('bayes');
+        $bayes->learn(array(
+            'text'        => $item->title . ' ' . $item->content, 
+            'undo'        => ($to=='up' && $item->rated=='down') || ($to=='down' && $item->rated=='up'),
+            'interesting' => $to=='up'
+        ));
+        
+        $item->rated=$to;
+        $item->rating = $to=='up' ? 1 : 0;
+        $item->save();
+        
+        $this->_helper->json(true);
+    }
+    
+    
+    /**
      * list more items
      *
      * @return array with items

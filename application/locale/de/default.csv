@@ -42,7 +42,7 @@ Database|Datenbank
 #
 # Update
 #
-The current rsslounge database is out of date. Click the button below for updating it.|Die aktuelle rsslounge Datenbank ist nicht mehr aktuell. Bitte den untenstehenden Button klicken, um die Datenbank zu aktualisieren.
+The current rsslounge database is out of date. Click the button below for updating it.|Die verwendete rsslounge Datenbank ist nicht mehr aktuell. Bitte den untenstehenden Button klicken, um die Datenbank zu aktualisieren.
 
 
 
@@ -65,6 +65,7 @@ all|alle
 only unread|nur ungelesene
 only images|nur Bilder
 only messages|nur Nachrichten
+sort by rating|nach Rating
 images and messages|Bilder und Nachrichten
 add new feed|neues Feed
 starred items|Markierte Eintr&auml;ge
@@ -82,7 +83,9 @@ This application doesn't support the Internet Explorer. Please install a Gecko o
 unread items|ungelesene Eintr&auml;ge
 read items|gelesene Eintr&auml;ge
 feeds|Feeds
-
+rating|Bewertung
+set interesting|als interessant markieren
+set boring|als langweilig markieren
 
 #
 # Validation
@@ -169,10 +172,11 @@ Optional: enter a regular expression (preg_match), only entries which match this
 No valid date given|kein g&uuml;ltiges Datum
 Only true or false allowed|nur wahr oder falsch erlaubt
 Only both, multimedia, message allowed|Nur beides, Bilder und Nachrichten erlaubt
+Only date or rating allowed|Nur Datum oder Bewertung erlaubt
 No items found|Keine Eintr&auml;ge gefunden
 more|mehr
 starr|vormerken
-
+no title|kein Titel
 
 #
 # opml error

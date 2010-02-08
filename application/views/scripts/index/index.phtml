@@ -35,6 +35,10 @@
     <!-- js hotkeys -->
     <script type="text/javascript" src="javascript/jquery.hotkeys.min.js"></script>
     
+    <!-- ui.selectmenu -->
+    <script type="text/javascript" src="javascript/ui.selectmenu.js"></script>
+    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/ui.selectmenu.css" />
+    
     <!-- rsslounge -->
     <script type="text/javascript" src="javascript/base.js"></script>
     <script type="text/javascript" src="javascript/events.js"></script>
@@ -89,20 +93,29 @@
             
             <!-- top filter settings -->
             <div id="filter">
+            
                 <ul id="actions">
                     <li><input type="button" value="<?PHP echo $this->translate('mark all as read'); ?>" id="markall" /></li>
                     <li><input type="button" value="<?PHP echo $this->translate('unstarr all'); ?>" id="unstarrall" /></li>
-                    <li class="search"><?PHP echo $this->translate('Search for'); ?> '<span class="search-term"></span>' <a title="<?PHP echo $this->translate('remove search'); ?>"><span><?PHP echo $this->translate('remove search'); ?></span></a></li>
                 </ul>
                 
-                <ul id="view">
-                    <li><a class="date <?PHP if(Zend_Registry::get('session')->dateFilter==1) echo 'active' ?>"><span><?PHP echo $this->translate('date'); ?></span></a></li>
-                    <li><a class="all <?PHP if(Zend_Registry::get('session')->unread==0) echo 'active' ?>"><?PHP echo $this->translate('all'); ?></a></li>
-                    <li><a class="unread <?PHP if(Zend_Registry::get('session')->unread==1) echo 'active' ?>"><?PHP echo $this->translate('only unread'); ?></a></li>
-                    <li><a class="images <?PHP if(Zend_Registry::get('session')->view=='multimedia') echo 'active' ?>" title="<?PHP echo $this->translate('only images'); ?>"><span><?PHP echo $this->translate('only images'); ?></span></a></li>
-                    <li><a class="messages <?PHP if(Zend_Registry::get('session')->view=='messages') echo 'active' ?>" title="<?PHP echo $this->translate('only messages'); ?>"><span><?PHP echo $this->translate('only messages'); ?></span></a></li>
-                    <li><a class="both <?PHP if(Zend_Registry::get('session')->view=='both') echo 'active' ?>" title="<?PHP echo $this->translate('images and messages'); ?>"><span><?PHP echo $this->translate('images and messages'); ?></span></a></li>
-                </ul>
+                <div id="filter-options">
+                    <select name="sort" id="sort">
+                        <option value="date" <?PHP if(Zend_Registry::get('session')->sort=='date') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('date'); ?></option>
+                        <option value="rating" <?PHP if(Zend_Registry::get('session')->sort=='rating') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('rating'); ?></option>
+                    </select>
+
+                    <select name="unread" id="unread">
+                        <option value="0" <?PHP if(Zend_Registry::get('session')->unread==0) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('all'); ?></option>
+                        <option value="1" <?PHP if(Zend_Registry::get('session')->unread==1) : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('only unread'); ?></option>
+                    </select>
+                    
+                    <select name="view" id="view">
+                        <option value="both" <?PHP if(Zend_Registry::get('session')->view=='both') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('images and messages'); ?></option>
+                        <option value="messages" <?PHP if(Zend_Registry::get('session')->view=='messages') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('only messages'); ?></option>
+                        <option value="multimedia" <?PHP if(Zend_Registry::get('session')->view=='multimedia') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('only images'); ?></option>
+                    </select>
+                </div>
             </div>
             
             
@@ -117,24 +130,30 @@
     <!-- feed navigation -->
     <div id="feeds">
     
-        <!-- calendar filter -->
-        <div id="calendar">
-        
-        </div>
-    
         <!-- add show hide feeds -->
-        <ul id="showhide">
+        <ul id="feedsmenue">
             <li><a class="add"><span><?PHP echo $this->translate('add new feed'); ?></span></a></li>
+            <li><a class="date <?PHP if(Zend_Registry::get('session')->dateFilter==1) echo 'active' ?>"><span><?PHP echo $this->translate('date'); ?></span></a></li>
             <li><a class="show" title="<?PHP echo $this->translate('Show all Feeds'); ?>"><span><?PHP echo $this->translate('Show all Feeds'); ?></span></a></li>
             <li><a class="hide" title="<?PHP echo $this->translate('Hide all Feeds'); ?>"><span><?PHP echo $this->translate('Hide all Feeds'); ?></span></a></li>
         </ul>
 
-
+        <!-- calendar filter -->
+        <div id="calendar">
+        
+        </div>
 
         <!-- feed list -->
         <ul id="feeds-list">
             <?PHP echo $this->render("index/feedlist." . Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()); ?>
         </ul>
+        
+        <!-- search remove field -->
+        <div class="search">
+            <?PHP echo $this->translate('Search for'); ?> '<span class="search-term"></span>' <a title="<?PHP echo $this->translate('remove search'); ?>">
+            <span><?PHP echo $this->translate('remove search'); ?></span></a>
+        </div>
+        
         
         <!-- progressbar -->
         <div id="progress">
