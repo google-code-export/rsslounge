@@ -1,23 +1,21 @@
--- phpMyAdmin SQL Dump
--- version 3.2.0.1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 19. August 2009 um 09:44
--- Server Version: 5.1.37
--- PHP-Version: 5.3.0
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Datenbank: `rsslounge`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `b8wordlist`
+--
+
+CREATE TABLE IF NOT EXISTS `b8wordlist` (
+  `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `count` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`token`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -31,8 +29,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `position` (`position`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -63,12 +60,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
   KEY `dirtyicon` (`dirtyicon`),
   KEY `lastrefresh` (`lastrefresh`),
   KEY `error` (`error`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Daten für Tabelle `feeds`
---
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -86,18 +78,15 @@ CREATE TABLE IF NOT EXISTS `items` (
   `datetime` datetime NOT NULL,
   `uid` varchar(255) NOT NULL,
   `link` text NOT NULL,
+  `rating` float NOT NULL,
+  `rated` enum('up','down') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `feed` (`feed`),
   KEY `uid` (`uid`),
   KEY `unread` (`unread`),
   KEY `starred` (`starred`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Daten für Tabelle `items`
---
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=636 ;
 
 -- --------------------------------------------------------
 
@@ -113,12 +102,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `feed` (`feed`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Daten für Tabelle `messages`
---
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 
 -- --------------------------------------------------------
 
@@ -132,11 +116,6 @@ CREATE TABLE IF NOT EXISTS `settings` (
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `settings`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -148,13 +127,31 @@ CREATE TABLE IF NOT EXISTS `version` (
   KEY `version` (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+
+
+
+
+
+
+
+
+
+--
+-- Daten für Tabelle `b8wordlist`
+--
+
+INSERT INTO `b8wordlist` (`token`, `count`) VALUES
+('bayes*dbversion', '2'),
+('bayes*texts.ham', '1'),
+('another', '1 0 100208'),
+('bayes*texts.spam', '1'),
+('bayes', '0 1 100208'),
+('learn', '1 1 100208');
+
+
 --
 -- Daten für Tabelle `version`
 --
 
 INSERT INTO `version` (`version`) VALUES
-('1');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+('2');

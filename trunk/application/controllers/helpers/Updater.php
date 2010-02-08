@@ -56,6 +56,9 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         if(!function_exists('htmLawed'))
             require(Zend_Registry::get('config')->includePaths->library . '/htmLawed.php');
         
+        // prepare bayes classifier
+        $bayes = Zend_Controller_Action_HelperBroker::getStaticHelper('bayes');
+        
         // insert new items in database
         $logger->log('start item fetching', Zend_Log::DEBUG);
         $itemsModel = new application_models_items();
@@ -106,7 +109,8 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     'starred'      => 0,
                     'datetime'     => $item->getDate(),
                     'uid'          => $item->getId(),
-                    'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*"))
+                    'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*")),
+                    'rating'       => $bayes->classify($content)
                 );
             $logger->log('item in database inserted', Zend_Log::DEBUG);
             

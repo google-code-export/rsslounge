@@ -29,14 +29,7 @@ var rsslounge = {
      */
     init: function(newfeed) {
         $(document).ready(function(){
-            $('#header h1').click(function() {
-                rsslounge.setFeedVisibility();
-                rsslounge.refreshList();
-            });
-        
-            // create calendar
-            rsslounge.calendar();
-            
+       
             // register events
             rsslounge.events.header();
             rsslounge.events.feedlist();
@@ -94,24 +87,25 @@ var rsslounge = {
      * initialize the calendar
      */
     calendar: function() {
-        $('#calendar').DatePicker({
-            flat: true,
-            date: [],
-            mode: 'range',
-            starts: 1,
-            onChange: function(date) {
-                if(date[0]=="NaN-NaN-NaN")
-                    return;
-                if(!rsslounge.calendarPick) {
-                    rsslounge.calendarPick = true;
-                } else {
-                    rsslounge.settings.dateStart = date[0];
-                    rsslounge.settings.dateEnd = date[1];
-                    rsslounge.refreshList();
-                    rsslounge.calendarPick = false;
+        if($('#calendar').html().trim().length==0)
+            $('#calendar').DatePicker({
+                flat: true,
+                date: [],
+                mode: 'range',
+                starts: 1,
+                onChange: function(date) {
+                    if(date[0]=="NaN-NaN-NaN")
+                        return;
+                    if(!rsslounge.calendarPick) {
+                        rsslounge.calendarPick = true;
+                    } else {
+                        rsslounge.settings.dateStart = date[0];
+                        rsslounge.settings.dateEnd = date[1];
+                        rsslounge.refreshList();
+                        rsslounge.calendarPick = false;
+                    }
                 }
-            }
-        });
+            });
     },
     
     
@@ -431,6 +425,35 @@ var rsslounge = {
     
     
     /**
+     * rate an item
+     */
+    rateItem: function () {
+            var current = $(this);
+            
+            $.ajax({
+            type: "POST",
+            url: "item/rate",
+            data: { 
+                'id': current.parents('li').attr('id').substr(5),
+                'to': current.hasClass('rateup-message') ? 'up' : 'down'
+            },
+            dataType: 'json',
+            success: function(response){
+                    // error
+                    if(typeof response.error != 'undefined')
+                        rsslounge.showError(response.error);
+                    
+                    // success
+                    else {
+                        current.parents('.rate').children('.active').removeClass('active');
+                        current.addClass('active');
+                    }
+                }
+            });
+    },
+    
+    
+    /**
      * save open categories
      */
     saveOpenCategories: function() {
@@ -469,9 +492,9 @@ var rsslounge = {
      * and select all feeds)
      */
     showAllItems: function() {
+        
         // select all
-        $('#view .unread').toggleClass('active');
-        $('#view .all').toggleClass('active');
+        $('#unread').selectmenu('value',0);
         rsslounge.settings.unread = 0;
         
         // load all

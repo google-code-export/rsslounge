@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $version = "1.3";
+    public $version = "1.4";
     
     
     /**
@@ -22,7 +22,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $dbversion = "1";
+    public $dbversion = "2";
     
     
     /**
@@ -313,12 +313,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     protected function initializeSessionValue($name, $default) {
         // get database settings object
         $settings = new application_models_settings();
-
+    
         // get value from database
         $result = $settings->fetchAll(
                             $settings->select()
                                      ->where('name=?',$name));
-        
+                                    
         // value found?
         if($result->count()>0) {
             return $result->current()->value;
