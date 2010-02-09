@@ -86,6 +86,11 @@ feeds|Feeds
 rating|Bewertung
 set interesting|als interessant markieren
 set boring|als langweilig markieren
+first new|zuerst Neues
+first old|zuerst Altes
+first boring|zuerst Langweiliges
+first interesting|zuerst Interessantes
+
 
 #
 # Validation

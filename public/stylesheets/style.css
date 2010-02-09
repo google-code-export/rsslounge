@@ -676,8 +676,8 @@ div.search a {
     #filter #filter-options {
         position:absolute;
         left:100%;
-        margin-left:-450px;
-        width:450px;
+        margin-left:-480px;
+        width:480px;
         
     }
 
@@ -976,10 +976,8 @@ div.search a {
         border:0;
         left:100%;
         top:0px;
-        width:184px;
         height:29px;
         display:block;
-        margin-left:-194px;
         text-align:right;
         z-index:2;
     }
@@ -987,6 +985,8 @@ div.search a {
         #messages span.rating {
             background:url(images/rating.png) repeat-y right;
             height:100%;
+            width:100px;
+            margin-left:-110px;
         }
         
         #messages span.rate {

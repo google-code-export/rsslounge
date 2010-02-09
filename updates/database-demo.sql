@@ -1,30 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 3.2.0.1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 19. September 2009 um 19:01
--- Server Version: 5.1.37
--- PHP-Version: 5.3.0
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- alte Tabellen loeschen
+DROP TABLE `categories`, `feeds`, `items`, `messages`, `settings`, `version`, `b8wordlist`;
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Datenbank: `rsslounge`
---
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `categories`
---
-
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
@@ -33,21 +11,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   KEY `position` (`position`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
---
--- Daten für Tabelle `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `position`) VALUES
-(-1, 'unkategorisiert', 0),
-(1, 'Blogs', 1),
-(2, 'Images', 2);
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `feeds`
---
-
 CREATE TABLE IF NOT EXISTS `feeds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source` varchar(200) NOT NULL,
@@ -73,24 +37,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
   KEY `error` (`error`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
---
--- Daten für Tabelle `feeds`
---
-
-INSERT INTO `feeds` (`id`, `source`, `url`, `category`, `priority`, `favicon`, `filter`, `name`, `position`, `icon`, `multimedia`, `dirtyicon`, `htmlurl`, `lastrefresh`, `error`) VALUES
-(1, 'plugins_rss_feed', 'http://blog.aditu.de/feed', 1, 1, '', '', 'Tobis Blog', 0, '0b832c11c1127f5bcf9011ebe7d98807.ico', 0, 1, 'http://blog.aditu.de/', 1253379409, 0),
-(2, 'plugins_images_deviantart', 'SSilence', 2, 3, '', '', 'SSilence', 0, 'a54d65cc8768f644533b8853e3dff821.png', 1, 1, 'http://browse.deviantart.com/?order=5&amp;q=by:SSilence', 1253379423, 0),
-(3, 'plugins_images_visualizeus', '', 2, 2, '', '', 'vi.sualize.us', 2, 'd1e9f2ee7385eed7f85bae612ad9f8a7.ico', 1, 1, 'http://vi.sualize.us/popular', 1253379449, 0),
-(7, 'plugins_rss_feed', 'http://www.ftd.de/rss2/', -1, 2, '', '', 'FTD', 1, '78ae7a488905806a06facd735c3d73b9.ico', 0, 1, 'http://www.ftd.de/rss2/', 1253379658, 0),
-(5, 'plugins_images_deviantartfavs', 'SSilence', 2, 3, '', '', 'SSilence Favorites', 1, 'a54d65cc8768f644533b8853e3dff821.png', 1, 1, 'http://browse.deviantart.com/?order=5&amp;q=favby:SSilence', 1253379569, 0),
-(6, 'plugins_rss_feed', 'http://rss.cnn.com/rss/cnn_topstories.rss', -1, 1, '', '', 'CNN', 0, '9b0df61a6b6bde574e83b3b99f2da13c.ico', 0, 1, 'http://www.cnn.com/?eref=rss_topstories', 1253379611, 0);
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `items`
---
-
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
@@ -101,6 +48,8 @@ CREATE TABLE IF NOT EXISTS `items` (
   `datetime` datetime NOT NULL,
   `uid` varchar(255) NOT NULL,
   `link` text NOT NULL,
+  `rating` float NOT NULL,
+  `rated` enum('up','down') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `feed` (`feed`),
   KEY `uid` (`uid`),
@@ -109,13 +58,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   KEY `datetime` (`datetime`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=153 ;
 
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `messages`
---
-
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `feed` int(11) NOT NULL,
@@ -126,27 +69,38 @@ CREATE TABLE IF NOT EXISTS `messages` (
   KEY `datetime` (`datetime`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Daten für Tabelle `messages`
---
-
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `settings`
---
-
 CREATE TABLE IF NOT EXISTS `settings` (
   `name` varchar(200) NOT NULL,
   `value` text NOT NULL,
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `settings`
---
+-- Tabellenstruktur für Tabelle `b8wordlist`
+CREATE TABLE IF NOT EXISTS `b8wordlist` (
+  `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `count` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`token`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- Tabellenstruktur für Tabelle `version`
+CREATE TABLE IF NOT EXISTS `version` (
+  `version` varchar(100) NOT NULL,
+  KEY `version` (`version`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+-- Daten
+
+
+-- Daten für Tabelle `categories`
+INSERT INTO `categories` (`id`, `name`, `position`) VALUES
+(-1, 'unkategorisiert', 0),
+(1, 'Blogs', 1),
+(2, 'Images', 2);
+
+-- Daten für Tabelle `settings`
 INSERT INTO `settings` (`name`, `value`) VALUES
 ('language', 'en'),
 ('priorityStart', '1'),
@@ -171,24 +125,24 @@ INSERT INTO `settings` (`name`, `value`) VALUES
 ('currentPriorityStart', '1'),
 ('currentPriorityEnd', '3');
 
--- --------------------------------------------------------
+-- Daten für Tabelle `feeds`
+INSERT INTO `feeds` (`id`, `source`, `url`, `category`, `priority`, `favicon`, `filter`, `name`, `position`, `icon`, `multimedia`, `dirtyicon`, `htmlurl`, `lastrefresh`, `error`) VALUES
+(1, 'plugins_rss_feed', 'http://blog.aditu.de/feed', 1, 1, '', '', 'Tobis Blog', 0, '0b832c11c1127f5bcf9011ebe7d98807.ico', 0, 1, 'http://blog.aditu.de/', 1253379409, 0),
+(2, 'plugins_images_deviantart', 'SSilence', 2, 3, '', '', 'SSilence', 0, 'a54d65cc8768f644533b8853e3dff821.png', 1, 1, 'http://browse.deviantart.com/?order=5&amp;q=by:SSilence', 1253379423, 0),
+(3, 'plugins_images_visualizeus', '', 2, 2, '', '', 'vi.sualize.us', 2, 'd1e9f2ee7385eed7f85bae612ad9f8a7.ico', 1, 1, 'http://vi.sualize.us/popular', 1253379449, 0),
+(7, 'plugins_rss_feed', 'http://www.ftd.de/rss2/', -1, 2, '', '', 'FTD', 1, '78ae7a488905806a06facd735c3d73b9.ico', 0, 1, 'http://www.ftd.de/rss2/', 1253379658, 0),
+(5, 'plugins_images_deviantartfavs', 'SSilence', 2, 3, '', '', 'SSilence Favorites', 1, 'a54d65cc8768f644533b8853e3dff821.png', 1, 1, 'http://browse.deviantart.com/?order=5&amp;q=favby:SSilence', 1253379569, 0),
+(6, 'plugins_rss_feed', 'http://rss.cnn.com/rss/cnn_topstories.rss', -1, 1, '', '', 'CNN', 0, '9b0df61a6b6bde574e83b3b99f2da13c.ico', 0, 1, 'http://www.cnn.com/?eref=rss_topstories', 1253379611, 0);
 
---
--- Tabellenstruktur für Tabelle `version`
---
+-- Daten für Tabelle `b8wordlist`
+INSERT INTO `b8wordlist` (`token`, `count`) VALUES
+('bayes*dbversion', '2'),
+('bayes*texts.ham', '1'),
+('another', '1 0 100208'),
+('bayes*texts.spam', '1'),
+('bayes', '0 1 100208'),
+('learn', '1 1 100208');
 
-CREATE TABLE IF NOT EXISTS `version` (
-  `version` varchar(100) NOT NULL,
-  KEY `version` (`version`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
 -- Daten für Tabelle `version`
---
-
 INSERT INTO `version` (`version`) VALUES
-('1');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+('2');

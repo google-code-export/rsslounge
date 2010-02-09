@@ -101,8 +101,10 @@
                 
                 <div id="filter-options">
                     <select name="sort" id="sort">
-                        <option value="date" <?PHP if(Zend_Registry::get('session')->sort=='date') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('date'); ?></option>
-                        <option value="rating" <?PHP if(Zend_Registry::get('session')->sort=='rating') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('rating'); ?></option>
+                        <option value="date" <?PHP if(Zend_Registry::get('session')->sort=='date') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('first new'); ?></option>
+                        <option value="dateasc" <?PHP if(Zend_Registry::get('session')->sort=='dateasc') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('first old'); ?></option>
+                        <option value="rating" <?PHP if(Zend_Registry::get('session')->sort=='rating') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('first interesting'); ?></option>
+                        <option value="ratingasc" <?PHP if(Zend_Registry::get('session')->sort=='ratingasc') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('first boring'); ?></option>
                     </select>
 
                     <select name="unread" id="unread">

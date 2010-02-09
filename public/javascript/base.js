@@ -445,8 +445,10 @@ var rsslounge = {
                     
                     // success
                     else {
+                        var undo = current.hasClass('active') ? true : false;
                         current.parents('.rate').children('.active').removeClass('active');
-                        current.addClass('active');
+                        if(undo==false)
+                            current.addClass('active');
                     }
                 }
             });
