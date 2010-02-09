@@ -118,9 +118,10 @@ class Helper_Bayes extends Zend_Controller_Action_Helper_Abstract {
     
     
     /**
-     * classify
+     * classify and returns value which indicates how
+     * interesting given text is
      *
-     * @return void
+     * @return float value between 0 and 1 (0 = boring to 1 = interesting)
      * @param string $text classify following thest
      */
     public function classify($text) {
