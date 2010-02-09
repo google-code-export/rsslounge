@@ -1,8 +1,8 @@
-﻿#labels Featured
+#labels Featured
 =Update=
 
-1. die Datenbank sowie den "data" Ordner sichern
-2. (WICHTIG: nicht den "data" Ordner löschen) alle alten Dateien und Ordnern (einschließlich "config") aber ohne dem Ordner "data" löschen
-3. alle neuen Dateien und Ordner hochladen (ausgenommen dem "data" Ordner) (WICHTIG: auch die unsichtbaren .htaccess Dateien hochladen)
-4. rsslounge im Browser öffnen und den Anweisungen folgen
-5. die alte Datenbank-Verbindung für die neue rsslounge Version verwenden (die alte Datenbank wird automatisch aktualisiert)
+  # die Datenbank sowie den "data" Ordner sichern
+  # (WICHTIG: nicht den "data" Ordner löschen) alle alten Dateien und Ordnern (einschließlich "config") aber ohne dem Ordner "data" löschen
+  # alle neuen Dateien und Ordner hochladen (ausgenommen dem "data" Ordner) (WICHTIG: auch die unsichtbaren .htaccess Dateien hochladen)
+  # rsslounge im Browser öffnen und den Anweisungen folgen
+  # die alte Datenbank-Verbindung für die neue rsslounge Version verwenden (die alte Datenbank wird automatisch aktualisiert)
