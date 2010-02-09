@@ -1,11 +1,8 @@
 #labels Featured
 =Update=
 
-During the beta 1 phase you have to reinstall rsslounge:
-
-  #	delete all files except the folder 'data'
-  # delete all files from the folder 'data/cache'
-  # upload all files and folders of the current zip file
-  # open your rsslounge url and follow the installation instructions
-  
-*Important:* enter your previous database settings and rsslounge will resume your previous settings and data
+1. backup your database and your "data" folder
+2. (IMPORTANT: don't delete the "data" folder) delete all old files and folders (including "config") excluding the folder "data"
+3. upload all new files and folders excluding the data folder (IMPORTANT: also upload the invisible .htaccess files)
+4. open rsslounge in your browser and follow the install instructions
+5. use your old database connection, the new rsslounge version will update the old database automatically
