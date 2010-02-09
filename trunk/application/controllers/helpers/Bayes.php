@@ -11,9 +11,18 @@
 class Helper_Bayes extends Zend_Controller_Action_Helper_Abstract {
 
     /**
+     * instance of b8 library
+     *
+     * @var b8
      */
     protected $b8;
 
+    
+    /**
+     * prepares the b8 library
+     *
+     * @return void
+     */
     public function __construct() {
         $this->b8 = null;
         
@@ -62,12 +71,15 @@ class Helper_Bayes extends Zend_Controller_Action_Helper_Abstract {
             
             ob_start();
             
-            if($params['undo'])
+            if($params['undo']) {
+                Zend_Registry::get('logger')->log('bayes: unlearn', Zend_Log::DEBUG);
                 $this->b8->unlearn(
                     $params['text'], 
                     $params['interesting'] ? 'ham' : 'spam'
                 );
+            }
             
+            Zend_Registry::get('logger')->log('bayes: learn', Zend_Log::DEBUG);
             $this->b8->learn(
                 $params['text'], 
                 $params['interesting'] ? 'spam' : 'ham'
@@ -81,6 +93,29 @@ class Helper_Bayes extends Zend_Controller_Action_Helper_Abstract {
         }
     }
 
+    
+    /**
+     * unlearn from given params
+     *
+     * @return void
+     * @param mixed $params the params for learning (text, undo, interesting)
+     */
+    public function unlearn($params) {
+        if($this->b8!=null) {
+            ob_start();
+            Zend_Registry::get('logger')->log('bayes: unlearn', Zend_Log::DEBUG);
+            $this->b8->unlearn(
+                $params['text'], 
+                $params['interesting'] ? 'ham' : 'spam'
+            );
+            
+            $errors = ob_get_contents();
+            ob_end_clean();
+            if(strlen($errors)>0)
+                Zend_Registry::get('logger')->log('b8 error: '.$errors, Zend_Log::ERR);
+        }
+    }
+    
     
     /**
      * classify

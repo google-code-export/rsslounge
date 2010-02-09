@@ -433,7 +433,7 @@ rsslounge.events = {
         });
         
         // sort field
-        $('#sort').selectmenu({width:100});
+        $('#sort').selectmenu({width:150});
         $('#unread').selectmenu({width:130});
         $('#view').selectmenu({width:170});
         

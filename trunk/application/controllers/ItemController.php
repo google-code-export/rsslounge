@@ -57,7 +57,8 @@ class ItemController extends Zend_Controller_Action {
                 'view'                   => $settings['view'],
                 'selected'               => $settings['selected'],
                 'unread'                 => $settings['unread'],
-                'starred'                => $settings['starred']
+                'starred'                => $settings['starred'],
+                'sort'                   => $settings['sort']
         ) );
         
         // get unread items
@@ -274,12 +275,24 @@ class ItemController extends Zend_Controller_Action {
         if($to!='up' && $to!='down')
             $this->_helper->json(false);
         
-        // dont learn twice
-        if($item->rated==$to)
+        $bayes = Zend_Controller_Action_HelperBroker::getStaticHelper('bayes');
+        $logger = Zend_Registry::get('logger');
+        
+        // undo learning
+        if($item->rated==$to) {
+            $logger->log('rating: only unlearn item', Zend_Log::DEBUG);
+            $bayes->unlearn(array(
+                'text'        => $item->title . ' ' . $item->content, 
+                'interesting' => $to=='up'
+            ));
+            $item->rated=null;
+            $item->save();
+            $logger->log('rating: rating "null" saved', Zend_Log::DEBUG);
             $this->_helper->json(true);
+        }
         
         // learn bayes, learn
-        $bayes = Zend_Controller_Action_HelperBroker::getStaticHelper('bayes');
+        $logger->log('rating: learn from item', Zend_Log::DEBUG);
         $bayes->learn(array(
             'text'        => $item->title . ' ' . $item->content, 
             'undo'        => ($to=='up' && $item->rated=='down') || ($to=='down' && $item->rated=='up'),
@@ -287,8 +300,8 @@ class ItemController extends Zend_Controller_Action {
         ));
         
         $item->rated=$to;
-        $item->rating = $to=='up' ? 1 : 0;
         $item->save();
+        $logger->log('rating: rating "' . $to . '" saved', Zend_Log::DEBUG);
         
         $this->_helper->json(true);
     }

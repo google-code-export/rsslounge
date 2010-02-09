@@ -59,6 +59,10 @@ class application_models_items extends application_models_base {
         // set order
         if($settings['sort']=='rating')
             $select->order(array('rating DESC', 'datetime DESC'));
+        elseif($settings['sort']=='ratingasc')
+            $select->order(array('rating ASC', 'datetime DESC'));
+        elseif($settings['sort']=='dateasc')
+            $select->order('datetime ASC');
         else
             $select->order('datetime DESC');
         

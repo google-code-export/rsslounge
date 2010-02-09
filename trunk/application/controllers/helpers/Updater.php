@@ -99,10 +99,16 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     "elements"       => Zend_Registry::get('config')->rss->allowed->tags
                 )
             );
+            $title = htmLawed($item->getTitle(), array("deny_attribute" => "*", "elements" => "-*"));
             $logger->log('item content sanitized', Zend_Log::DEBUG);
             
+            // rate
+            $rating = 0;
+            if(!$plugin->multimedia)
+                $rating = 0.6666 * $bayes->classify($title) + 0.3333 * $bayes->classify($content);
+                
             $nitem = array(
-                    'title'        => htmLawed($item->getTitle(), array("deny_attribute" => "*", "elements" => "-*")),
+                    'title'        => $title,
                     'content'      => $content,
                     'feed'         => $feed->id,
                     'unread'       => 1,
@@ -110,7 +116,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     'datetime'     => $item->getDate(),
                     'uid'          => $item->getId(),
                     'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*")),
-                    'rating'       => $bayes->classify($content)
+                    'rating'       => $rating
                 );
             $logger->log('item in database inserted', Zend_Log::DEBUG);
             
