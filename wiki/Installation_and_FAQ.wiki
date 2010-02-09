@@ -77,3 +77,42 @@ For user of lighttpd you have to set the rewrite rules in the lighttpd configura
     }}}
 
 Modify the urls according to your directory structure.
+
+
+=Installation on nginx=
+
+For user of nginx you have to set the rewrite rules in the configuration:
+
+    {{{
+    server {
+        listen              80;
+        server_name         www.server.com;
+
+        root /var/www;
+        index           index.php index.html index.htm;
+        location ~ .php$ {
+            root            /var/www;
+            fastcgi_pass    unix:/tmp/php-fpm; # oder einfach 127.0.0.1:9000 je nach Einstellung
+            include         fastcgi_params;
+            fastcgi_param   QUERY_STRING   mod_rewrite=1&$query_string; # perfomanter als ein rewrite
+            fastcgi_index   index.php;
+            fastcgi_param   SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+        }
+        # rewrites von .htaccess:
+        rewrite ^/favicon.ico$ /public/favicon.ico;
+        rewrite ^/plugins/([^/]+)/(.*)$ /plugins/$1/public/$2;
+        rewrite ^/favicons/(.*)$ /data/favicons/$1;
+        rewrite ^/thumbnails/(.*)$ /data/thumbnails/$1;
+        rewrite ^/javascript/(.*)$ /public/javascript/$1;
+        rewrite ^/stylesheets/(.*)$ /public/stylesheets/$1;
+
+        location ~ \.htaccess {
+            deny all;
+        }
+
+        if (!-e $request_filename) {
+            rewrite ^.*$ /index.php last;
+        }
+
+    }
+    }}}
