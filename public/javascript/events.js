@@ -646,7 +646,7 @@ rsslounge.events = {
                             // select next item
                             if(message.parent('li').hasClass('selected'))
                                 rsslounge.events.shortcuts_next({
-                                    'open_next': false,
+                                    'open_next': message.parent('li').children('.content:visible').length > 0,
                                     'close_current': false,
                                     'down': true
                                 });

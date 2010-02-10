@@ -18,3 +18,6 @@ This feed fetches the popular gallery of vi.sualize.us|Diese Quelle liefert popu
 
 plugins_images_deviantartdaily|deviantArt daily deviations
 This feed fetches the daily deviations from deviantart|Diese Quelle liefert die daily deviations von deviantArt
+
+plugins_images_flickr|flickr
+This feed fetches a flickr RSS Feed|Diese Quelle liefert Eintr&auml;ge eines flickr RSS Feeds
