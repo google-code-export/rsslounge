@@ -308,7 +308,9 @@ rsslounge.events = {
         $('#menue-button').click(function () {
             $('#menue').slideToggle('medium');
         });
-        
+        $(document).bind('mouseup',function(event){
+            $('#menue').slideUp('medium');
+        });
         
         //
         // main menue options
@@ -342,27 +344,23 @@ rsslounge.events = {
         $('#opml-export').unbind('click');
         $('#opml-export').click(function() {
             window.open('opml/export');
-            $('#menue').slideToggle('medium');
         });
         
         // settings
         $('#menue .settings').unbind('click');
         $('#menue .settings').click(function() {
-            $('#menue').slideToggle('medium');
             rsslounge.dialogs.editSettings();
         });
         
         // errors
         $('#errormessages').unbind('click');
         $('#errormessages').click(function() {
-            $('#menue').slideToggle('medium');
             rsslounge.dialogs.showErrors();
         });
         
         // about
         $('#menue .about').unbind('click');
         $('#menue .about').click(function() {
-            $('#menue').slideToggle('medium');
             rsslounge.dialogs.showAbout();
         });
         
@@ -825,6 +823,22 @@ rsslounge.events = {
         $(document).bind('keydown', 's', function() {
             if(rsslounge.events.shortcuts_enabled())
                 $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
+        });
+        
+        // rate up
+        $(document).bind('keydown', 'u', function() {
+            var current = $('#messages li.selected .rateup-message');
+            
+            if(rsslounge.events.shortcuts_enabled())
+                current.click();
+        });
+        
+        // rate down
+        $(document).bind('keydown', 'd', function() {
+            var current = $('#messages li.selected .ratedown-message');
+            
+            if(rsslounge.events.shortcuts_enabled())
+                current.click();
         });
         
         // open target
