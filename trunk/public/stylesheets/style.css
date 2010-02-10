@@ -671,7 +671,12 @@ div.search a {
     #filter .ui-selectmenu-popup {
         float:left;
         margin-right:5px;
+        background:#efefef;
     }
+    
+        #filter .ui-selectmenu-popup:hover {
+            background: #fdf5ce;
+        }
     
     #filter #filter-options {
         position:absolute;
@@ -680,6 +685,24 @@ div.search a {
         width:480px;
         
     }
+    
+    #filter #actions input {
+        border: 1px solid #ccc; 
+        font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; 
+        font-size: 1em;
+        cursor:pointer;
+        color:#333;
+        background:#efefef;
+        border-radius: 4px;
+        -o-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+    }
+    
+        #filter #actions input:hover {
+            border-color:#fbcb09;
+            background: #fdf5ce;
+        }
 
 /* ============ No Items ============ */
 
