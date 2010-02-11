@@ -979,7 +979,6 @@ div.search a {
     }
     
     #messages span.date {
-        display:none;
         position:absolute;
         border:0;
         color:#999;

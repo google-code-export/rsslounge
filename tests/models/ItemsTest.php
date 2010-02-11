@@ -83,6 +83,7 @@ class ItemsTest extends PHPUnit_Framework_TestCase {
             'starred'                 => '0',
             'currentPriorityStart'    => '1',
             'currentPriorityEnd'      => '2',
+            'sort'                    => 'date',
             'authenticated'           => true
         );
         
