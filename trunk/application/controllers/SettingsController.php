@@ -72,10 +72,17 @@ class SettingsController extends Zend_Controller_Action {
             }
         }
         
+        $newSettings = $this->getRequest()->getPost();
+        
+        // change order to date if rating disabled
+        if($newSettings['enableRating']!=1 && (Zend_Registry::get('session')->sort=='rating' || Zend_Registry::get('session')->sort=='ratingasc'))
+            $newSettings['sort'] = 'date';
+        
+        
         // save new settings
         if(count($result)==0) {
             $settingsModel = new application_models_settings();
-            $result = $settingsModel->save($this->getRequest()->getPost());
+            $result = $settingsModel->save($newSettings);
         }
         
         // return result (errors or success)

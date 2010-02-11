@@ -12,17 +12,19 @@
     <div class="content">
         <?PHP echo $this->lazyimg( $this->highlite($this->content, Zend_Registry::get('search')) ); ?>
     </div>
-    <span class="date">
-    <?PHP echo $date->toString('d.MM.'); ?>
-    </span>
-    <span class="rate">
-        <a class="rateup-message <?PHP echo $this->rated=='up' ? 'active' : '' ?>" title="<?PHP echo $this->translate('set interesting') ?>"><span><?PHP echo $this->translate('set interesting') ?></span></a>
-        <a class="ratedown-message <?PHP echo $this->rated=='down' ? 'active' : '' ?>" title="<?PHP echo $this->translate('set boring') ?>"><span><?PHP echo $this->translate('set boring') ?></span></a>
-    </span>
-    <?PHP 
-        $opacity = 2*$this->rating-1; 
-        $opacity = $opacity<0 ? 0 : $opacity;
-    ?>
-    <span class="rating" style="-moz-opacity: <?PHP echo sprintf("%g",$opacity); ?>;opacity: <?PHP echo sprintf("%g",$opacity); ?>;">&nbsp;</span>
-    
+    <?PHP if(Zend_Registry::get('session')->enableRating==1) : ?>
+        <span class="rate">
+            <a class="rateup-message <?PHP echo $this->rated=='up' ? 'active' : '' ?>" title="<?PHP echo $this->translate('set interesting') ?>"><span><?PHP echo $this->translate('set interesting') ?></span></a>
+            <a class="ratedown-message <?PHP echo $this->rated=='down' ? 'active' : '' ?>" title="<?PHP echo $this->translate('set boring') ?>"><span><?PHP echo $this->translate('set boring') ?></span></a>
+        </span>
+        <?PHP 
+            $opacity = 2*$this->rating-1; 
+            $opacity = $opacity<0 ? 0 : $opacity;
+        ?>
+        <span class="rating" style="-moz-opacity: <?PHP echo sprintf("%g",$opacity); ?>;opacity: <?PHP echo sprintf("%g",$opacity); ?>;">&nbsp;</span>
+    <?PHP else: ?>
+        <span class="date">
+        <?PHP echo $date->toString('d.MM.'); ?>
+        </span>
+    <?PHP endif; ?>
 </li>

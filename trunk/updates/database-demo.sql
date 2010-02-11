@@ -1,5 +1,5 @@
 -- alte Tabellen loeschen
-DROP TABLE `categories`, `feeds`, `items`, `messages`, `settings`, `version`, `b8wordlist`;
+DROP TABLE IF EXISTS `categories`, `feeds`, `items`, `messages`, `settings`, `version`, `b8wordlist`;
 
 
 -- Tabellenstruktur für Tabelle `categories`
