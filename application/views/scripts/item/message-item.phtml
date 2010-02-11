@@ -8,7 +8,11 @@
         $title = $this->highlite($this->title, Zend_Registry::get('search'));
         echo strlen(trim($title))==0 ? '['.$this->translate('no title').']' : $title;
     ?></h2>
-    <a href="<?PHP echo $this->link ?>" class="link">&raquo; <?PHP echo $this->name ?> (<?PHP echo sprintf("%1.2g",$this->rating); ?>)</a>
+    <a href="<?PHP echo $this->link ?>" class="link">&raquo; <?PHP echo $this->name ?> 
+    <?PHP if(Zend_Registry::get('session')->enableRating==1) : ?>
+        <span><?PHP echo sprintf("%1.2g",$this->rating); ?></span>
+    <?PHP endif; ?>
+    </a>
     <div class="content">
         <?PHP echo $this->lazyimg( $this->highlite($this->content, Zend_Registry::get('search')) ); ?>
     </div>
