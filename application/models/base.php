@@ -64,6 +64,27 @@ class application_models_base extends Zend_Db_Table {
          } else
              return $input;
      }
+     
+     
+     /**
+     * optimize tables
+     *
+     * @return void
+     */
+     public static function optimizeDatabase() {
+        $prefix = Zend_Registry::get('config')->resources->db->prefix;
+        $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
+        $db->query(
+            "OPTIMIZE TABLE 
+                `".$prefix."b8wordlist` , 
+                `".$prefix."categories` , 
+                `".$prefix."feeds` , 
+                `".$prefix."items` , 
+                `".$prefix."messages` , 
+                `".$prefix."settings` , 
+                `".$prefix."version` "
+        );
+     }
 }
 
 

@@ -39,8 +39,11 @@ class UpdateController extends Zend_Controller_Action {
         $feeds = $feedModel->fetchAll();
         
         $logger->log('update '.$feeds->count().' feeds', Zend_Log::DEBUG);
-        foreach($feeds as $feed)
+        $i = 1;
+        foreach($feeds as $feed) {
+            $logger->log('#'.$i++.' feed update', Zend_Log::DEBUG);
             $updater->feed($feed);
+        }
         
         // set last update
         $settingsModel = new application_models_settings();
@@ -48,6 +51,12 @@ class UpdateController extends Zend_Controller_Action {
         
         // delete orphaned thumbnails
         $updater->cleanupThumbnails();
+        $logger->log('delete orphaned thumbnails', Zend_Log::DEBUG);
+        
+        // optimize database
+        application_models_base::optimizeDatabase();
+        $logger->log('database successfully optimized', Zend_Log::DEBUG);
+        
         $logger->log('finished silent update', Zend_Log::DEBUG);
     }
     
@@ -73,6 +82,13 @@ class UpdateController extends Zend_Controller_Action {
             
             // delete orphaned thumbnails
             $updater->cleanupThumbnails();
+            $logger->log('delete orphaned thumbnails', Zend_Log::DEBUG);
+            
+            // optimize database
+            application_models_base::optimizeDatabase();
+            $logger->log('database successfully optimized', Zend_Log::DEBUG);
+            
+            $logger->log('finished ajax update', Zend_Log::DEBUG);
         }
         
         // return new timeout and unread items

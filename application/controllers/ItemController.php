@@ -371,5 +371,50 @@ class ItemController extends Zend_Controller_Action {
         else
             return $item->current();
     }
+    
+    
+    /**
+     * echoes informations about the bayes classification quality
+     *
+     * @return void
+     */
+    public function statsAction() {
+        $date = $this->getRequest()->getParam('date',"");
+        if(strlen($date)>0) {
+            $day = substr($date, 0, 2);
+            $month = substr($date, 3, 2);
+            $year = substr($date, 6, 4);
+            if(!is_numeric($year) || !is_numeric($month) || !is_numeric($day))
+                die("");
+            $date = $year."-".$month."-".$day;
+            $date = " AND datetime >= '" . $date . " 00:00:00'";
+        }
+        
+        $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
+        $correctInteresting = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>0.7 AND rated='up'".$date);
+        $wrongInteresting = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>0.7 AND rated!='up'".$date);
+        
+        $correctNeutral = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.7 AND rating>0.3 AND rated IS NULL".$date);
+        $wrongNeutral = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>0.7 AND rating>0.3 AND rated IS NOT NULL".$date);
+        
+        $correctBoring = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.3 AND rated='down'".$date);
+        $wrongBoring = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.3 AND rated!='down'".$date);
+        
+        $correct = $correctBoring+$correctNeutral+$correctInteresting;
+        $wrong = $wrongBoring+$wrongNeutral+$wrongInteresting;
+        
+        $size = $db->fetchOne("SELECT Data_length+Index_length FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME   = '".Zend_Registry::get('config')->resources->db->prefix."b8wordlist'");
+        
+        echo "table size: " . sprintf("%.4g", $size/1024) . " kB<br /><br />";
+        echo "correct interesting: " . $correctInteresting . "<br />";
+        echo "wrong interesting: " . $wrongInteresting . "<br /><br />";
+        echo "correct neutral: " . $correctNeutral . "<br />";
+        echo "wrong neutral: " . $wrongNeutral . "<br /><br />";
+        echo "correct boring: " . $correctBoring . "<br />";
+        echo "wrong boring: " . $wrongBoring . "<br /><br />";
+        echo "correct: " . $correct . " (" . sprintf("%0.2g", ($correct/($correct+$wrong))*100). "%)<br />";
+        echo "wrong: " . $wrong . " (" . sprintf("%0.2g", ($wrong/($correct+$wrong))*100) . "%)<br />";
+        die("");
+    }
 }
 
