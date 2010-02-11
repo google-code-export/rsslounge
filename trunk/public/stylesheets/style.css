@@ -896,6 +896,10 @@ div.search a {
             border:0;
         }
         
+        #messages > li .link span{
+            color:#999;
+        }
+        
     #messages .rateup-message,
     #messages .ratedown-message,
     #messages .starr-message,
