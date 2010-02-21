@@ -188,7 +188,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         $date = Zend_Date::now();
         $date->sub(Zend_Registry::get('session')->deleteItems, Zend_Date::DAY);
         $itemsModel->delete(
-            $itemsModel->getAdapter()->quoteInto('datetime<?', $date->toString('YYYY-MM-dd') . ' 00:00:00')
+            $itemsModel->getAdapter()->quoteInto('starred=0 AND datetime<?', $date->toString('YYYY-MM-dd') . ' 00:00:00')
         );
     }
     

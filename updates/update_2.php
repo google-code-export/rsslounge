@@ -21,6 +21,12 @@ INSERT INTO `b8wordlist` (`token`, `count`) VALUES
     $sql = ob_get_contents();
     ob_end_clean();
     
+    // rename tables
+    if(strlen(trim($_POST['prefix']))>0) {
+        $sql = str_replace('CREATE TABLE IF NOT EXISTS `', 'CREATE TABLE IF NOT EXISTS `' . trim(Zend_Registry::get('config')->resources->db->prefix), $sql);
+        $sql = str_replace('INSERT INTO `', 'INSERT INTO `' . trim(Zend_Registry::get('config')->resources->db->prefix), $sql);
+    }
+    
     try {
         $config = array(
             'host'     => Zend_Registry::get('config')->resources->db->params->host,
@@ -37,7 +43,4 @@ INSERT INTO `b8wordlist` (`token`, `count`) VALUES
     }
     
     $db->exec($sql);
-    
-    // $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
-    // $db->exec($sql);
     
