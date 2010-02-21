@@ -387,18 +387,18 @@ class ItemController extends Zend_Controller_Action {
             if(!is_numeric($year) || !is_numeric($month) || !is_numeric($day))
                 die("");
             $date = $year."-".$month."-".$day;
-            $date = " AND datetime >= '" . $date . " 00:00:00'";
+            $date = " AND datetime >= '" . $date . " 00:00:00' AND datetime <= '" . $date . " 23:59:59'";
         }
         
         $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
-        $correctInteresting = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>0.7 AND rated='up'".$date);
-        $wrongInteresting = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>0.7 AND rated!='up'".$date);
+        $correctInteresting = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>=0.6 AND rated='up'".$date);
+        $wrongInteresting = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>=0.6 AND (rated IS NULL OR rated!='up')".$date);
         
-        $correctNeutral = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.7 AND rating>0.3 AND rated IS NULL".$date);
-        $wrongNeutral = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>0.7 AND rating>0.3 AND rated IS NOT NULL".$date);
+        $correctNeutral = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.6 AND rating>0.4 AND rated IS NULL".$date);
+        $wrongNeutral = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.6 AND rating>0.4 AND rated IS NOT NULL".$date);
         
-        $correctBoring = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.3 AND rated='down'".$date);
-        $wrongBoring = $db->fetchOne("SELECT Count(*) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.3 AND rated!='down'".$date);
+        $correctBoring = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<=0.4 AND rated='down'".$date);
+        $wrongBoring = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<=0.4 AND (rated IS NULL OR rated!='down')".$date);
         
         $correct = $correctBoring+$correctNeutral+$correctInteresting;
         $wrong = $wrongBoring+$wrongNeutral+$wrongInteresting;
