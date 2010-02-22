@@ -126,13 +126,22 @@
         
         // check database connection
         try {
+            $port = false;
+            $host = trim($_POST['host']);
+            if(strpos($_POST['host'], ':')!==false) {
+                $host = preg_split('/:/', $host);
+                $port = $host[1];
+                $host = $host[0];
+            }
             $config = array(
-                'host'     => trim($_POST['host']),
+                'host'     => $host,
                 'username' => trim($_POST['username']),
                 'password' => trim($_POST['password']),
                 'dbname'   => trim($_POST['database']),
                 'driver_options'  => array( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true )
             );
+            if($port!==false)
+                $config['port'] = $port;
             $db = Zend_Db::factory('Pdo_Mysql', $config);
             $db->getConnection();
         } catch (Zend_Db_Adapter_Exception $e) {
@@ -169,10 +178,14 @@
         $config = file_get_contents(CONFIG_DIST_PATH);
         
         $config = str_replace('resources.db.prefix =', 'resources.db.prefix = "'.trim($_POST['prefix']).'"', $config);
-        $config = str_replace('resources.db.params.host =', 'resources.db.params.host = "'.trim($_POST['host']).'"', $config);
+        $config = str_replace('resources.db.params.host =', 'resources.db.params.host = "'.$host.'"', $config);
         $config = str_replace('resources.db.params.username =', 'resources.db.params.username = "'.trim($_POST['username']).'"', $config);
         $config = str_replace('resources.db.params.password =', 'resources.db.params.password = "'.trim($_POST['password']).'"', $config);
         $config = str_replace('resources.db.params.dbname =', 'resources.db.params.dbname = "'.trim($_POST['database']).'"', $config);
+        if($port!==false)
+            $config = str_replace('resources.db.params.port =', 'resources.db.params.port = "'.$port.'"', $config);
+        else
+            $config = str_replace('resources.db.params.port =', '', $config);
         $config = str_replace('session.default.language = en', 'session.default.language = '.trim($_POST['language']), $config);
         
         $config = str_replace('login.username =', 'login.username = '.trim($_POST['login_username']), $config);
