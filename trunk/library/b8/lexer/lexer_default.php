@@ -63,7 +63,7 @@ class lexer_default extends b8SharedFunctions
 		}
 
 		$tokens = "";
-
+/*
 		# Get internet and IP addresses
 
 		preg_match_all("/([A-Za-z0-9\_\-\.]+)/", $text, $raw_tokens);
@@ -101,11 +101,19 @@ class lexer_default extends b8SharedFunctions
 			}
 
 		}
-
+*/
 		# Raw splitting of the remaining text
-
+        $text = preg_replace("/[^a-zA-Z0-9\säöüßÄÖÜ\-]/", '', $text);
 		$raw_tokens = preg_split("/[^A-Za-z0-9!?\$¤¥£'`ÄÖÜäöüßÉéÈèÊêÁáÀàÂâÓóÒòÔôÇç]/", $text);
 
+        /* modification (tobias zeising), always get two words */
+        $paired_raw_tokens = array();
+        for($i = 0; $i<count($raw_tokens); $i++) {
+            if($i!=0)
+                $paired_raw_tokens[] = $raw_tokens[$i-1] . " " . $raw_tokens[$i];
+        }
+        $raw_tokens = $paired_raw_tokens;
+        /* end modification (tobias zeising), always get two words */
 		foreach($raw_tokens as $word) {
 
 			if(!$this->isValid($word))
@@ -117,7 +125,7 @@ class lexer_default extends b8SharedFunctions
 				$tokens[$word]++;
 
 		}
-
+/*
 		# Get HTML
 
 		preg_match_all("/(<.+?>)/", $text, $raw_tokens);
@@ -140,7 +148,7 @@ class lexer_default extends b8SharedFunctions
 				$tokens[$word]++;
 
 		}
-
+*/        
 		# Return a list of all found tokens
 		return($tokens);
 

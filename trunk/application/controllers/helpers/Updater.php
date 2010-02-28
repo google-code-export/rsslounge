@@ -105,7 +105,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             // rate
             $rating = 0;
             if(!$plugin->multimedia && Zend_Registry::get('session')->enableRating==1) {
-                $rating = 0.6666 * $bayes->classify($title) + 0.3333 * $bayes->classify($content);
+                $rating = 0.6666 * $bayes->classify(strip_tags($title)) + 0.3333 * $bayes->classify(strip_tags($content));
                 $logger->log('item rating: '. $rating, Zend_Log::DEBUG);
             }
                 

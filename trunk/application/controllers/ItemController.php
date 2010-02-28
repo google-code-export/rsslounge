@@ -67,7 +67,7 @@ class ItemController extends Zend_Controller_Action {
         // return items
         $feedModel = new application_models_feeds();
         $this->_helper->json(array( 
-            'html'           => $this->view->render('item/list.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()),
+            'html'           => utf8_encode(utf8_decode($this->view->render('item/list.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()))),
             'categories'     => $itemCounter->unreadItemsCategories($settings),
             'feeds'          => $itemCounter->unreadItemsFeeds($settings),
             'starred'        => $itemCounter->starredItems($settings),
@@ -282,7 +282,7 @@ class ItemController extends Zend_Controller_Action {
         if($item->rated==$to) {
             $logger->log('rating: only unlearn item', Zend_Log::DEBUG);
             $bayes->unlearn(array(
-                'text'        => $item->title . ' ' . $item->content, 
+                'text'        => strip_tags($item->title . ' ' . $item->content), 
                 'interesting' => $to=='up'
             ));
             $item->rated=null;
@@ -294,7 +294,7 @@ class ItemController extends Zend_Controller_Action {
         // learn bayes, learn
         $logger->log('rating: learn from item', Zend_Log::DEBUG);
         $bayes->learn(array(
-            'text'        => $item->title . ' ' . $item->content, 
+            'text'        => strip_tags($item->title . ' ' . $item->content), 
             'undo'        => ($to=='up' && $item->rated=='down') || ($to=='down' && $item->rated=='up'),
             'interesting' => $to=='up'
         ));

@@ -521,12 +521,13 @@
 							fillIt = true;
 						}
 					} else if (parentEl.is('td') && !parentEl.hasClass('datepickerDisabled')) {
-						switch (tblEl.get(0).className) {
+                        switch (tblEl.get(0).className) {
 							case 'datepickerViewMonths':
 								options.current.setMonth(tblEl.find('tbody.datepickerMonths td').index(parentEl));
 								options.current.setFullYear(parseInt(tblEl.find('thead th.datepickerMonth span').text(), 10));
 								options.current.addMonths(Math.floor(options.calendars/2) - tblIndex);
 								tblEl.get(0).className = 'datepickerViewDays';
+                                noChange = true;
 								break;
 							case 'datepickerViewYears':
 								options.current.setFullYear(parseInt(el.text(), 10));
@@ -578,7 +579,7 @@
 					if (fillIt) {
 						fill(this);
 					}
-					if (changed) {
+					if (changed && typeof noChange != "undefined") {
 						options.onChange.apply(this, prepareDate(options));
 					}
 				}
