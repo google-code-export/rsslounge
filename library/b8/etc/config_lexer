@@ -11,7 +11,7 @@
 minSize = 3
 
 # Maximal length for a token
-maxSize = 30
+maxSize = 100
 
 # Whether pure numbers ("123456") can be a token
 allowNumbers = FALSE
