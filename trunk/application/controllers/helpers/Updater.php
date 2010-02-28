@@ -20,6 +20,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
     public function feed($feed) {
         
         @set_time_limit(Zend_Registry::get('config')->rss->timelimit);
+        @error_reporting(E_ERROR);
         
         // logging
         $logger = Zend_Registry::get('logger');
