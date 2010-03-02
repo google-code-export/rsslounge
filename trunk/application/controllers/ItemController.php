@@ -282,7 +282,7 @@ class ItemController extends Zend_Controller_Action {
         if($item->rated==$to) {
             $logger->log('rating: only unlearn item', Zend_Log::DEBUG);
             $bayes->unlearn(array(
-                'text'        => strip_tags($item->title . ' ' . $item->content), 
+                'text'        => $item->title . ' ' . $item->content, 
                 'interesting' => $to=='up'
             ));
             $item->rated=null;
@@ -294,7 +294,7 @@ class ItemController extends Zend_Controller_Action {
         // learn bayes, learn
         $logger->log('rating: learn from item', Zend_Log::DEBUG);
         $bayes->learn(array(
-            'text'        => strip_tags($item->title . ' ' . $item->content), 
+            'text'        => $item->title . ' ' . $item->content, 
             'undo'        => ($to=='up' && $item->rated=='down') || ($to=='down' && $item->rated=='up'),
             'interesting' => $to=='up'
         ));
