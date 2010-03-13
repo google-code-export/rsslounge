@@ -405,15 +405,15 @@ class ItemController extends Zend_Controller_Action {
         
         $size = $db->fetchOne("SELECT Data_length+Index_length FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME   = '".Zend_Registry::get('config')->resources->db->prefix."b8wordlist'");
         
-        echo "table size: " . sprintf("%.4g", $size/1024) . " kB<br /><br />";
+        echo "table size: " . sprintf("%.2f", $size/1024) . " kB<br /><br />";
         echo "correct interesting: " . $correctInteresting . "<br />";
         echo "wrong interesting: " . $wrongInteresting . "<br /><br />";
         echo "correct neutral: " . $correctNeutral . "<br />";
         echo "wrong neutral: " . $wrongNeutral . "<br /><br />";
         echo "correct boring: " . $correctBoring . "<br />";
         echo "wrong boring: " . $wrongBoring . "<br /><br />";
-        echo "correct: " . $correct . " (" . sprintf("%0.2g", ($correct/($correct+$wrong))*100). "%)<br />";
-        echo "wrong: " . $wrong . " (" . sprintf("%0.2g", ($wrong/($correct+$wrong))*100) . "%)<br />";
+        echo "correct: " . $correct . " (" . sprintf("%0.2f", ($correct/($correct+$wrong))*100). "%)<br />";
+        echo "wrong: " . $wrong . " (" . sprintf("%0.2f", ($wrong/($correct+$wrong))*100) . "%)<br />";
         die("");
     }
 }
