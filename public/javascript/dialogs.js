@@ -303,7 +303,7 @@ rsslounge.dialogs = {
      */
     initializeDialogCategories: function() {
         // make list sortable
-        $('#categories-list').sortable({ items: 'li:not(.add)' }).disableSelection();
+        $('#categories-list').sortable({ items: 'li:not(.add)', axis: 'y' }).disableSelection();
         
         // edit category
         var editEvent = function() {
@@ -334,7 +334,6 @@ rsslounge.dialogs = {
             
             var cat = $(this).prev().hide();
             $(this).hide();
-            
         };
         
         // delete category

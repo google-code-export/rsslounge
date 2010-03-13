@@ -47,6 +47,11 @@ $.widget("ui.selectmenu", {
 
 		//click toggle for menu visibility
 		this.newelement
+            // MODIFICATION Tobias Zeising
+            .mouseover(function(e) {
+                self.open();
+            })
+            // MODIFICATION Tobias Zeising
 			.bind('mousedown', function(event){
 				self._toggle(event);
 				//make sure a click won't open/close instantly
@@ -298,6 +303,12 @@ $.widget("ui.selectmenu", {
 		
 		//update value
 		this.value(this._selectedIndex());
+        
+        // MODIFICATION Tobias Zeising
+        this.list.mouseleave(function() {
+            self.close();
+        });
+        // MODIFICATION Tobias Zeising
 	},
 	destroy: function() {
 		this.element.removeData(this.widgetName)
