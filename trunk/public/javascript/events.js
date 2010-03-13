@@ -431,9 +431,10 @@ rsslounge.events = {
         });
         
         // sort field
-        $('#sort').selectmenu({width:150});
-        $('#unread').selectmenu({width:130});
-        $('#view').selectmenu({width:170});
+        $('#sort').selectmenu({width:150, menuWidth:150});
+        $('#unread').selectmenu({width:130, menuWidth:130});
+        $('#view').selectmenu({width:170, menuWidth:170});
+        
         
         // select field events
         
