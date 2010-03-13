@@ -65,11 +65,18 @@
         <li>
             <label><?PHP echo $this->translate('Anonymizer URL (e.g. http://anonym.to/?)'); ?></label> 
             <input type="text" value="<?PHP echo Zend_Registry::get('session')->anonymizer ?>" id="anonymizer" />
+            
+            
+            <input type="hidden" value='<?PHP echo Zend_Registry::get('session')->enableRating ?>' id="enableRating" />
         </li>
+        <?PHP
+        /*
         <li>
             <label><?PHP echo $this->translate('Enable rating'); ?></label> 
             <input type="checkbox" value='1' id="enableRating" <?PHP echo Zend_Registry::get('session')->enableRating==1 ? 'checked="checked"' : '' ?>/>
         </li>
+        */
+        ?>
         <li>
             <label><?PHP echo $this->translate('Activate login'); ?></label> 
             <input type="checkbox" value="1" id="activate_login" <?PHP echo strlen($this->username)>0 ? 'checked="checked"' : '' ?>/>
