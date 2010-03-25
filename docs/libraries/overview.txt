@@ -36,6 +36,7 @@ http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/index.php
 
 Javascript jQuery Hotkeys Plugin 0.7.9
 http://code.google.com/p/js-hotkeys/
+(we use the jQuery 1.4.2 compatible version from John Resig: http://github.com/jeresig/jquery.hotkeys/)
 
 jQuery UI Selectmenu 06/19/2009
 http://www.filamentgroup.com/lab/jquery_ui_selectmenu_an_aria_accessible_plugin_for_styling_a_html_select/

@@ -201,6 +201,12 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
      * @return int timeout
      */
     public function timeout() {
+        // load lastrefresh from database
+        $settings = new application_models_settings();
+        $lastrefresh = $settings->get('lastrefresh');
+        if($lastrefresh!==false)
+            Zend_Registry::get('session')->lastrefresh = $lastrefresh;
+        
         // no lastrefresh set
         if(Zend_Registry::get('session')->lastrefresh==0)
             Zend_Registry::get('session')->timeout = 0;
