@@ -69,11 +69,27 @@ var rsslounge = {
             // config jGrowl
             $.jGrowl.defaults.position = 'bottom-right';
             $.jGrowl.defaults.life = 7000;
-            
+           
+            // resize
+            $(window).bind("resize", rsslounge.resize);
+            rsslounge.resize();
+           
             // open new feed dialog
             if($.trim(newfeed).length!=0)
                 rsslounge.dialogs.addEditFeed(newfeed);
         });
+    },
+    
+    
+    /**
+     * resize window = change theme
+     */
+    resize: function() {
+        if ($(window).width() < '1100'){
+           $('body').addClass('small');
+        } else {
+           $('body').removeClass('small');
+        }
     },
     
     

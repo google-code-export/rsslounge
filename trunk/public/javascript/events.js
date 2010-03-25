@@ -306,7 +306,10 @@ rsslounge.events = {
         // toggle main menue (on top right side)
         $('#menue-button').unbind('click');
         $('#menue-button').click(function () {
-            $('#menue').slideToggle('medium');
+            if($('#menue').is(':visible'))
+                $('#menue').slideUp('medium');
+            else
+                $('#menue').slideDown('medium');
         });
         $(document).bind('mouseup',function(event){
             $('#menue').slideUp('medium');
@@ -435,6 +438,9 @@ rsslounge.events = {
         $('#unread').selectmenu({width:130, menuWidth:130});
         $('#view').selectmenu({width:170, menuWidth:170});
         
+        $(window).bind("resize", function() {
+            $('.ui-selectmenu-menu').css({'left':0});
+        });
         
         // select field events
         
@@ -742,6 +748,7 @@ rsslounge.events = {
     shortcuts: function() {    
         // switch and open next
         $(document).bind('keydown', 'space', function() {
+            console.info("ja");
             if(rsslounge.events.shortcuts_enabled()) {
                 rsslounge.events.shortcuts_next({
                     'open_next': true,

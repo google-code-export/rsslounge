@@ -665,12 +665,21 @@ div.search a {
         margin-left:10px;
     }
     
+    body.small #filter #actions {
+        margin-top:-53px;
+        margin-left:80px;
+    }
+    
     #filter #actions, 
     #filter #actions li, 
     #filter select, 
     #filter .ui-selectmenu-popup {
         float:left;
         margin-right:5px;
+    }
+    
+    #filter select, 
+    #filter .ui-selectmenu-popup {
         background:#efefef;
     }
     
@@ -1087,7 +1096,7 @@ div.search a {
         height:16px;
     }
 
-    #feed-source .ui-accordion-header {
+    #feed-source h3 {
         border:0;
         border-radius: 0px;
         -o-border-radius: 0px;
@@ -1096,17 +1105,22 @@ div.search a {
         padding:5px;
         color:white;
         background:#2e2e2e;
+        cursor:pointer;
+        margin-top:2px;
+        margin-bottom:2px;
     }
+    
+        #feed-source h3 span {
+            visibility:hidden;
+        }
 
-    #feed-source .ui-accordion-content {
+    #feed-source ul{
         border:0;
         background:none;
         padding:5px;
     }
 
-    #feed-source .ui-accordion-header span {
-        visibility:hidden;
-    }
+    
 
 
 #feed-data {
