@@ -441,37 +441,6 @@ var rsslounge = {
     
     
     /**
-     * rate an item
-     */
-    rateItem: function () {
-            var current = $(this);
-            
-            $.ajax({
-            type: "POST",
-            url: "item/rate",
-            data: { 
-                'id': current.parents('li').attr('id').substr(5),
-                'to': current.hasClass('rateup-message') ? 'up' : 'down'
-            },
-            dataType: 'json',
-            success: function(response){
-                    // error
-                    if(typeof response.error != 'undefined')
-                        rsslounge.showError(response.error);
-                    
-                    // success
-                    else {
-                        var undo = current.hasClass('active') ? true : false;
-                        current.parents('.rate').children('.active').removeClass('active');
-                        if(undo==false)
-                            current.addClass('active');
-                    }
-                }
-            });
-    },
-    
-    
-    /**
      * save open categories
      */
     saveOpenCategories: function() {

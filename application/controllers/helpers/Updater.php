@@ -57,9 +57,6 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         if(!function_exists('htmLawed'))
             require(Zend_Registry::get('config')->includePaths->library . '/htmLawed.php');
         
-        // prepare bayes classifier
-        $bayes = Zend_Controller_Action_HelperBroker::getStaticHelper('bayes');
-        
         // insert new items in database
         $logger->log('start item fetching', Zend_Log::DEBUG);
         $itemsModel = new application_models_items();
@@ -103,13 +100,6 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
             $title = htmLawed($item->getTitle(), array("deny_attribute" => "*", "elements" => "-*"));
             $logger->log('item content sanitized', Zend_Log::DEBUG);
             
-            // rate
-            $rating = 0;
-            if(!$plugin->multimedia && Zend_Registry::get('session')->enableRating==1) {
-                $rating = 0.6666 * $bayes->classify($title) + 0.3333 * $bayes->classify($content);
-                $logger->log('item rating: '. $rating, Zend_Log::DEBUG);
-            }
-                
             $nitem = array(
                     'title'        => $title,
                     'content'      => $content,
@@ -118,8 +108,7 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
                     'starred'      => 0,
                     'datetime'     => $item->getDate(),
                     'uid'          => $item->getId(),
-                    'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*")),
-                    'rating'       => $rating
+                    'link'         => htmLawed($item->getLink(), array("deny_attribute" => "*", "elements" => "-*"))
                 );
             $logger->log('item in database inserted', Zend_Log::DEBUG);
             

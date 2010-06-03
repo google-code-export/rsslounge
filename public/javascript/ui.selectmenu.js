@@ -308,6 +308,9 @@ $.widget("ui.selectmenu", {
         this.list.mouseleave(function() {
             self.close();
         });
+        $('#header,#items').mouseenter(function() {
+            self.close();
+        });
         // MODIFICATION Tobias Zeising
 	},
 	destroy: function() {

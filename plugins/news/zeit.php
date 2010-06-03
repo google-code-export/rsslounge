@@ -1,21 +1,21 @@
 <?PHP 
 
 /**
- * Plugin for fetching the news from heise with the full text
+ * Plugin for fetching the full text of zeit.de
  *
  * @package    plugins
  * @subpackage news
  * @copyright  Copyright (c) Tobias Zeising (http://www.aditu.de)
  * @license    GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html)
  */
-class plugins_news_heise extends plugins_rss_feed {
+class plugins_news_zeit extends plugins_rss_feed {
 
     /**
      * url of the icon or false if no icon available
      *
      * @var string
      */
-    public $icon = 'plugins/news/heise.ico';
+    public $icon = 'plugins/news/zeit.ico';
 
         
     /**
@@ -39,7 +39,7 @@ class plugins_news_heise extends plugins_rss_feed {
      *
      * @var string
      */
-    public $description = 'This feed fetches the heise news with full content (not only the header as content)';
+    public $description = 'This feed fetches the ftd news with full content (not only the header as content)';
     
     
     /**
@@ -49,7 +49,7 @@ class plugins_news_heise extends plugins_rss_feed {
      * @param string $url the url source (username, etc.)
      */    
     public function opml($url) {
-        return 'http://www.heise.de/newsticker/heise-atom.xml';
+        return 'http://newsfeed.zeit.de/index';
     }
     
     
@@ -74,7 +74,7 @@ class plugins_news_heise extends plugins_rss_feed {
         
             try {
                 // load entry page
-                $client = new Zend_Http_Client($this->getLink());
+                $client = new Zend_Http_Client($this->getLink().'?page=all');
                 $response = $client->request();  
                 $content = $response->getBody();
             
@@ -82,7 +82,7 @@ class plugins_news_heise extends plugins_rss_feed {
                 
                 // parse content
                 $dom = new Zend_Dom_Query($content); 
-                $text = $dom->query('.meldung_wrapper');
+                $text = $dom->query('.article');
                 
                 $innerHTML = '';
                 
@@ -93,12 +93,8 @@ class plugins_news_heise extends plugins_rss_feed {
                     $tmp_doc = new DOMDocument();
                     $tmp_doc->appendChild($tmp_doc->importNode($child,true));
                     
-                    // make relative image src absolute
-                    $images = $tmp_doc->getElementsByTagName('img');
-                    foreach($images as $image) {
-                        if($image->hasAttribute('src') && strpos($image->getAttribute('src'), 'http://')===false)
-                            $image->setAttribute('src', 'http://www.heise.de'.$image->getAttribute('src'));
-                    }
+                    if(count($tmp_doc->getElementById('comments'))>0)
+                        continue;
                     
                     // convert to text
                     $innerHTML .= @$tmp_doc->saveHTML();

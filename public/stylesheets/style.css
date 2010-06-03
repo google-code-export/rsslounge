@@ -706,6 +706,8 @@ div.search a {
         -o-border-radius: 4px;
         -moz-border-radius: 4px;
         -webkit-border-radius: 4px;
+        padding-left:5px;
+        padding-right:5px;
     }
     
         #filter #actions input:hover {
@@ -909,8 +911,6 @@ div.search a {
             color:#999;
         }
         
-    #messages .rateup-message,
-    #messages .ratedown-message,
     #messages .starr-message,
     #messages .mark-message {
         display:block;
@@ -940,21 +940,6 @@ div.search a {
             background:url(images/mark-inactive.png);
         }
         
-        #messages .rateup-message.active {
-            background:url(images/thumbup.png);
-        }
-    
-        #messages .rateup-message {
-            background:url(images/thumbup-inactive.png);
-        }
-        
-        #messages .ratedown-message.active {
-            background:url(images/thumbdown.png);
-        }
-    
-        #messages .ratedown-message {
-            background:url(images/thumbdown-inactive.png);
-        }
     
     #messages li {
         position:relative;
@@ -1005,39 +990,6 @@ div.search a {
             margin-left:-63px;
         }
         
-    #messages span.rate,
-    #messages span.rating {
-        position:absolute;
-        border:0;
-        left:100%;
-        top:0px;
-        height:29px;
-        display:block;
-        text-align:right;
-        z-index:2;
-    }
-    
-        #messages span.rating {
-            background:url(images/rating.png) repeat-y right;
-            height:100%;
-            width:100px;
-            margin-left:-110px;
-        }
-        
-        #messages span.rate {
-            position:absolute;
-            border:0;
-            left:100%;
-            top:5px;
-            width:40px;
-            height:19px;
-            display:block;
-            margin:0;
-            margin-left:-50px;
-            z-index:3;
-        }
-        
-    
     #messages .content {
         display:none;
         padding:10px;

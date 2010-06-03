@@ -57,11 +57,7 @@ class application_models_items extends application_models_base {
             $select->limit($settings['itemsperpage']);
         
         // set order
-        if($settings['sort']=='rating')
-            $select->order(array('rating DESC', 'datetime DESC'));
-        elseif($settings['sort']=='ratingasc')
-            $select->order(array('rating ASC', 'datetime DESC'));
-        elseif($settings['sort']=='dateasc')
+        if($settings['sort']=='dateasc')
             $select->order('datetime ASC');
         else
             $select->order('datetime DESC');
@@ -235,7 +231,7 @@ class application_models_items extends application_models_base {
         
         // base select statement
         $select = $db->select()
-                     ->from( array( 'i' => $p.'items' ), array('id','title','content','unread','starred','datetime','link','rating','rated') )
+                     ->from( array( 'i' => $p.'items' ), array('id','title','content','unread','starred','datetime','link') )
                      ->join( array( 'f' => $p.'feeds' ), 'i.feed = f.id', array('name','icon') )
                      ->join( array( 'c' => $p.'categories' ), 'c.id=f.category', array() );
                      

@@ -5,17 +5,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Datenbank: `rsslounge`
 --
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `b8wordlist`
---
-
-CREATE TABLE IF NOT EXISTS `b8wordlist` (
-  `token` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
-  `count` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`token`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -78,8 +67,6 @@ CREATE TABLE IF NOT EXISTS `items` (
   `datetime` datetime NOT NULL,
   `uid` varchar(255) NOT NULL,
   `link` text NOT NULL,
-  `rating` float NOT NULL,
-  `rated` enum('up','down') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `feed` (`feed`),
   KEY `uid` (`uid`),
@@ -127,26 +114,6 @@ CREATE TABLE IF NOT EXISTS `version` (
   KEY `version` (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-
-
-
-
-
-
-
-
---
--- Daten für Tabelle `b8wordlist`
---
-
-INSERT INTO `b8wordlist` (`token`, `count`) VALUES
-('bayes*dbversion', '2'),
-('bayes*texts.ham', '1'),
-('another', '1 0 100208'),
-('bayes*texts.spam', '1'),
-('bayes', '0 1 100208'),
-('learn', '1 1 100208');
 
 
 --
