@@ -50,16 +50,18 @@ class ItemController extends Zend_Controller_Action {
         }
         
         // save settings
-        $settingsModel = new application_models_settings();
-        $settingsModel->save( array( 
-                'currentPriorityStart'   => $settings['currentPriorityStart'],
-                'currentPriorityEnd'     => $settings['currentPriorityEnd'],
-                'view'                   => $settings['view'],
-                'selected'               => $settings['selected'],
-                'unread'                 => $settings['unread'],
-                'starred'                => $settings['starred'],
-                'sort'                   => $settings['sort']
-        ) );
+        if(Zend_Registry::get('config')->demomode!="1") {
+            $settingsModel = new application_models_settings();
+            $settingsModel->save( array( 
+                    'currentPriorityStart'   => $settings['currentPriorityStart'],
+                    'currentPriorityEnd'     => $settings['currentPriorityEnd'],
+                    'view'                   => $settings['view'],
+                    'selected'               => $settings['selected'],
+                    'unread'                 => $settings['unread'],
+                    'starred'                => $settings['starred'],
+                    'sort'                   => $settings['sort']
+            ) );
+        }
         
         // get unread items
         $itemCounter = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter');
@@ -260,54 +262,6 @@ class ItemController extends Zend_Controller_Action {
     
     
     /**
-     * rate up
-     *
-     * @return void
-     */
-    public function rateAction() {
-        // get item
-        $item = $this->getItem();
-        if($item===false)
-            $this->_helper->json(false);
-        
-        // invalid learn target
-        $to = $this->getRequest()->getParam('to');
-        if($to!='up' && $to!='down')
-            $this->_helper->json(false);
-        
-        $bayes = Zend_Controller_Action_HelperBroker::getStaticHelper('bayes');
-        $logger = Zend_Registry::get('logger');
-        
-        // undo learning
-        if($item->rated==$to) {
-            $logger->log('rating: only unlearn item', Zend_Log::DEBUG);
-            $bayes->unlearn(array(
-                'text'        => $item->title . ' ' . $item->content, 
-                'interesting' => $to=='up'
-            ));
-            $item->rated=null;
-            $item->save();
-            $logger->log('rating: rating "null" saved', Zend_Log::DEBUG);
-            $this->_helper->json(true);
-        }
-        
-        // learn bayes, learn
-        $logger->log('rating: learn from item', Zend_Log::DEBUG);
-        $bayes->learn(array(
-            'text'        => $item->title . ' ' . $item->content, 
-            'undo'        => ($to=='up' && $item->rated=='down') || ($to=='down' && $item->rated=='up'),
-            'interesting' => $to=='up'
-        ));
-        
-        $item->rated=$to;
-        $item->save();
-        $logger->log('rating: rating "' . $to . '" saved', Zend_Log::DEBUG);
-        
-        $this->_helper->json(true);
-    }
-    
-    
-    /**
      * list more items
      *
      * @return array with items
@@ -370,51 +324,6 @@ class ItemController extends Zend_Controller_Action {
             ));
         else
             return $item->current();
-    }
-    
-    
-    /**
-     * echoes informations about the bayes classification quality
-     *
-     * @return void
-     */
-    public function statsAction() {
-        $date = $this->getRequest()->getParam('date',"");
-        if(strlen($date)>0) {
-            $day = substr($date, 0, 2);
-            $month = substr($date, 3, 2);
-            $year = substr($date, 6, 4);
-            if(!is_numeric($year) || !is_numeric($month) || !is_numeric($day))
-                die("");
-            $date = $year."-".$month."-".$day;
-            $date = " AND datetime >= '" . $date . " 00:00:00' AND datetime <= '" . $date . " 23:59:59'";
-        }
-        
-        $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
-        $correctInteresting = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>=0.6 AND rated='up'".$date);
-        $wrongInteresting = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating>=0.6 AND (rated IS NULL OR rated!='up')".$date);
-        
-        $correctNeutral = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.6 AND rating>0.4 AND rated IS NULL".$date);
-        $wrongNeutral = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<0.6 AND rating>0.4 AND rated IS NOT NULL".$date);
-        
-        $correctBoring = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<=0.4 AND rated='down'".$date);
-        $wrongBoring = $db->fetchOne("SELECT Count(items.id) FROM items, feeds WHERE items.feed=feeds.id AND feeds.multimedia=0 AND rating<=0.4 AND (rated IS NULL OR rated!='down')".$date);
-        
-        $correct = $correctBoring+$correctNeutral+$correctInteresting;
-        $wrong = $wrongBoring+$wrongNeutral+$wrongInteresting;
-        
-        $size = $db->fetchOne("SELECT Data_length+Index_length FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME   = '".Zend_Registry::get('config')->resources->db->prefix."b8wordlist'");
-        
-        echo "table size: " . sprintf("%.2f", $size/1024) . " kB<br /><br />";
-        echo "correct interesting: " . $correctInteresting . "<br />";
-        echo "wrong interesting: " . $wrongInteresting . "<br /><br />";
-        echo "correct neutral: " . $correctNeutral . "<br />";
-        echo "wrong neutral: " . $wrongNeutral . "<br /><br />";
-        echo "correct boring: " . $correctBoring . "<br />";
-        echo "wrong boring: " . $wrongBoring . "<br /><br />";
-        echo "correct: " . $correct . " (" . sprintf("%0.2f", ($correct/($correct+$wrong))*100). "%)<br />";
-        echo "wrong: " . $wrong . " (" . sprintf("%0.2f", ($wrong/($correct+$wrong))*100) . "%)<br />";
-        die("");
     }
 }
 

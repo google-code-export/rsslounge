@@ -83,13 +83,8 @@ This application doesn't support the Internet Explorer. Please install a Gecko o
 unread items|ungelesene Eintr&auml;ge
 read items|gelesene Eintr&auml;ge
 feeds|Feeds
-rating|Bewertung
-set interesting|als interessant markieren
-set boring|als langweilig markieren
 first new|zuerst Neues
 first old|zuerst Altes
-first boring|zuerst Langweiliges
-first interesting|zuerst Interessantes
 
 
 #
@@ -150,7 +145,6 @@ subscribe feed|Feed abonnieren
 Entries old than this value will be deleted. Enter 0 for never deleting items.|Eintr&auml;ge &auml;lter als dieser Wert werden gel&ouml;scht. Gib 0 ein, falls die Eintr&auml;ge nie gel&ouml;scht werden sollen.
 Open links in new window|Links in neuem Fenster &ouml;ffnen
 Anonymizer URL (e.g. http://anonym.to/?)|Anonymisierer (z.B. http://anonym.to/?)
-Enable rating|Bewertung aktivieren
 
 
 #

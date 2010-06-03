@@ -13,7 +13,7 @@ http://wideimage.sourceforge.net/
 jQuery 1.4
 http://jquery.com/
 
-jQuery UI 1.7.2
+jQuery UI 1.8.1
 http://jqueryui.com/
 
 jQuery Impromptu 2.8
@@ -40,6 +40,3 @@ http://code.google.com/p/js-hotkeys/
 
 jQuery UI Selectmenu 06/19/2009
 http://www.filamentgroup.com/lab/jquery_ui_selectmenu_an_aria_accessible_plugin_for_styling_a_html_select/
-
-b8 0.4.4
-http://nasauber.de/opensource/b8/
