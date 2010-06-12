@@ -35,6 +35,11 @@ body {
     background-color:#f4f8f2;
 }
 
+.jqimessage  {
+    position:relative;
+    height:340px;
+}
+
 /* popupwindow heading */
 .jqimessage h1 {
     font-size:18px;
@@ -160,7 +165,6 @@ div#header {
         top:60px;
         width:170px;
         z-index:100;
-        
     }
     
         #menue li {
@@ -321,6 +325,7 @@ div#header {
     position:relative;
     margin-bottom:0;
     margin-top:6px;
+    height:20px;
 }
 
 #feedsmenue li {
@@ -484,7 +489,6 @@ div#header {
                 }
         
         /* sublist with feeds */
-        
         #feeds-list ul {
             display:none;
         }
@@ -511,7 +515,12 @@ div#header {
                 -webkit-border-radius: 4px;
             }
             
+            #feeds-list ul  li .feed-img {
+                float:left;
+            }
+            
                 #feeds-list ul  li img {
+                    display:block;
                     float:left;
                     width:16px;
                     height:16px;
@@ -706,9 +715,15 @@ div.search a {
         -o-border-radius: 4px;
         -moz-border-radius: 4px;
         -webkit-border-radius: 4px;
-        padding-left:5px;
-        padding-right:5px;
+        padding:5px;
+        padding-top:2px;
+        padding-bottom:2px;
     }
+    
+        * + html #filter #actions input {
+            padding:0;
+            width:160px;
+        }
     
         #filter #actions input:hover {
             border-color:#fbcb09;
@@ -733,6 +748,7 @@ div.search a {
 
 #items {
     clear:both;
+    z-index:50;
 }
 
 #images div.loading,
@@ -808,10 +824,9 @@ div.search a {
     }
     
     #images a.images-imagelink {
-        display:table-cell;
-        height:165px;
-        vertical-align:middle;
-        text-align:center;
+        display:block;
+        height:145px;
+        text-align:left;
     }
     
     #images div a.starr-image {
@@ -1076,9 +1091,12 @@ div.search a {
 
 
 #feed-data {
+    position:absolute;
+    left:220px;
     height:300px;
-    width:500px;
-    margin-left:210px;
+    width:470px;
+    padding:0;
+    margin:0;
     padding-left:5px;
     border-left:1px solid #ccc;
     font-size:14px;
@@ -1086,10 +1104,12 @@ div.search a {
 
     #feed-data li {
         padding:5px;
+        clear:both;
     }
 
         #feed-data li label {
-            display:inline-block;
+            display:block;
+            float:left;
             font-size:18px;
             font-weight:normal;
             width:150px;
@@ -1110,15 +1130,18 @@ div.search a {
         
         #feed-data li #priority {
             width:30px;
+            float:left;
         }
         
         #feed-data li .prio-add,
         #feed-data li .prio-sub {
-            display:inline-block;
+            display:block;
+            float:left;
             cursor:pointer;
             background:url(images/prio-add.png);
             width:16px;
             height:16px;
+            margin-top:5px;
         }
         
         #feed-data li .prio-sub {
@@ -1240,7 +1263,9 @@ div.search a {
     }
     
     #settings-data li input[type=checkbox]  {
-        width:10px;
+        width:20px;
+        border:0;
+        height:20px;
     }
 
     #settings-data li .error {

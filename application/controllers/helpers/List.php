@@ -113,7 +113,7 @@ class Helper_List extends Zend_Controller_Action_Helper_Abstract {
         if($settings['view']=='both' || $settings['view']=='multimedia') {
             // set amount of images (which will be loaded)
             if($settings['view']=='both' && count($this->messages)!=0)
-                $settings['itemsperpage'] = $settings['imagesHeight'] * Zend_Registry::get('config')->thumbnails->imagesperline;
+                $settings['itemsperpage'] = Zend_Registry::get('config')->thumbnails->imagesperline;
         
             $this->multimedia = $itemsModel->get($settings,'multimedia');
             $this->moreMultimedia = $itemsModel->hasMore($settings,'multimedia');

@@ -134,9 +134,9 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
         if($content===false)
             return false;            
         try {
-            $dom = new Zend_Dom_Query($content);
+            $dom = @new Zend_Dom_Query($content);
             //$linkTags = $dom->query('link[rel="shortcut icon"]'); // don't work
-            $linkTags = $dom->query('link');
+            $linkTags = @$dom->query('link');
             foreach($linkTags as $link) {
                 if($link->getAttribute('rel') == 'shortcut icon')
                     return $linkTags->current()->getAttribute("href");    

@@ -196,8 +196,7 @@ rsslounge.events = {
                 };
         
         // sortable lists
-        $("ul.feeds").sortable(); //.disableSelection();
-        $("ul.feeds").sortable('options', {
+        $("ul.feeds:not(.ui-sortable)").sortable({
             'connectWith': '.feeds',
             'stop': event,
             'receive': event
@@ -278,30 +277,34 @@ rsslounge.events = {
         // remove slider (on reinitialize)
         $("#slider").remove();
         $("#prio").append('<div id="slider"></div>');
-    
+        
         // initialize slider
-        $("#slider").slider({
-            range: true,
-            min: parseInt(rsslounge.settings.priorityStart),
-            max: parseInt(rsslounge.settings.priorityEnd),
-            step: 1,
-            animate: true,
-            values: [parseInt(rsslounge.settings.currentPriorityStart),  parseInt(rsslounge.settings.currentPriorityEnd)],
-            change: function(event, ui) {
-                // set new priorities
-                rsslounge.settings.currentPriorityStart = ui.values[0];
-                rsslounge.settings.currentPriorityEnd = ui.values[1];
-                
-                // set feed visibility
-                rsslounge.setFeedVisibility();
-                
-                // refresh items
-                rsslounge.refreshList();
-            },
-            slide: function(event, ui) {
-                $('#prio label span').html(ui.values[0] + ' - ' + ui.values[1]);
-            }
-        });
+        if(parseInt(rsslounge.settings.priorityStart)!=parseInt(rsslounge.settings.priorityEnd)) {
+            $("#prio").show();
+            $("#slider").slider({
+                'range': true,
+                'min': parseInt(rsslounge.settings.priorityStart),
+                'max': parseInt(rsslounge.settings.priorityEnd),
+                'step': 1,
+                'animate': true,
+                'values': [parseInt(rsslounge.settings.currentPriorityStart),  parseInt(rsslounge.settings.currentPriorityEnd)],
+                'change': function(event, ui) {
+                    // set new priorities
+                    rsslounge.settings.currentPriorityStart = ui.values[0];
+                    rsslounge.settings.currentPriorityEnd = ui.values[1];
+                    
+                    // set feed visibility
+                    rsslounge.setFeedVisibility();
+                    
+                    // refresh items
+                    rsslounge.refreshList();
+                },
+                'slide': function(event, ui) {
+                    $('#prio label span').html(ui.values[0] + ' - ' + ui.values[1]);
+               }
+            });
+        } else
+            $("#prio").hide();
         
         $('#prio label span').html(rsslounge.settings.currentPriorityStart + ' - ' + rsslounge.settings.currentPriorityEnd);
         

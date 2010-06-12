@@ -6,9 +6,11 @@
     prio<?PHP echo $this->priority ?>"
     alt="<?PHP echo $this->lastrefresh ?>"
     id="feed_<?PHP echo $this->id ?>">
-    <img 
-        src="<?PHP echo Zend_Registry::get('config')->favicons->url . $this->icon ?>" 
-        alt="<?PHP echo $this->name; ?>" /> 
+    <div class="feed-img">
+        <img 
+            src="<?PHP echo Zend_Registry::get('config')->favicons->url . $this->icon ?>" 
+            alt="<?PHP echo $this->name; ?>" /> 
+    </div>
     <a class="feed"><?PHP echo $this->name; ?> <span><?PHP echo $this->unread > 0 ? '(' . $this->unread . ')' : ''; ?></span></a>
     <span class="prio"><?PHP echo $this->priority ?></span>
     <a class="edit" title="<?PHP echo $this->translate('edit'); ?>"><span><?PHP echo $this->translate('edit'); ?></span></a>

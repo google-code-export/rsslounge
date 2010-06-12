@@ -18,20 +18,6 @@
                         ); ?>
         </li>
         <li>
-            <label><?PHP echo $this->translate('Height of Imagebox'); ?></label>
-            <?PHP echo $this->formSelect(
-                            'imagesHeight', 
-                            Zend_Registry::get('session')->imagesHeight,
-                            null,
-                            array(
-                                '1' => $this->translate('1 row'),
-                                '2' => $this->translate('2 rows'),
-                                '3' => $this->translate('3 rows')
-                            )
-                        ); ?>
-            </select>
-        </li>
-        <li>
             <label><?PHP echo $this->translate('Language'); ?></label>
             <?PHP 
                     echo $this->formSelect(

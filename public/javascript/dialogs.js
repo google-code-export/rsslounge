@@ -227,6 +227,15 @@ rsslounge.dialogs = {
                         // update categories
                         rsslounge.refreshCategories(response.categories);
                     
+                        // update settings (new slider max and min)
+                        rsslounge.updateSettings(response.settings);
+                        
+                        // refresh items
+                        rsslounge.refreshList();
+                        
+                        // reinitialize slider
+                        rsslounge.events.header();
+                        
                         // close window
                         $('.tipsy').remove();
                         $.prompt.close();
@@ -455,7 +464,7 @@ rsslounge.dialogs = {
                         // activate tipsy
                         $('#deleteItems').tipsy({fade: true, gravity: 'w'});
                     },
-                    submit: rsslounge.dialogs.submitSettings,
+                    submit: rsslounge.dialogs.submitSettings
                 });
            }
         }); 
@@ -472,11 +481,12 @@ rsslounge.dialogs = {
             var settings = rsslounge.getValues('#settings');
             
             // save new data via ajax
-            $.post(
-                'settings/save', 
-                settings,
-                function(response, status) {
-                    
+            $.ajax( {
+                type: 'POST',
+                url: 'settings/save', 
+                data: settings,
+                dataType: 'json',
+                success: function(response, status) {
                     // success
                     if(response==true) {
                         // reload page
@@ -489,9 +499,8 @@ rsslounge.dialogs = {
                         rsslounge.showErrors($('#settings'), response);
                     }
                     
-                },
-                'json'
-            );
+                }
+            });
             
             return false;
         }
