@@ -132,7 +132,7 @@ class FeedController extends Zend_Controller_Action {
             $result = $feedModel->add($data);
         else
             $result = $feedModel->edit($data);
-
+        
         // error
         if(is_array($result)) {
             $this->_helper->json( array(
@@ -212,6 +212,7 @@ class FeedController extends Zend_Controller_Action {
         
         // return unread items or error
         $return = array();
+                
         if($result===true) {
             // count unread items per category
             $return['categories'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->unreadItemsCategories();
@@ -223,6 +224,10 @@ class FeedController extends Zend_Controller_Action {
             
             // count all items
             $return['all'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->allItems();
+            
+            // new settings (priority)
+            $return['settings'] = $this->resetPriorities();
+        
         } else 
             $return['error'] = $result;
         

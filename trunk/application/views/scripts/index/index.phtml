@@ -46,8 +46,7 @@
     <script type="text/javascript" src="javascript/refresh.js"></script>
     <script type="text/javascript" src="javascript/locale/<?PHP echo Zend_Registry::get('session')->language ?>.js"></script>
     <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/style.css" />
-    
-    
+
     <!-- base initialization -->
     <script type="text/javascript">
         // rss lounge settings
@@ -60,7 +59,7 @@
 
 <body>
 <div id="container">
-
+    
     <!-- header -->
     <div id="header">
         <h1><span>rssLounge aggregator</span></h1>
@@ -71,21 +70,21 @@
         </div>
         
         <a id="menue-button"><span><?PHP echo $this->translate('main menue'); ?></span></a>
-        
-        <ul id="menue" class="ui-corner-all ui-widget-content">
-              <li><a class="settings"><?PHP echo $this->translate('Settings'); ?></a></li>
-              <li><a class="categories"><?PHP echo $this->translate('Categories'); ?></a></li>
-              <li><a id="opml-import"><?PHP echo $this->translate('OPML Import'); ?></a></li>
-              <li><a id="opml-export"><?PHP echo $this->translate('OPML Export'); ?></a></li>
-              <li><a id="errormessages"><?PHP echo $this->translate('Errormessages'); ?></a></li>
-              <li class="<?PHP if(!isset($this->logout)) echo 'last'; ?>"><a class="about"><?PHP echo $this->translate('About'); ?></a></li>
-              
-              <?PHP if(isset($this->logout)) : ?>
-              <li class="last"><a class="logout"><?PHP echo $this->translate('Logout'); ?></a></li>
-              <?PHP endif; ?>
-        </ul>
     </div>
     
+    <!-- main menue -->
+    <ul id="menue" class="ui-corner-all ui-widget-content">
+          <li><a class="settings"><?PHP echo $this->translate('Settings'); ?></a></li>
+          <li><a class="categories"><?PHP echo $this->translate('Categories'); ?></a></li>
+          <li><a id="opml-import"><?PHP echo $this->translate('OPML Import'); ?></a></li>
+          <li><a id="opml-export"><?PHP echo $this->translate('OPML Export'); ?></a></li>
+          <li><a id="errormessages"><?PHP echo $this->translate('Errormessages'); ?></a></li>
+          <li class="<?PHP if(!isset($this->logout)) echo 'last'; ?>"><a class="about"><?PHP echo $this->translate('About'); ?></a></li>
+          
+          <?PHP if(isset($this->logout)) : ?>
+          <li class="last"><a class="logout"><?PHP echo $this->translate('Logout'); ?></a></li>
+          <?PHP endif; ?>
+    </ul>
 
     <!-- main area -->
     <div id="wrapper">

@@ -103,7 +103,7 @@ var rsslounge = {
      * initialize the calendar
      */
     calendar: function() {
-        if($('#calendar').html().trim().length==0)
+        if($('#calendar').html().length==0)
             $('#calendar').DatePicker({
                 flat: true,
                 date: [],
@@ -359,7 +359,7 @@ var rsslounge = {
     refreshList: function() {
     
         // fade list
-        $('#images, #messages, #noentries').fadeTo('normal', 0.5);
+        $('#images, #messages, #noentries, #messages li').fadeTo('normal', 0.5);
         
         // don't save offset
         rsslounge.settings.offset = 0;
