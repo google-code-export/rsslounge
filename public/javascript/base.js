@@ -103,7 +103,7 @@ var rsslounge = {
      * initialize the calendar
      */
     calendar: function() {
-        if($('#calendar').html().length==0)
+        if($.trim($('#calendar').html()).length==0)
             $('#calendar').DatePicker({
                 flat: true,
                 date: [],

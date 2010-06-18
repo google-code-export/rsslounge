@@ -4,7 +4,7 @@
  * Model for accessing and edit the items
  *
  * @package    application_models
- * @copyright  Copyright (c) Tobias Zeising (http://www.aditu.de)
+ * @copyright  Cpyright (c) Tobias Zeising (http://www.aditu.de)
  * @license    GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html)
  */
 class application_models_items extends application_models_base {
@@ -59,6 +59,8 @@ class application_models_items extends application_models_base {
         // set order
         if($settings['sort']=='dateasc')
             $select->order('datetime ASC');
+        else if($settings['sort']=='priority')
+            $select->order(array('f.priority DESC', 'i.datetime DESC'));
         else
             $select->order('datetime DESC');
         

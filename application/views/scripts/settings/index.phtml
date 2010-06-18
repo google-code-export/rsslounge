@@ -53,6 +53,10 @@
             <input type="text" value="<?PHP echo Zend_Registry::get('session')->anonymizer ?>" id="anonymizer" />
         </li>
         <li>
+            <label><?PHP echo $this->translate('Allow public access'); ?></label> 
+            <input type="checkbox" value='1' id="public" <?PHP echo Zend_Registry::get('session')->public==1 ? 'checked="checked"' : '' ?>/>
+        </li>
+        <li>
             <label><?PHP echo $this->translate('Activate login'); ?></label> 
             <input type="checkbox" value="1" id="activate_login" <?PHP echo strlen($this->username)>0 ? 'checked="checked"' : '' ?>/>
         </li>

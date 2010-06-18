@@ -46,7 +46,7 @@ try {
     $sql = file_get_contents(APPLICATION_PATH . '/../updates/database-dist.sql');
 
     // drop old data
-    $sql = 'DROP TABLE IF EXISTS `'.$prefix.'b8wordlist`, `'.$prefix.'categories`, `'.$prefix.'feeds`, `'.$prefix.'items`, `'.$prefix.'messages`, `'.$prefix.'settings`, `'.$prefix.'version`;' . $sql;
+    $sql = 'DROP TABLE IF EXISTS `'.$prefix.'categories`, `'.$prefix.'feeds`, `'.$prefix.'items`, `'.$prefix.'messages`, `'.$prefix.'settings`, `'.$prefix.'version`;' . $sql;
     
     // rename tables
     $sql = str_replace('CREATE TABLE IF NOT EXISTS `', 'CREATE TABLE `' . $prefix, $sql);
@@ -60,6 +60,7 @@ try {
     
     // close database connection
     unset($db);
+    
 } catch (PDOException $e) {
   echo 'Error on accessing the database. Unit Test needs correct database settings. Error: ' . $e->getMessage();
   return;

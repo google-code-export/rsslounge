@@ -49,7 +49,7 @@ class IndexController extends Zend_Controller_Action {
         $logout = $this->getRequest()->getParam('logout', false);
         if($logout!==false) {
             Zend_Registry::get('session')->authenticated=false;
-            $this->_forward('index','login');
+            $this->_forward('index','index');
         }
         
         // load feedlist
@@ -75,7 +75,8 @@ class IndexController extends Zend_Controller_Action {
         Zend_Controller_Action_HelperBroker::getStaticHelper('updater')->timeout();
         
         // logout available?
-        if(strlen(Zend_Registry::get('config')->login->username)!=0)
+        $users = new application_models_users();
+        if($users->getUsername()!==false)
             $this->view->logout = true;
         
         // add new feed? Then show the dialog (for add feed bookmark)
@@ -93,9 +94,9 @@ class IndexController extends Zend_Controller_Action {
         $password = $this->getRequest()->getParam('password', false);
         
         // login
+        $users = new application_models_users();
         if($username) {
-            if(     $username==Zend_Registry::get('config')->login->username
-                &&  sha1($password)==Zend_Registry::get('config')->login->password) {
+            if($users->authenticate($username, $password)) {
                 Zend_Registry::get('session')->authenticated=true;
                 $this->_redirect('');
             } else {

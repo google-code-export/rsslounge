@@ -115,6 +115,9 @@
             
         if(strlen(trim($_POST['login_password']))!=0 && strlen(trim($_POST['login_username']))==0)
             $errors['login_password'] = $locale->translate('if you set a password you must set an username');
+            
+        if(strlen(trim($_POST['login_username']))!=0 && strlen(trim($_POST['login_password']))==0)
+            $errors['login_password'] = $locale->translate('if you set a username you must set an password');
         
         if(count($errors)>0)
             return false;
@@ -162,6 +165,14 @@
                 $sql = str_replace('INSERT INTO `', 'INSERT INTO `' . trim($_POST['prefix']), $sql);
             }
             
+            if(strlen(trim($_POST['login_password']))!=0 && strlen(trim($_POST['login_username']))!=0)
+                $sql = $sql . "INSERT INTO " . trim($_POST['prefix']) . "users 
+                                (username,
+                                 password) 
+                               VALUES 
+                                ('".trim($_POST['login_username'])."',
+                                 '".sha1(trim($_POST['login_password']))."');";
+            
             // insert dump
             $db->exec($sql);
         } catch (Zend_Exception $e) {
@@ -182,14 +193,16 @@
         $config = str_replace('resources.db.params.username =', 'resources.db.params.username = "'.trim($_POST['username']).'"', $config);
         $config = str_replace('resources.db.params.password =', 'resources.db.params.password = "'.trim($_POST['password']).'"', $config);
         $config = str_replace('resources.db.params.dbname =', 'resources.db.params.dbname = "'.trim($_POST['database']).'"', $config);
+        
         if($port!==false)
             $config = str_replace('resources.db.params.port =', 'resources.db.params.port = "'.$port.'"', $config);
         else
             $config = str_replace('resources.db.params.port =', '', $config);
         $config = str_replace('session.default.language = en', 'session.default.language = '.trim($_POST['language']), $config);
         
-        $config = str_replace('login.username =', 'login.username = '.trim($_POST['login_username']), $config);
-        $config = str_replace('login.password =', 'login.password = '.sha1(trim($_POST['login_password'])), $config);
+        
+        if(isset($_POST['login_public']) && trim($_POST['login_public'])==1)
+            $config = str_replace('session.default.public = 0', 'session.default.public = 1', $config);
         
         file_put_contents(CONFIG_PATH, $config);
         
@@ -200,9 +213,6 @@
     if(count($_POST)>0)
         $success = install();
          
-    
-
-    
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -309,6 +319,7 @@
                 <li><label><?PHP echo $locale->translate('Username'); ?>:</label><input type="text" value="<?PHP echo isset($_POST['login_username']) ? $_POST['login_username'] : '' ?>" name="login_username" /></li>
                 <li><label><?PHP echo $locale->translate('Password'); ?>:</label><input type="password" value="<?PHP echo isset($_POST['login_password']) ? $_POST['login_password'] : '' ?>" name="login_password" /></li>
                 <li><label><?PHP echo $locale->translate('again Password'); ?>:</label><input type="password" value="<?PHP echo isset($_POST['login_password_again']) ? $_POST['login_password_again'] : '' ?>" name="login_password_again" /></li>
+                <li><label><?PHP echo $locale->translate('Public Access'); ?>:</label> <input type="checkbox" value="1" name="login_public" <?PHP if(isset($_POST['login_public']) && trim($_POST['login_public'])==1) echo "checked=checked" ?> /></li>
             </ul>
             
             <br />
