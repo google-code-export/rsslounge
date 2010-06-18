@@ -4,17 +4,20 @@
     <img src="<?PHP echo Zend_Registry::get('config')->favicons->url . $this->icon ?>" alt="<?PHP echo $this->name ?>" title="<?PHP echo $this->name ?>" width="16" height="16" />
     <?PHP $date = new Zend_Date($this->datetime); ?>
     <span title="<?PHP echo $date->toString('d.MM.YYYY HH:mm'); ?>"><?PHP echo $date->toString('HH:mm'); ?></span>
-    <h2><?PHP 
-        $title = $this->highlite($this->title, Zend_Registry::get('search'));
-        echo strlen(trim($title))==0 ? '['.$this->translate('no title').']' : $title;
-    ?></h2>
-    <a href="<?PHP echo $this->link ?>" class="link">&raquo; <?PHP echo $this->name ?> 
-    <?PHP if(Zend_Registry::get('session')->enableRating==1) : ?>
-        <span><?PHP echo sprintf("%1.2g",$this->rating); ?></span>
-    <?PHP endif; ?>
-    </a>
-    <div class="content">
-        <?PHP echo $this->lazyimg( $this->highlite($this->content, Zend_Registry::get('search')) ); ?>
+    <h2 <?PHP echo Zend_Registry::get('session')->openitems==1 ? 'class="opened"' : '' ?>>
+        <?PHP 
+            $title = $this->highlite($this->title, Zend_Registry::get('search'));
+            echo strlen(trim($title))==0 ? '['.$this->translate('no title').']' : $title;
+        ?>
+    </h2>
+    <a href="<?PHP echo $this->link ?>" class="link">&raquo; <?PHP echo $this->name ?> </a>
+    <div class="content <?PHP echo Zend_Registry::get('session')->openitems!=1 ? 'closed' : '' ?>">
+        <?PHP 
+            if(Zend_Registry::get('session')->openitems==1)
+                echo $this->highlite($this->content, Zend_Registry::get('search'));
+            else
+                echo $this->lazyimg( $this->highlite($this->content, Zend_Registry::get('search')) );
+        ?>
     </div>
     <span class="date">
     <?PHP echo $date->toString('d.MM.'); ?>

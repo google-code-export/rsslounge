@@ -607,8 +607,8 @@ rsslounge.events = {
      */
     messages: function() {    
         // hide and show item content
-        $('#messages h2').unbind('click');
-        $('#messages h2').click(function () {
+        $('#messages h2:not(.opened)').unbind('click');
+        $('#messages h2:not(.opened)').click(function () {
             var content = $(this).parent('li').children(".content");
             content.slideToggle('medium');
             rsslounge.showImages(content);
