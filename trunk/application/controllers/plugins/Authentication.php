@@ -22,7 +22,8 @@ class Plugin_Authentication extends Zend_Controller_Plugin_Abstract {
             && !($request->getControllerName()=='update' && $request->getActionName()=='silent') ) {
         
             // no login required?
-            if(!Zend_Registry::get('config')->login->username) {
+            $users = new application_models_users();
+            if(!$users->getUsername()) {
                 Zend_Registry::get('session')->authenticated = true;
                 return;
             } else {

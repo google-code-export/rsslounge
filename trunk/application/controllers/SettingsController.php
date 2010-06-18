@@ -34,7 +34,11 @@ class SettingsController extends Zend_Controller_Action {
         foreach(Zend_Registry::get('language')->getList() as $lang)
             $this->view->languages[$lang] = Zend_Registry::get('language')->translate($lang);
             
-        $this->view->username = Zend_Registry::get('config')->login->username;
+        // load username
+        $user = new application_models_users();
+        $username = $user->getUsername();
+        if($username!==false)
+            $this->view->username = $username;
     }
     
     
@@ -62,7 +66,8 @@ class SettingsController extends Zend_Controller_Action {
         // activate login
         } else {
             // any data changed?
-            if($username!=Zend_Registry::get('config')->login->username || strlen($password)!=0 ) {
+            $user = new application_models_users();
+            if($username!=$user->getUsername() || strlen($password)!=0 ) {
                 if($password!=$passwordAgain)
                     $result = array('password_again' => Zend_Registry::get('language')->translate('given passwords not equal'));
                 else if(strlen(trim($password))!=0 && strlen(trim($username))==0)
@@ -96,17 +101,8 @@ class SettingsController extends Zend_Controller_Action {
         if(Zend_Registry::get('config')->demomode=="1")
             return;
         
-        $config = file_get_contents(CONFIG_PATH);
-        if(strlen($username)!=0)
-            $config = str_replace('login.username = ' . Zend_Registry::get('config')->login->username, 'login.username = '.trim($username), $config);
-        
-        if(strlen($password)==0 && strlen(Zend_Registry::get('config')->login->password)!=0)
-            $password = Zend_Registry::get('config')->login->password;
-        else
-            $password = sha1($password);
-        
-        $config = str_replace('login.password = ' . Zend_Registry::get('config')->login->password, 'login.password = '.$password, $config);
-        file_put_contents(CONFIG_PATH, $config);
+        $user = new application_models_users();
+        $user->setUser($username, $password);
     }
 
 
@@ -116,10 +112,8 @@ class SettingsController extends Zend_Controller_Action {
      * @return void
      */
     private function removeLogin() {
-        $config = file_get_contents(CONFIG_PATH);
-        $config = str_replace('login.username = ' . Zend_Registry::get('config')->login->username, 'login.username = ', $config);
-        $config = str_replace('login.password = ' . Zend_Registry::get('config')->login->password, 'login.password = ', $config);
-        file_put_contents(CONFIG_PATH, $config);
+        $user = new application_models_users();
+        $user->purge();
     }    
 }
 

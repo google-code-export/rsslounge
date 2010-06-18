@@ -49,7 +49,6 @@ class SettingsTest extends PHPUnit_Framework_TestCase {
             'view'                    => 'both',
             'itemsperpage'            => '10',
             'imagesPosition'          => 'top',
-            'imagesHeight'            => '1',
             'selected'                => '',
             'dateFilter'              => '0',
             'dateStart'               => '',
@@ -99,9 +98,6 @@ class SettingsTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('en', $this->model->find('language')->current()->value );
         $this->assertEquals('en', Zend_Registry::get('session')->language ); // check session update
         $this->assertEquals(0, $this->model->find('new value')->count()); // don't add new values
-        $this->assertEquals(1, $this->model->find('imagesHeight')->count());
-        $this->assertEquals('3', $this->model->find('imagesHeight')->current()->value );
-        $this->assertEquals('3', Zend_Registry::get('session')->imagesHeight ); // check session update
     }
     
     
@@ -114,7 +110,6 @@ class SettingsTest extends PHPUnit_Framework_TestCase {
         $this->checkWrongValue('deleteItems', -3);
         $this->checkWrongValue('imagesPosition', 'middle');
         $this->checkWrongValue('imagesPosition', 33);
-        $this->checkWrongValue('imagesHeight', 'aaa');
         $this->checkWrongValue('language', 'fr');
         $this->checkWrongValue('language', 333);
         $this->checkWrongValue('refresh', 'a');

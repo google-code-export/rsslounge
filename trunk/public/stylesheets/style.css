@@ -33,6 +33,8 @@ body {
     font-family:Verdana,Arial,Helvetica,sans-serif;
     font-size:13px;
     background-color:#f4f8f2;
+    width:100%;
+    height:100%;
 }
 
 .jqimessage  {
@@ -770,6 +772,7 @@ div.search a {
 /* ============ Image Items ============ */
 
 #images {
+    height:179px;
     position:relative;
     border:2px solid #BFBFBF;
     padding:10px;

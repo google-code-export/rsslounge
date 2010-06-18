@@ -13,7 +13,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase {
      * test the framework
      */
     public function testFramework() {
-        $this->assertEquals('1.10.1', Zend_Version::VERSION);
+        $this->assertEquals('1.10.5', Zend_Version::VERSION);
     }
     
     
@@ -201,6 +201,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase {
         
         // available autoloaders
         $expected = array(
+            'Zend_Loader_Autoloader_Resource',
             'rsslounge_autoloader'
         );
         $autoloaders = array();
