@@ -87,7 +87,8 @@ read items|gelesene Eintr&auml;ge
 feeds|Feeds
 first new|zuerst Neues
 first old|zuerst Altes
-by priority|nach Priorit&auml;t
+priority ascending|Priorit&auml;t aufsteigend
+priority descending|Priorit&auml;t absteigend
 
 
 #
@@ -149,6 +150,7 @@ subscribe feed|Feed abonnieren
 Entries old than this value will be deleted. Enter 0 for never deleting items.|Eintr&auml;ge &auml;lter als dieser Wert werden gel&ouml;scht. Gib 0 ein, falls die Eintr&auml;ge nie gel&ouml;scht werden sollen.
 Open links in new window|Links in neuem Fenster &ouml;ffnen
 Anonymizer URL (e.g. http://anonym.to/?)|Anonymisierer (z.B. http://anonym.to/?)
+Show items opened|Eintr&auml;ge ge&ouml;ffnet anzeigen
 
 
 #

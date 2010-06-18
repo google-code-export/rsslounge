@@ -772,7 +772,7 @@ div.search a {
 /* ============ Image Items ============ */
 
 #images {
-    height:179px;
+    height:189px;
     position:relative;
     border:2px solid #BFBFBF;
     padding:10px;
@@ -828,7 +828,7 @@ div.search a {
     
     #images a.images-imagelink {
         display:block;
-        height:145px;
+        height:160px;
         text-align:left;
     }
     
@@ -1009,9 +1009,12 @@ div.search a {
         }
         
     #messages .content {
-        display:none;
         padding:10px;
     }
+    
+        #messages .content.closed {
+            display:none;
+        }
 
         #messages .content li {
             list-style:disc;
