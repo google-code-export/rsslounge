@@ -59,6 +59,20 @@ class application_models_messages extends application_models_base {
         
         return $message;
     }
+    
+    
+    /**
+     * cleanup old messages
+     *
+     * @return void
+     */
+    public function cleanup() {
+        $date = Zend_Date::now();
+        $date->sub(Zend_Registry::get('config')->errormessages->lifetime, Zend_Date::DAY);
+        $this->delete(
+            $this->getAdapter()->quoteInto('datetime<?', $date->toString('YYYY-MM-dd') . ' 00:00:00')
+        );
+    }
 }
 
 

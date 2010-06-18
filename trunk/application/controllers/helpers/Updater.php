@@ -147,6 +147,9 @@ class Helper_Updater extends Zend_Controller_Action_Helper_Abstract {
         $logger->log('cleanup old items', Zend_Log::DEBUG);
         $this->cleanupOldItems();
         
+        // cleanup old message items
+        $messagesModel->cleanup();
+        
         // destroy feed object (prevent memory issues)
         $logger->log('destroy feed object', Zend_Log::DEBUG);
         $plugin->destroy();
