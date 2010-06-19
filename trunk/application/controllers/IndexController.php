@@ -37,20 +37,11 @@ class IndexController extends Zend_Controller_Action {
      */
     public function indexAction() {
         // stop if ie is current browser
-        // if($this->getBrowser()=='ie')
-            // $this->_redirect('index/ie');
         if(get_browser()->browser == 'IE' && get_browser()->majorver == 6)
             $this->_redirect('index/ie');
         
         // update
         $this->checkDatabase();
-        
-        // logout?
-        $logout = $this->getRequest()->getParam('logout', false);
-        if($logout!==false) {
-            Zend_Registry::get('session')->authenticated=false;
-            $this->_forward('index','index');
-        }
         
         // load feedlist
         $this->feedlistData();
@@ -74,10 +65,12 @@ class IndexController extends Zend_Controller_Action {
         // set new timeout for rss refresh in session settings
         Zend_Controller_Action_HelperBroker::getStaticHelper('updater')->timeout();
         
-        // logout available?
+        // logout/login available?
         $users = new application_models_users();
-        if($users->getUsername()!==false)
+        if($users->getUsername()!==false && Zend_Registry::get('session')->authenticated===true)
             $this->view->logout = true;
+        elseif(Zend_Registry::get('session')->authenticated=='readonly')
+            $this->view->login = true;
         
         // add new feed? Then show the dialog (for add feed bookmark)
         $this->view->newfeed = $this->getRequest()->getParam('url', '');
@@ -103,6 +96,9 @@ class IndexController extends Zend_Controller_Action {
                 $this->view->error = true;
             }
         }
+        
+        if($this->getRequest()->getParam('logout', false)!==false)
+            $this->view->logout = true;
     }
     
     

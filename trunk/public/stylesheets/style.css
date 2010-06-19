@@ -58,6 +58,10 @@ body {
     color:#ff0000;
 }
 
+.success {
+    color:#3C9600;
+}
+
 .found {
     background-color:#FFD100;
 }
@@ -239,6 +243,11 @@ div#header {
     
     #login input {
         font-size:20px;
+        color:#DF7800;
+    }
+    
+    #login a {
+        font-size:11px;
         color:#DF7800;
     }
 
@@ -772,7 +781,6 @@ div.search a {
 /* ============ Image Items ============ */
 
 #images {
-    height:189px;
     position:relative;
     border:2px solid #BFBFBF;
     padding:10px;
@@ -782,6 +790,10 @@ div.search a {
     -webkit-border-radius: 4px;
     overflow:hidden;
 }
+
+    #images.small {
+        height:189px;
+    }
 
     #images.top {
         padding-top:5px;

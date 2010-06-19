@@ -53,6 +53,7 @@ The current rsslounge database is out of date. Click the button below for updati
 #
 
 Error: wrong username or password|Fehler: falscher Benutzername oder Passwort
+You have been logged out successfully|Du hast dich erfolgreich abgemeldet
 Priority|Priorit&auml;t
 main menue|Hauptmen&uuml;
 Settings|Einstellungen
@@ -60,6 +61,9 @@ Categories|Kategorien
 Show all Feeds|Alle Feeds anzeigen
 Hide all Feeds|Alle Feeds ausblenden
 Logout|Abmelden
+Login|Anmelden
+login|anmelden
+show rsslounge in public mode|&ouml;ffentliche Version anzeigen
 mark all as read|alle als gelesen markieren
 unstarr all|alle Sterne entfernen
 date|Datum

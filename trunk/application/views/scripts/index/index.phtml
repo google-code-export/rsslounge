@@ -74,18 +74,25 @@
     
     <!-- main menue -->
     <ul id="menue" class="ui-corner-all ui-widget-content">
-          <li><a class="settings"><?PHP echo $this->translate('Settings'); ?></a></li>
-          <li><a class="categories"><?PHP echo $this->translate('Categories'); ?></a></li>
-          <li><a id="opml-import"><?PHP echo $this->translate('OPML Import'); ?></a></li>
-          <li><a id="opml-export"><?PHP echo $this->translate('OPML Export'); ?></a></li>
-          <li><a id="errormessages"><?PHP echo $this->translate('Errormessages'); ?></a></li>
-          <li class="<?PHP if(!isset($this->logout)) echo 'last'; ?>"><a class="about"><?PHP echo $this->translate('About'); ?></a></li>
-          
-          <?PHP if(isset($this->logout)) : ?>
-          <li class="last"><a class="logout"><?PHP echo $this->translate('Logout'); ?></a></li>
-          <?PHP endif; ?>
+        <?PHP if(Zend_Registry::get('session')->authenticated===true) : ?>
+            <li><a class="settings"><?PHP echo $this->translate('Settings'); ?></a></li>
+            <li><a class="categories"><?PHP echo $this->translate('Categories'); ?></a></li>
+            <li><a id="opml-import"><?PHP echo $this->translate('OPML Import'); ?></a></li>
+            <li><a id="opml-export"><?PHP echo $this->translate('OPML Export'); ?></a></li>
+            <li><a id="errormessages"><?PHP echo $this->translate('Errormessages'); ?></a></li>
+        <?PHP endif; ?>
+            <li class="<?PHP if(!isset($this->logout) && !isset($this->login)) echo 'last'; ?>"><a class="about"><?PHP echo $this->translate('About'); ?></a></li>
+        
+        <?PHP if(isset($this->logout)) : ?>
+            <li class="last"><a class="logout"><?PHP echo $this->translate('Logout'); ?></a></li>
+        <?PHP endif; ?>
+        
+        <?PHP if(isset($this->login)) : ?>
+            <li class="last"><a class="login"><?PHP echo $this->translate('Login'); ?></a></li>
+        <?PHP endif; ?>
     </ul>
-
+    
+    
     <!-- main area -->
     <div id="wrapper">
         <div id="content">
@@ -93,10 +100,12 @@
             <!-- top filter settings -->
             <div id="filter">
             
+                <?PHP if(Zend_Registry::get('session')->authenticated===true) : ?>
                 <ul id="actions">
                     <li><input type="button" value="<?PHP echo $this->translate('mark all as read'); ?>" id="markall" /></li>
                     <li><input type="button" value="<?PHP echo $this->translate('unstarr all'); ?>" id="unstarrall" /></li>
                 </ul>
+                <?PHP endif; ?>
                 
                 <div id="filter-options">
                     <select name="sort" id="sort">
@@ -133,7 +142,9 @@
     
         <!-- add show hide feeds -->
         <ul id="feedsmenue">
+            <?PHP if(Zend_Registry::get('session')->authenticated===true) : ?>
             <li><a class="add"><span><?PHP echo $this->translate('add new feed'); ?></span></a></li>
+            <?PHP endif; ?>
             <li><a class="date <?PHP if(Zend_Registry::get('session')->dateFilter==1) echo 'active' ?>"><span><?PHP echo $this->translate('date'); ?></span></a></li>
             <li><a class="show" title="<?PHP echo $this->translate('Show all Feeds'); ?>"><span><?PHP echo $this->translate('Show all Feeds'); ?></span></a></li>
             <li><a class="hide" title="<?PHP echo $this->translate('Hide all Feeds'); ?>"><span><?PHP echo $this->translate('Hide all Feeds'); ?></span></a></li>

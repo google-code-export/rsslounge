@@ -41,7 +41,8 @@ var rsslounge = {
             rsslounge.events.shortcuts();
             
             // set timeout for ajax refresh
-            rsslounge.refresh.timeout(rsslounge.settings.timeout);
+            if(rsslounge.settings.authenticated==true)
+                rsslounge.refresh.timeout(rsslounge.settings.timeout);
             
             // set visible feeds
             rsslounge.setFeedVisibility();
@@ -75,7 +76,7 @@ var rsslounge = {
             rsslounge.resize();
            
             // open new feed dialog
-            if($.trim(newfeed).length!=0)
+            if($.trim(newfeed).length!=0 && rsslounge.settings.authenticated==true)
                 rsslounge.dialogs.addEditFeed(newfeed);
         });
     },

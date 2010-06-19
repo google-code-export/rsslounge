@@ -60,9 +60,9 @@ class application_models_items extends application_models_base {
         if($settings['sort']=='dateasc')
             $select->order('datetime ASC');
         else if($settings['sort']=='priority')
-            $select->order(array('f.priority DESC', 'i.datetime DESC'));
+            $select->order(array('DATE(i.datetime) DESC', 'f.priority DESC', 'i.datetime DESC'));
         else if($settings['sort']=='priorityasc')
-            $select->order(array('f.priority ASC', 'i.datetime DESC'));
+            $select->order(array('DATE(i.datetime) DESC', 'f.priority ASC', 'i.datetime DESC'));
         else
             $select->order('datetime DESC');
         
