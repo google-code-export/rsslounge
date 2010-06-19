@@ -58,10 +58,6 @@ body {
     color:#ff0000;
 }
 
-.success {
-    color:#3C9600;
-}
-
 .found {
     background-color:#FFD100;
 }
@@ -250,6 +246,11 @@ div#header {
         font-size:11px;
         color:#DF7800;
     }
+    
+    #login .success {
+        color:#3C9600;
+    }
+
 
 
 
