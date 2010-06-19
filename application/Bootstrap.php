@@ -281,11 +281,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     
     
     /**
-     * initialize session
+     * reset session with default values
+     * from config file
      *
      * @return void
      */
-    protected function _initSession() {
+    public function resetSession($usedatabase=false) {
         // get session object
         $this->session = new Zend_Session_Namespace("base");
         
@@ -294,18 +295,41 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $default = $default["session"]["default"];
         
         // initialize values using values in database or default values
-        foreach ($default as $key => $value)
-            if($this->session->__isset($key)===false)
+        if($usedatabase===false) {
+            foreach ($default as $key => $value)
+                $this->session->__set(
+                    $key,
+                    $value
+                );
+        } else {
+            foreach ($default as $key => $value)
                 $this->session->__set(
                     $key,
                     $this->initializeSessionValue($key, $value)
                 );
+        }
+        
+        // always load public value from database
+        $this->session->__set(
+            'public',
+            $this->initializeSessionValue('public', 0)
+        );
         
         // set language
         $this->language->setLocale(new Zend_Locale($this->session->language));
         
         // save session object for further use
         Zend_Registry::set('session',$this->session);
+    }
+    
+    
+    /**
+     * initialize session
+     *
+     * @return void
+     */
+    protected function _initSession() {
+        $this->resetSession(true);
         return $this->session;
     }
     
@@ -325,7 +349,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $result = $settings->fetchAll(
                             $settings->select()
                                      ->where('name=?',$name));
-                                    
+        
         // value found?
         if($result->count()>0) {
             return $result->current()->value;

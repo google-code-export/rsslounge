@@ -50,7 +50,7 @@ class ItemController extends Zend_Controller_Action {
         }
         
         // save settings
-        if(Zend_Registry::get('config')->demomode!="1") {
+        if(Zend_Registry::get('config')->demomode!="1" && Zend_Registry::get('session')->authenticated===true) {
             $settingsModel = new application_models_settings();
             $settingsModel->save( array( 
                     'currentPriorityStart'   => $settings['currentPriorityStart'],

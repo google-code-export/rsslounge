@@ -156,73 +156,75 @@ rsslounge.events = {
         });
         
         // feed mousover
-        $('#feeds-list ul li').unbind('mouseenter');
-        $('#feeds-list ul li').mouseenter(function () {
-            $(this).children('.edit').show();
-            $(this).children('.prio').hide();
-        });
-        
-        $('#feeds-list ul li').unbind('mouseleave');
-        $('#feeds-list ul li').mouseleave(function () {
-            $(this).children('.edit').hide();
-            $(this).children('.prio').show();
-        });
-        
-        // feed edit
-        $('#feeds-list .edit').unbind('click');
-        $('#feeds-list .edit').click(function () {
-            rsslounge.dialogs.addEditFeed('',$(this).parent('li').attr('id'));
-        });
-
+        if(rsslounge.settings.authenticated==true) {
+            $('#feeds-list ul li').unbind('mouseenter');
+            $('#feeds-list ul li').mouseenter(function () {
+                $(this).children('.edit').show();
+                $(this).children('.prio').hide();
+            });
+            
+            $('#feeds-list ul li').unbind('mouseleave');
+            $('#feeds-list ul li').mouseleave(function () {
+                $(this).children('.edit').hide();
+                $(this).children('.prio').show();
+            });
+            
+            // feed edit
+            $('#feeds-list .edit').unbind('click');
+            $('#feeds-list .edit').click(function () {
+                rsslounge.dialogs.addEditFeed('',$(this).parent('li').attr('id'));
+            });
+        }
         
         
         
         //
         // drag n drop of feeds
         //
-        
-        var event = function(event) {
-                    rsslounge.dragged = true;
-                    
-                    // send new order
-                    $.ajax({
-                       type: 'GET',
-                       url: 'feed/sort?cat='+$(this).prev('h3').attr('id')+'&'+$(this).sortable('serialize'),
-                       dataType: 'json',
-                       success: function(response) {
-                            rsslounge.refreshCategories(response);
-                       }
-                    });
-                };
-        
-        // sortable lists
-        $("ul.feeds:not(.ui-sortable)").sortable({
-            'connectWith': '.feeds',
-            'stop': event,
-            'receive': event
-        });
-        
-        // dropable categories
-        $("#feeds h3:not(.add,.starred,.all)").droppable({
-            drop: function(event, ui) {
-                $list = $(this).next("ul");
-                
-                ui.draggable.hide('slow', function() {
-                    $(this).appendTo($list).show('slow',function() {
+        if(rsslounge.settings.authenticated==true) {
+            var event = function(event) {
+                        rsslounge.dragged = true;
+                        
                         // send new order
                         $.ajax({
                            type: 'GET',
-                           url: 'feed/sort?cat='+$(this).parent('ul').prev('h3').attr('id')+'&'+$(this).parent('ul').sortable('serialize'),
+                           url: 'feed/sort?cat='+$(this).prev('h3').attr('id')+'&'+$(this).sortable('serialize'),
                            dataType: 'json',
                            success: function(response) {
                                 rsslounge.refreshCategories(response);
                            }
                         });
+                    };
+            
+            // sortable lists
+            $("ul.feeds:not(.ui-sortable)").sortable({
+                'connectWith': '.feeds',
+                'stop': event,
+                'receive': event
+            });
+            
+            // dropable categories
+            $("#feeds h3:not(.add,.starred,.all)").droppable({
+                drop: function(event, ui) {
+                    $list = $(this).next("ul");
+                    
+                    ui.draggable.hide('slow', function() {
+                        $(this).appendTo($list).show('slow',function() {
+                            // send new order
+                            $.ajax({
+                               type: 'GET',
+                               url: 'feed/sort?cat='+$(this).parent('ul').prev('h3').attr('id')+'&'+$(this).parent('ul').sortable('serialize'),
+                               dataType: 'json',
+                               success: function(response) {
+                                    rsslounge.refreshCategories(response);
+                               }
+                            });
+                        });
                     });
-                });
-            },
-            hoverClass: 'dropphover'
-        });
+                },
+                hoverClass: 'dropphover'
+            });
+        }
         
         //
         // search
@@ -332,21 +334,22 @@ rsslounge.events = {
         });
         
         // opml import
-        new AjaxUpload('#opml-import', {
-            action: 'opml/import',
-            responseType: 'json',
-            onSubmit: function(file, extension) {
-                rsslounge.showError(lang.opml_wait, true);
-            },
-            onComplete: function(file, response) {
-                // error
-                if(typeof response.error != 'undefined')
-                    rsslounge.showError(response.error);
-                else
-                    // success: reload
-                    location.reload();
-            }
-        });
+        if($('#opml-import').length!=0)
+            new AjaxUpload('#opml-import', {
+                action: 'opml/import',
+                responseType: 'json',
+                onSubmit: function(file, extension) {
+                    rsslounge.showError(lang.opml_wait, true);
+                },
+                onComplete: function(file, response) {
+                    // error
+                    if(typeof response.error != 'undefined')
+                        rsslounge.showError(response.error);
+                    else
+                        // success: reload
+                        location.reload();
+                }
+            });
         
         // opml export
         $('#opml-export').unbind('click');
@@ -374,6 +377,9 @@ rsslounge.events = {
         
         // logout
         $('#menue .logout').attr('href',document.location+'?logout=1');
+        
+        // logout
+        $('#menue .login').attr('href',document.location+'?login=1');
     },
     
 
