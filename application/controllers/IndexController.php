@@ -69,7 +69,7 @@ class IndexController extends Zend_Controller_Action {
         $users = new application_models_users();
         if($users->getUsername()!==false && Zend_Registry::get('session')->authenticated===true)
             $this->view->logout = true;
-        elseif(Zend_Registry::get('session')->authenticated=='readonly')
+        elseif(Zend_Registry::get('session')->authenticated==='readonly')
             $this->view->login = true;
         
         // add new feed? Then show the dialog (for add feed bookmark)
