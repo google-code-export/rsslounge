@@ -5,12 +5,27 @@ rsslounge.events = {
      */
     SCROLL_TOLERANCE: 20,
     
+    /**
+     * element with current focus
+     */
+    focus: null,
+    
 
     /**
      * initialize the events of the feedlist
      */
     feedlist: function() {
-           
+        // prevent any touch event on the feedlist
+        $("#feeds-list").touch({
+            animate: false,
+            sticky: false,
+            dragx: false,
+            dragy: false,
+            rotate: false,
+            resort: false,
+            scale: false
+        });
+        
         //
         // submenue top
         //
@@ -65,9 +80,7 @@ rsslounge.events = {
         // categories
         //
         
-        // category click
-        $('#feeds-list h3').unbind('click');
-        $('#feeds-list h3').click(function () {
+        var selectCategoryEvent = function () {
             // prevent click after dragdrop
             if(rsslounge.dragged) {
                 rsslounge.dragged = false;
@@ -98,7 +111,14 @@ rsslounge.events = {
                 rsslounge.settings.starred = 0;
                 rsslounge.refreshList();
             }
-        });
+        };
+        
+        // category click
+        $('#feeds-list h3').unbind('touchstart');
+        $('#feeds-list h3').bind('touchstart', selectCategoryEvent);
+        
+        $('#feeds-list h3').unbind('click');
+        $('#feeds-list h3').click(selectCategoryEvent);
         
         // category mousemove: show dropdown button
         $('#feeds-list h3').unbind('mouseenter');
@@ -137,9 +157,7 @@ rsslounge.events = {
         // feeds
         //
         
-        // feed click
-        $('#feeds-list .feed').unbind('click');
-        $('#feeds-list .feed').click(function () {
+        var selectFeedEvent = function () {
             // prevent click after dragdrop
             if(rsslounge.dragged) {
                 rsslounge.dragged = false;
@@ -153,7 +171,14 @@ rsslounge.events = {
             rsslounge.settings.selected = $(this).parent('li').attr('id');
             rsslounge.settings.starred = 0;
             rsslounge.refreshList();
-        });
+        };
+        
+        // feed click
+        $('#feeds-list .feed').unbind('touchend');
+        $('#feeds-list .feed').bind('touchend', selectFeedEvent);
+        
+        $('#feeds-list .feed').unbind('click');
+        $('#feeds-list .feed').click(selectFeedEvent);
         
         // feed mousover
         if(rsslounge.settings.authenticated==true) {
@@ -226,6 +251,7 @@ rsslounge.events = {
             });
         }
         
+        
         //
         // search
         //
@@ -254,7 +280,16 @@ rsslounge.events = {
             rsslounge.settings.search = '';
             rsslounge.refreshList();
         });
-            
+        
+        $('#search').unbind('focusin');
+        $('#search').focusin(function(e) {
+            rsslounge.events.focus = $(this);
+        });
+        
+        $('#search').unbind('focusout');
+        $('#search').focusout(function(e) {
+            rsslounge.events.focus = null;
+        });        
         
         //
         // progressbar
@@ -271,6 +306,15 @@ rsslounge.events = {
      * initialize the events and widgets of the header
      */
     header: function() {
+        $("#header").touch({
+            animate: false,
+            sticky: false,
+            dragx: false,
+            dragy: false,
+            rotate: false,
+            resort: false,
+            scale: false
+        });
         
         //
         // slider
@@ -288,7 +332,7 @@ rsslounge.events = {
                 'min': parseInt(rsslounge.settings.priorityStart),
                 'max': parseInt(rsslounge.settings.priorityEnd),
                 'step': 1,
-                'animate': true,
+                'animate': false,
                 'values': [parseInt(rsslounge.settings.currentPriorityStart),  parseInt(rsslounge.settings.currentPriorityEnd)],
                 'change': function(event, ui) {
                     // set new priorities
@@ -303,7 +347,7 @@ rsslounge.events = {
                 },
                 'slide': function(event, ui) {
                     $('#prio label span').html(ui.values[0] + ' - ' + ui.values[1]);
-               }
+                }
             });
         } else
             $("#prio").hide();
@@ -1001,6 +1045,6 @@ rsslounge.events = {
      * returns whether shortcuts are active or not
      */
     shortcuts_enabled: function() {
-        return $.prompt.getCurrentState().length==0 && $('#search:focus').length==0;
+        return $.prompt.getCurrentState().length==0 && rsslounge.events.focus==null;
     }
 };

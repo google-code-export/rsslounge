@@ -110,6 +110,10 @@ div#header {
         background:url(images/header.png) center 3px no-repeat;
     }
     
+        body.small #header h1 {
+            margin-left:20px;
+        }
+    
     #header h1 span {
         visibility:hidden;
     }
@@ -120,7 +124,6 @@ div#header {
         left:100%;
         margin-left:-320px;
         width:200px;
-        
         font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;
         font-size:14px;
         font-weight:bold;
@@ -238,7 +241,9 @@ div#header {
     }
     
     #login input {
+        margin:0;
         font-size:20px;
+        width:240px;
         color:#DF7800;
     }
     
@@ -688,7 +693,7 @@ div.search a {
     
     body.small #filter #actions {
         margin-top:-53px;
-        margin-left:80px;
+        margin-left:45px;
     }
     
     #filter #actions, 
