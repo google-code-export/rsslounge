@@ -31,12 +31,8 @@ var rsslounge = {
         $(document).ready(function(){
        
             // register events
-            rsslounge.events.header();
-            rsslounge.events.feedlist();
-            rsslounge.events.settings();
-            rsslounge.events.images();
-            rsslounge.events.messages();
-            
+            rsslounge.events.init();
+    
             // register shortcuts
             rsslounge.events.shortcuts();
             
