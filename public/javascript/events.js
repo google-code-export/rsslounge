@@ -9,23 +9,27 @@ rsslounge.events = {
      * element with current focus
      */
     focus: null,
-    
+ 
 
+    /**
+     * initialize all events
+     */
+    init: function() {
+        rsslounge.events.header();
+        rsslounge.events.feedlist();
+        rsslounge.events.settings();
+        rsslounge.events.images();
+        rsslounge.events.messages();
+        
+        $('.ui-slider-handle').addTouch();
+    },
+    
+    
     /**
      * initialize the events of the feedlist
      */
     feedlist: function() {
-        // prevent any touch event on the feedlist
-        $("#feeds-list").touch({
-            animate: false,
-            sticky: false,
-            dragx: false,
-            dragy: false,
-            rotate: false,
-            resort: false,
-            scale: false
-        });
-        
+       
         //
         // submenue top
         //
@@ -114,8 +118,8 @@ rsslounge.events = {
         };
         
         // category click
-        $('#feeds-list h3').unbind('touchstart');
-        $('#feeds-list h3').bind('touchstart', selectCategoryEvent);
+        $('#feeds-list h3').unbind('touchend');
+        $('#feeds-list h3').bind('touchend', selectCategoryEvent);
         
         $('#feeds-list h3').unbind('click');
         $('#feeds-list h3').click(selectCategoryEvent);
@@ -174,6 +178,10 @@ rsslounge.events = {
         };
         
         // feed click
+        $('#feeds-list .feed').unbind('touchstart');
+        $('#feeds-list .feed').bind('touchstart', selectFeedEvent);
+        
+        
         $('#feeds-list .feed').unbind('touchend');
         $('#feeds-list .feed').bind('touchend', selectFeedEvent);
         
@@ -226,7 +234,7 @@ rsslounge.events = {
                 'connectWith': '.feeds',
                 'stop': event,
                 'receive': event
-            });
+            }).addTouch();
             
             // dropable categories
             $("#feeds h3:not(.add,.starred,.all)").droppable({
@@ -306,15 +314,6 @@ rsslounge.events = {
      * initialize the events and widgets of the header
      */
     header: function() {
-        $("#header").touch({
-            animate: false,
-            sticky: false,
-            dragx: false,
-            dragy: false,
-            rotate: false,
-            resort: false,
-            scale: false
-        });
         
         //
         // slider
@@ -1046,5 +1045,34 @@ rsslounge.events = {
      */
     shortcuts_enabled: function() {
         return $.prompt.getCurrentState().length==0 && rsslounge.events.focus==null;
+    },
+    
+    
+    
+    touchHandler: function(event) {
+    var touches = event.changedTouches,
+        first = touches[0],
+        type = "";
+    
+    switch(event.type)
+    {
+        case "touchstart": type ="mousedown"; break;
+        case "touchmove":  type="mousemove"; break;        
+        case "touchend":   type="mouseup"; break;
+        default: return;
     }
+        
+    //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+    //           screenX, screenY, clientX, clientY, ctrlKey, 
+    //           altKey, shiftKey, metaKey, button, relatedTarget);
+    
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+                              first.screenX, first.screenY, 
+                              first.clientX, first.clientY, false, 
+                              false, false, false, 0/*left*/, null);
+                                                                            
+    first.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+}
 };
