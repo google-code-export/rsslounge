@@ -36,7 +36,7 @@
             <?PHP endif; ?>
             <li><label><?PHP echo $this->translate('Username'); ?></label> <input type="text" name="username" /></li>
             <li><label><?PHP echo $this->translate('Password'); ?></label> <input type="password" name="password" /></li>
-            <li><label>&nbsp;</label><input type="submit" value="<?PHP echo $this->translate('login'); ?>" /></li>
+            <li><label>&nbsp;</label> <input type="submit" value="<?PHP echo $this->translate('login'); ?>" /></li>
             <?PHP if(Zend_Registry::get('session')->public==1) : ?>
             <li><label>&nbsp;</label><a href="<?PHP echo $this->url(); ?>"><?PHP echo $this->translate('show rsslounge in public mode'); ?> &raquo;</a></li>
             <?PHP endif; ?>
