@@ -133,7 +133,7 @@ div#header {
             display:block;
             width:100%;
             text-align:center;
-            margin-bottom:5px;
+            margin-bottom:10px;
         }
     
         #slider {
@@ -142,8 +142,9 @@ div#header {
         }
         
             #slider .ui-slider-handle {
-                width:1.0em;
-                height:1.0em;
+                margin-top:-5px;
+                width:25px;
+                height:25px;
             }
     
     
@@ -692,7 +693,7 @@ div.search a {
     }
     
     body.small #filter #actions {
-        margin-top:-53px;
+        margin-top:-51px;
         margin-left:45px;
     }
     
@@ -1265,6 +1266,31 @@ div.search a {
 .jqimessage h1.settings {
     background-image:url(images/settings.png);
 }
+
+#settings-nav {
+    position:absolute;
+    left:660px;
+    top:320px;
+    width:40px;
+    display:none;
+}
+
+    #settings-nav  .settings-nav-up,
+    #settings-nav  .settings-nav-down {
+        cursor:pointer;
+        display:block;
+        width:20px;
+        height:24px;
+    }
+    
+    #settings-nav  .settings-nav-up {
+        background-image:url(images/up_arrow_big.png);
+        display:none;
+    }
+    
+    #settings-nav .settings-nav-down {
+        background-image:url(images/down_arrow_big.png);
+    }
 
 #settings-data {
     height:300px;
