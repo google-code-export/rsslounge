@@ -312,7 +312,7 @@ rsslounge.dialogs = {
      */
     initializeDialogCategories: function() {
         // make list sortable
-        $('#categories-list').sortable({ items: 'li:not(.add)', axis: 'y' }).disableSelection();
+        $('#categories-list').sortable({ items: 'li:not(.add)', axis: 'y' }).disableSelection().addTouch();
         
         // edit category
         var editEvent = function() {
@@ -335,6 +335,7 @@ rsslounge.dialogs = {
             };
             
             parent.children('.accept').click(accept);
+            parent.children('.accept').bind('touchend',accept);
             
             parent.children('input').keypress(function(e) {
                 if(e.which==13)
@@ -354,14 +355,22 @@ rsslounge.dialogs = {
         $("#categories-list .edit").click(editEvent);
         $("#categories-list .delete").click(deleteEvent);
         
+        $("#categories-list .edit").bind('touchend', editEvent);
+        $("#categories-list .delete").bind('touchend', deleteEvent);
+        
         // add category
-        $("#categories-list .add").click(function() {
+        var addEvent = function() {
             $(this).before('<li><span>'+lang.new_category+'</span> <a class="edit"><span>'+lang.edit+'</span></a> <a class="delete"><span>'+lang.remove+'</span></a> <span class="error"></span></li>');
             var parent = $(this).prev();
             parent.children('.edit').click(editEvent);
             parent.children('.delete').click(deleteEvent);
+            parent.children('.edit').bind('touchend', editEvent);
+            parent.children('.delete').bind('touchend', deleteEvent);
             parent.children('.edit').click();
-        });
+        };
+        
+        $("#categories-list .add").click(addEvent);
+        $("#categories-list .add").bind('touchend', addEvent);
     },
     
     
@@ -452,6 +461,28 @@ rsslounge.dialogs = {
                     buttons: buttons,
                     loaded: function() {
                         $('#settings-data .bookmark a').attr('href', 'javascript:document.location="'+document.location+'?url="+escape(document.location)');
+                        
+                        // only show scroll buttons on ipad
+                        if(navigator.userAgent.match(/iPad/i) != null)
+                            $('#settings-nav').show();
+                        
+                        // enable scroll down and up
+                        var scrollUpEvent = function() {
+                            $('#settings-data').animate({ scrollTop: 0}, 500);
+                            $('#settings-nav .settings-nav-up').hide();
+                            $('#settings-nav .settings-nav-down').show();
+                        }
+                        //$('#settings-nav .settings-nav-up').click(scrollUpEvent);
+                        $('#settings-nav .settings-nav-up').bind('touchend',scrollUpEvent);
+                        
+                        var scrollDownEvent = function() {
+                            $('#settings-data').animate({ scrollTop: 300}, 500);
+                            $('#settings-nav .settings-nav-up').show();
+                            $('#settings-nav .settings-nav-down').hide();
+                        }
+                        //$('#settings-nav .settings-nav-down').click(scrollDownEvent);
+                        $('#settings-nav .settings-nav-down').bind('touchend',scrollDownEvent);
+                        
                         
                         // enable/disable login fields
                         $('#activate_login').click(function() {

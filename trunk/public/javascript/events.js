@@ -20,8 +20,6 @@ rsslounge.events = {
         rsslounge.events.settings();
         rsslounge.events.images();
         rsslounge.events.messages();
-        
-        $('.ui-slider-handle').addTouch();
     },
     
     
@@ -172,15 +170,22 @@ rsslounge.events = {
             $('#feeds-list ul li').removeClass('active');
             $(this).parent('li').addClass('active');
             
+            // show edit on ipad
+            if(navigator.userAgent.match(/iPad/i) != null && rsslounge.settings.authenticated==true) {
+                $('#feeds-list ul li .edit').hide();
+                $('#feeds-list ul li .prio').show();
+                $(this).parent('li').children('.edit').show();
+                $(this).parent('li').children('.prio').hide();
+            }
+            
             rsslounge.settings.selected = $(this).parent('li').attr('id');
             rsslounge.settings.starred = 0;
             rsslounge.refreshList();
         };
         
         // feed click
-        $('#feeds-list .feed').unbind('touchstart');
-        $('#feeds-list .feed').bind('touchstart', selectFeedEvent);
-        
+        // $('#feeds-list .feed').unbind('touchstart');
+        // $('#feeds-list .feed').bind('touchstart', selectFeedEvent);
         
         $('#feeds-list .feed').unbind('touchend');
         $('#feeds-list .feed').bind('touchend', selectFeedEvent);
@@ -205,6 +210,11 @@ rsslounge.events = {
             // feed edit
             $('#feeds-list .edit').unbind('click');
             $('#feeds-list .edit').click(function () {
+                rsslounge.dialogs.addEditFeed('',$(this).parent('li').attr('id'));
+            });
+            
+            $('#feeds-list .edit').unbind('touchend');
+            $('#feeds-list .edit').bind('touchend',function () {
                 rsslounge.dialogs.addEditFeed('',$(this).parent('li').attr('id'));
             });
         }
@@ -348,6 +358,9 @@ rsslounge.events = {
                     $('#prio label span').html(ui.values[0] + ' - ' + ui.values[1]);
                 }
             });
+            
+            // make slider touchable
+            $('.ui-slider-handle').addTouch();
         } else
             $("#prio").hide();
         
