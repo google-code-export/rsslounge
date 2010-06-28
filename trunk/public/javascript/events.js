@@ -432,7 +432,10 @@ rsslounge.events = {
         $('#menue .logout').attr('href',document.location+'?logout=1');
         
         // logout
-        $('#menue .login').attr('href',document.location+'?login=1');
+        var url = document.location+'?login=1';
+        if(document.location.href.indexOf('?')!=-1)
+            url = document.location+'&login=1';
+        $('#menue .login').attr('href',url);
     },
     
 

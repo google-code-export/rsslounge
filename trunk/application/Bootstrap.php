@@ -22,7 +22,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $dbversion = "2";
+    public $dbversion = "1";
     
     
     /**

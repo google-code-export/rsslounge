@@ -24,8 +24,9 @@ UPDATE
 1. backup your database and your "data" folder
 2. (IMPORTANT: don't delete the "data" folder) delete all old files and folders (including "config") excluding the folder "data"
 3. upload all new files and folders excluding the data folder (IMPORTANT: also upload the invisible .htaccess files)
-4. open rsslounge in your browser and follow the install instructions
-5. use your old database connection, the new rsslounge version will update the old database automatically
+4. Clean your browser cache
+5. open rsslounge in your browser and follow the install instructions
+6. use your old database connection, the new rsslounge version will update the old database automatically
 
 
 
@@ -51,6 +52,7 @@ UPDATE
 1. die Datenbank sowie den "data" Ordner sichern
 2. (WICHTIG: nicht den "data" Ordner löschen) alle alten Dateien und Ordnern (einschließlich "config") aber ohne dem Ordner "data" löschen
 3. alle neuen Dateien und Ordner hochladen (ausgenommen dem "data" Ordner) (WICHTIG: auch die unsichtbaren .htaccess Dateien hochladen)
-4. rsslounge im Browser öffnen und den Anweisungen folgen
-5. die alte Datenbank für die neue rsslounge Version verwenden (die alte Datenbank wird automatisch aktualisiert)
+4. Leere den Cache des Browsers
+5. rsslounge im Browser öffnen und den Anweisungen folgen
+6. die alte Datenbank für die neue rsslounge Version verwenden (die alte Datenbank wird automatisch aktualisiert)
 
