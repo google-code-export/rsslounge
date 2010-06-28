@@ -171,7 +171,7 @@ rsslounge.events = {
             $(this).parent('li').addClass('active');
             
             // show edit on ipad
-            if(navigator.userAgent.match(/iPad/i) != null && rsslounge.settings.authenticated==true) {
+            if($('body').hasClass('ipad') && rsslounge.settings.authenticated==true) {
                 $('#feeds-list ul li .edit').hide();
                 $('#feeds-list ul li .prio').show();
                 $(this).parent('li').children('.edit').show();
@@ -184,9 +184,6 @@ rsslounge.events = {
         };
         
         // feed click
-        // $('#feeds-list .feed').unbind('touchstart');
-        // $('#feeds-list .feed').bind('touchstart', selectFeedEvent);
-        
         $('#feeds-list .feed').unbind('touchend');
         $('#feeds-list .feed').bind('touchend', selectFeedEvent);
         

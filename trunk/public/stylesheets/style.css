@@ -142,6 +142,11 @@ div#header {
         }
         
             #slider .ui-slider-handle {
+                width:1em;
+                height:1em;
+            }
+        
+            body.ipad #slider .ui-slider-handle {
                 margin-top:-5px;
                 width:25px;
                 height:25px;

@@ -59,11 +59,17 @@ class application_models_items extends application_models_base {
         // set order
         if($settings['sort']=='dateasc')
             $select->order('datetime ASC');
-        else if($settings['sort']=='priority')
-            $select->order(array('DATE(i.datetime) DESC', 'f.priority DESC', 'i.datetime DESC'));
-        else if($settings['sort']=='priorityasc')
-            $select->order(array('DATE(i.datetime) DESC', 'f.priority ASC', 'i.datetime DESC'));
-        else
+        else if($settings['sort']=='priority') {
+            if(isset($settings['unread']) && $settings['unread']!=0)
+                $select->order(array('f.priority DESC', 'i.datetime DESC'));
+            else
+                $select->order(array('DATE(i.datetime) DESC', 'f.priority DESC', 'i.datetime DESC'));
+        } else if($settings['sort']=='priorityasc') {
+            if(isset($settings['unread']) && $settings['unread']!=0)
+                $select->order(array('f.priority ASC', 'i.datetime DESC'));
+            else
+                $select->order(array('DATE(i.datetime) DESC', 'f.priority ASC', 'i.datetime DESC'));
+        } else
             $select->order('datetime DESC');
         
         // execute search
