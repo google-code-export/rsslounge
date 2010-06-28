@@ -463,7 +463,7 @@ rsslounge.dialogs = {
                         $('#settings-data .bookmark a').attr('href', 'javascript:document.location="'+document.location+'?url="+escape(document.location)');
                         
                         // only show scroll buttons on ipad
-                        if(navigator.userAgent.match(/iPad/i) != null)
+                        if($('body').hasClass('ipad'))
                             $('#settings-nav').show();
                         
                         // enable scroll down and up

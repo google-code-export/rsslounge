@@ -74,6 +74,9 @@ class IndexController extends Zend_Controller_Action {
         
         // add new feed? Then show the dialog (for add feed bookmark)
         $this->view->newfeed = $this->getRequest()->getParam('url', '');
+        
+        // ipad detection
+        $this->view->isIpad = (bool) strpos($_SERVER['HTTP_USER_AGENT'],'iPad');
     }
     
     
