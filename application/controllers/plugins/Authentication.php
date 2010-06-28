@@ -84,6 +84,7 @@ class Plugin_Authentication extends Zend_Controller_Plugin_Abstract {
             if( 
                 $request->getControllerName()!='error'
                 && $request->getControllerName()!='index'
+                && $request->getControllerName()!='patch'
                 && !($request->getControllerName()=='item' && $request->getActionName()=='list')
                 && !($request->getControllerName()=='item' && $request->getActionName()=='listmore')
                 && !($request->getControllerName()=='update' && $request->getActionName()=='silent')
