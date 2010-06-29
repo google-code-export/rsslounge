@@ -1,6 +1,31 @@
 #labels Featured
 =Changelog=
 
+==Version 1.4==
+
+  * Design improvements: new dropdown menues for filter settings
+  * New order option by feed priority
+  * rsslounge works now on IE7+
+  * rsslounge works now on iPad
+  * New setting for choosing whether all items will be shown opened or closed per default
+  * New public mode for guest. rsslounge shows all items also for non authenticated users and allows any non editing action.
+  * Enable usage of port in database connection setting (e.g. 127.0.0.1:3306) (issue 23)
+  * Starred items will not be deleted
+  * New robots.txt prevents search engine indexing
+  * New datasource plugin for flickr
+  * New datasource plugin for zeit.de (full content)
+  * Smaller package size (unused Zend Frameworks components removed)
+  * Cleanup old errormessage entries
+  * Bugfix: items without title will get the title "[no item]"
+  * Bugfix: allow Umlaute in Feed names
+  * Bugfix: calendar works now also after clicks on the month overview
+  * Bugfix: solved UTF8 issue on ajax communication
+  * Bugfix: fix translation issue (issue 26)
+  * Bugfix: parallel refresh (cronjob and ajax) results in double update. Now no ajax refresh appears when cronjob was running.
+  * Bugfix: just one refresh of item list on calendar toggle
+  * Bugfix: set priority range after feed delete
+
+
 ==Version 1.3==
   
   * New: [Shortcuts] available
