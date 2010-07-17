@@ -893,22 +893,6 @@ rsslounge.events = {
                 $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
         });
         
-        // rate up
-        $(document).bind('keydown', 'u', function() {
-            var current = $('#messages li.selected .rateup-message');
-            
-            if(rsslounge.events.shortcuts_enabled())
-                current.click();
-        });
-        
-        // rate down
-        $(document).bind('keydown', 'd', function() {
-            var current = $('#messages li.selected .ratedown-message');
-            
-            if(rsslounge.events.shortcuts_enabled())
-                current.click();
-        });
-        
         // open target
         $(document).bind('keydown', 'v', function() {
             if(rsslounge.events.shortcuts_enabled()) {

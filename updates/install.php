@@ -163,6 +163,7 @@
             if(strlen(trim($_POST['prefix']))>0) {
                 $sql = str_replace('CREATE TABLE IF NOT EXISTS `', 'CREATE TABLE IF NOT EXISTS `' . trim($_POST['prefix']), $sql);
                 $sql = str_replace('INSERT INTO `', 'INSERT INTO `' . trim($_POST['prefix']), $sql);
+                $sql = str_replace('DELETE FROM `', 'DELETE FROM `' . trim($_POST['prefix']), $sql);
             }
             
             if(strlen(trim($_POST['login_password']))!=0 && strlen(trim($_POST['login_username']))!=0)
