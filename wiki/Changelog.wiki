@@ -1,6 +1,10 @@
 #labels Featured
 =Changelog=
 
+==Version 1.5==
+
+  * Bugfix: usage of database prefix will now work
+
 ==Version 1.4==
 
   * Design improvements: new dropdown menues for filter settings
