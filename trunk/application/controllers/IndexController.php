@@ -37,7 +37,8 @@ class IndexController extends Zend_Controller_Action {
      */
     public function indexAction() {
         // stop if ie is current browser
-        if(get_browser()->browser == 'IE' && get_browser()->majorver == 6)
+        $browser = @get_browser();
+        if(isset($browser->browser) && get_browser()->browser == 'IE' && get_browser()->majorver == 6)
             $this->_redirect('index/ie');
         
         // update

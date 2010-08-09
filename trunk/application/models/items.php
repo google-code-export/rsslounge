@@ -208,18 +208,43 @@ class application_models_items extends application_models_base {
      * @return void
      */
     public function cleanupThumbnails() {
-        // scan all thumbnails
-        foreach(scandir(Zend_Registry::get('config')->thumbnails->path) as $file) {
-            if(is_file(Zend_Registry::get('config')->thumbnails->path . '/' . $file)) {
-                
-                // search whether any link to this file exists
-                $select = $this->select()->from($this, 'count(*)')
-                                         ->where($this->getAdapter()->quoteInto('content=?', $file));
-                $count = $this->getAdapter()->fetchOne($select);
-                
-                // no link => delete
-                if($count==0)
-                    unlink(Zend_Registry::get('config')->thumbnails->path . '/' . $file);
+        if(Zend_Registry::get('config')->thumbnails->cleanup=="cached") {
+            // get all current thumbnail files
+            $p = Zend_Registry::get('config')->resources->db->prefix;
+            $db = $this->getAdapter();
+            $select = $db->select()
+                         ->from( array( 'i' => $p.'items' ), array('content') )
+                         ->join( array( 'f' => $p.'feeds' ), 'i.feed = f.id', array() )
+                         ->where('multimedia=1');
+            $items = $db->fetchAll($select);
+            $files = array();
+            foreach($items as $item)
+                $files[] = $item['content'];
+            
+            // scan all thumbnails
+            foreach(scandir(Zend_Registry::get('config')->thumbnails->path) as $file) {
+                if(is_file(Zend_Registry::get('config')->thumbnails->path . '/' . $file)) {
+                    
+                    if(in_array($file, $files)===false)
+                        unlink(Zend_Registry::get('config')->thumbnails->path . '/' . $file);
+                    
+                }
+            }
+        } else {
+        
+            // scan all thumbnails
+            foreach(scandir(Zend_Registry::get('config')->thumbnails->path) as $file) {
+                if(is_file(Zend_Registry::get('config')->thumbnails->path . '/' . $file)) {
+                    
+                    // search whether any link to this file exists
+                    $select = $this->select()->from($this, 'count(*)')
+                                             ->where($this->getAdapter()->quoteInto('content=?', $file));
+                    $count = $this->getAdapter()->fetchOne($select);
+                    
+                    // no link => delete
+                    if($count==0)
+                        unlink(Zend_Registry::get('config')->thumbnails->path . '/' . $file);
+                }
             }
         }
     }

@@ -76,7 +76,6 @@ class application_models_base extends Zend_Db_Table {
         $db = Zend_Registry::get('bootstrap')->getPluginResource('db')->getDbAdapter();
         $db->query(
             "OPTIMIZE TABLE 
-                `".$prefix."b8wordlist` , 
                 `".$prefix."categories` , 
                 `".$prefix."feeds` , 
                 `".$prefix."items` , 
