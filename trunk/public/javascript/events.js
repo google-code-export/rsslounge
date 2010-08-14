@@ -537,8 +537,8 @@ rsslounge.events = {
      */
     images: function() {
         // select image on click
-        $('#images div').unbind('click');
-        $('#images div').click(function() {
+        $('#images div').unbind('mouseenter');
+        $('#images div').mouseenter(function() {
             $('#images div.selected, #messages li.selected').removeClass('selected');
             $(this).addClass('selected');
         });

@@ -99,15 +99,41 @@ div#extra {
 
 div#header {
     color:#fff;
-    background:url(images/header-bg.png);
-    height:78px;
+    height:48px;
+	margin-bottom:20px;
 }
 
+    #header-left {
+    	position:absolute;
+		left:15px;
+		top:0;
+        background:url(images/header-left.png);
+		height:48px;
+		width:46px;	
+	}
+	
+	#header-right {
+        background:url(images/header-right.png);
+        height:48px;
+        width:37px; 
+		position:absolute;
+        left:100%;
+        top:0;
+		margin-left:-45px;
+    }
+	
+	#header-content {
+		background:url(images/header-bg.png);
+		height:48px;
+		margin-left:20px;
+		margin-right:20px;
+    }
+		
     #header h1 {
-        margin-left:60px;
-        width:280px;
-        height:68px;
-        background:url(images/header.png) center 3px no-repeat;
+        margin-left:50px;
+        width:203px;
+        height:62px;
+        background:url(images/header.png) center top no-repeat;
     }
     
         body.small #header h1 {
@@ -120,12 +146,12 @@ div#header {
     
     div#prio {
         position:absolute;
-        top:14px;
+        top:7px;
         left:100%;
         margin-left:-320px;
         width:200px;
         font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;
-        font-size:14px;
+        font-size:12px;
         font-weight:bold;
     }
     
@@ -137,11 +163,13 @@ div#header {
         }
     
         #slider {
+        	margin-top:-10px;
             height:8px;
             width:100%;
         }
         
             #slider .ui-slider-handle {
+            	font-size:14px;
                 width:1em;
                 height:1em;
             }
@@ -157,7 +185,7 @@ div#header {
         display:block;
         position:absolute;
         left:100%;
-        top:20px;
+        top:8px;
         margin-left:-80px;
         background:url(images/menue.png) no-repeat;
         width:32px;
@@ -173,7 +201,7 @@ div#header {
         position:absolute;
         left:100%;
         margin-left:-180px;
-        top:60px;
+        top:45px;
         width:170px;
         z-index:100;
     }
@@ -451,7 +479,7 @@ div#header {
             font-weight:normal;
             color:black;
             
-            padding:14px;
+            padding:12px;
             padding-left:35px;
             margin-top:2px;
             margin-bottom:2px;
@@ -461,7 +489,7 @@ div#header {
             -moz-border-radius: 4px;
             -webkit-border-radius: 4px;
             
-            background:url(images/category.png) 4px 9px no-repeat;
+            background:url(images/category.png) 4px 7px no-repeat;
         }
         
             #feeds-list h3.active,

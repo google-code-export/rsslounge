@@ -64,14 +64,18 @@
     
     <!-- header -->
     <div id="header">
-        <h1><span>rssLounge aggregator</span></h1>
-        
-        <div id="prio">
-            <label><?PHP echo $this->translate('Priority'); ?>: <span></span></label>
-            <div id="slider"></div>
+        <div id="header-left"></div>
+        <div id="header-content">
+	        <h1><span>rssLounge aggregator</span></h1>
+	        
+	        <div id="prio">
+	            <label><?PHP echo $this->translate('Priority'); ?>: <span></span></label>
+	            <div id="slider"></div>
+	        </div>
+	        
+	        <a id="menue-button"><span><?PHP echo $this->translate('main menue'); ?></span></a>
         </div>
-        
-        <a id="menue-button"><span><?PHP echo $this->translate('main menue'); ?></span></a>
+        <div id="header-right"></div>
     </div>
     
     <!-- main menue -->
