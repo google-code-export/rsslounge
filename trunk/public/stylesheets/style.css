@@ -109,7 +109,8 @@ div#header {
 		top:0;
         background:url(images/header-left.png);
 		height:48px;
-		width:46px;	
+		width:46px;
+		z-index:1;
 	}
 	
 	#header-right {
@@ -130,10 +131,12 @@ div#header {
     }
 		
     #header h1 {
+    	position:absolute;
         margin-left:50px;
         width:203px;
         height:62px;
         background:url(images/header.png) center top no-repeat;
+		z-index:200;
     }
     
         body.small #header h1 {
@@ -726,7 +729,7 @@ div.search a {
     }
     
     body.small #filter #actions {
-        margin-top:-51px;
+        margin-top:-61px;
         margin-left:45px;
     }
     
