@@ -26,6 +26,7 @@ div.jqi .jqicontainer{
 	font-weight: bold; 
 }
 div.jqi .jqiclose{ 
+    display:none;
 	position: absolute;
 	top: 4px; right: -2px; 
 	width: 18px; 
