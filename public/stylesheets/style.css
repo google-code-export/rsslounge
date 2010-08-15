@@ -105,7 +105,7 @@ div#header {
 
     #header-left {
     	position:absolute;
-		left:15px;
+		left:8px;
 		top:0;
         background:url(images/header-left.png);
 		height:48px;
@@ -120,7 +120,7 @@ div#header {
 		position:absolute;
         left:100%;
         top:0;
-		margin-left:-45px;
+		margin-left:-46px;
     }
 	
 	#header-content {
@@ -130,9 +130,15 @@ div#header {
 		margin-right:20px;
     }
 		
+    body.ipad #header h1 {
+    	top:-1px;
+	}
+		
     #header h1 {
     	position:absolute;
         margin-left:50px;
+		margin-top:0;
+		top:0;
         width:203px;
         height:62px;
         background:url(images/header.png) center top no-repeat;
@@ -711,6 +717,7 @@ div.search a {
 #content {
     padding:10px;
     padding-top:6px;
+	padding-right:15px;
 }
 
 #filter {
@@ -730,7 +737,7 @@ div.search a {
     
     body.small #filter #actions {
         margin-top:-61px;
-        margin-left:45px;
+        margin-left:15px;
     }
     
     #filter #actions, 
