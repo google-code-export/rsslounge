@@ -100,7 +100,7 @@ div#extra {
 div#header {
     color:#fff;
     height:48px;
-	margin-bottom:20px;
+	margin-bottom:10px;
 }
 
     #header-left {
@@ -136,7 +136,7 @@ div#header {
 		
     #header h1 {
     	position:absolute;
-        margin-left:50px;
+        margin-left:30px;
 		margin-top:0;
 		top:0;
         width:203px;
@@ -717,7 +717,7 @@ div.search a {
 #content {
     padding:10px;
     padding-top:6px;
-	padding-right:15px;
+	padding-right:17px;
 }
 
 #filter {
