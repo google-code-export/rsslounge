@@ -1,6 +1,13 @@
 #labels Featured
 =Changelog=
 
+==Version 1.6==
+
+  * new header design
+  * Bugfix: login works now correct
+  * select images on mouseover
+  * prevent get_browser error if no browsercap.ini is set
+
 ==Version 1.5==
 
   * Bugfix: usage of database prefix will now work

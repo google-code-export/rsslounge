@@ -1,6 +1,13 @@
 #labels Featured
 =Changelog=
 
+==Version 1.6==
+
+  * neues Design für den Seitenheader
+  * Bugfix: Login funktioniert nun fehlerfrei
+  * Bilder werden beim Mouseover selektiert
+  * get_browser Fehler tritt nicht mehr auf, wenn keine browsercap.ini gesetzt wurde
+  
 ==Version 1.5==
 
   * Bugfix: Verwendung eines Datenbank Prefix arbeitet nun korrekt
