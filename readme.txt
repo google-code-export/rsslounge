@@ -1,7 +1,7 @@
 rsslounge aggregator
 http://rsslounge.aditu.de
 tobias.zeising@aditu.de
-Version 1.5
+Version 1.6
 
 -------
 english

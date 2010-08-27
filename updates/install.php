@@ -236,10 +236,13 @@
 <body>
     <!-- header -->
     <div id="header">
-        <h1><span>rssLounge aggregator</span></h1>
+        <div id="header-left"></div>
+        <div id="header-content">
+	        <h1><span>rssLounge aggregator</span></h1>
+	    </div>
+        <div id="header-right"></div>
     </div>
     
-
     <!-- main area -->
     <form id="install" action="" method="<?PHP if($success) echo 'get'; else echo 'post'; ?>">
         <h1><?PHP echo $locale->translate('Installation'); ?></h1>
