@@ -262,7 +262,7 @@ div#header {
     #login h1 {
         width:100%;
         height:68px;
-        background:url(images/header.png) center 3px no-repeat;
+        background:url(images/header.png) center 0px no-repeat;
     }
     
         #login h1 span {
@@ -736,7 +736,7 @@ div.search a {
     }
     
     body.small #filter #actions {
-        margin-top:-61px;
+        margin-top:-53px;
         margin-left:15px;
     }
     
