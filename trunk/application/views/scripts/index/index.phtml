@@ -117,7 +117,7 @@
                     <select name="sort" id="sort">
                         <option value="date" <?PHP if(Zend_Registry::get('session')->sort=='date') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('first new'); ?></option>
                         <option value="dateasc" <?PHP if(Zend_Registry::get('session')->sort=='dateasc') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('first old'); ?></option>
-                        <option value="priority" <?PHP if(Zend_Registry::get('session')->sort=='priority') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('priority ascending'); ?></option>
+                        <?PHP /*<option value="priority" <?PHP if(Zend_Registry::get('session')->sort=='priority') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('priority ascending'); ?></option>*/ ?>
                         <option value="priorityasc" <?PHP if(Zend_Registry::get('session')->sort=='priorityasc') : ?>selected="selected"<?PHP endif; ?>><?PHP echo $this->translate('priority descending'); ?></option>
                     </select>
 
