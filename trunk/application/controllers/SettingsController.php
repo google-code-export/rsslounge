@@ -32,7 +32,7 @@ class SettingsController extends Zend_Controller_Action {
         // load available languages
         $this->view->languages = array();
         foreach(Zend_Registry::get('language')->getList() as $lang)
-            $this->view->languages[$lang] = Zend_Registry::get('language')->translate($lang);
+            $this->view->languages[$lang] = utf8_encode(html_entity_decode(Zend_Registry::get('language')->translate($lang)));
             
         // load username
         $user = new application_models_users();
