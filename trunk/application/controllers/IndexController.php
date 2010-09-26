@@ -89,20 +89,30 @@ class IndexController extends Zend_Controller_Action {
     public function loginAction() {
         $username = $this->getRequest()->getParam('username', false);
         $password = $this->getRequest()->getParam('password', false);
+        $isJson = $this->getRequest()->getParam('json', false);
         
         // login
         $users = new application_models_users();
         if($username) {
             if($users->authenticate($username, $password)) {
                 Zend_Registry::get('session')->authenticated=true;
+                if($isJson==true)
+                    $this->_helper->json(array('success' => true));
+                
                 $this->_redirect('');
             } else {
                 $this->view->error = true;
+                
+                if($isJson==true)
+                    $this->_helper->json(array('success' => false));
             }
         }
         
         if($this->getRequest()->getParam('logout', false)!==false)
             $this->view->logout = true;
+            
+        if($isJson==true)
+            $this->_helper->json(array('success' => true));
     }
     
     
