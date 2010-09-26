@@ -37,8 +37,17 @@ class ItemController extends Zend_Controller_Action {
      * @return void
      */
     public function listAction() {
+        $isJson = $this->getRequest()->getParam('json', false);
+    
+        // load current settings
+        $settingsModel = new application_models_settings();
+        $currentSettings = array();
+        foreach($settingsModel->fetchAll() as $setting)
+            $currentSettings[$setting->name] = $setting->value;
+    
         // read settings
         $settings = $this->getRequest()->getPost();
+        $settings = array_merge($currentSettings,$settings);
         
         // get list template vars
         $listHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('list');
@@ -51,7 +60,6 @@ class ItemController extends Zend_Controller_Action {
         
         // save settings
         if(Zend_Registry::get('config')->demomode!="1" && Zend_Registry::get('session')->authenticated===true) {
-            $settingsModel = new application_models_settings();
             $settingsModel->save( array( 
                     'currentPriorityStart'   => $settings['currentPriorityStart'],
                     'currentPriorityEnd'     => $settings['currentPriorityEnd'],
@@ -68,7 +76,7 @@ class ItemController extends Zend_Controller_Action {
         
         // return items
         $feedModel = new application_models_feeds();
-        $this->_helper->json(array( 
+        $result = array( 
             'html'           => utf8_encode(utf8_decode($this->view->render('item/list.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix()))),
             'categories'     => $itemCounter->unreadItemsCategories($settings),
             'feeds'          => $itemCounter->unreadItemsFeeds($settings),
@@ -77,7 +85,17 @@ class ItemController extends Zend_Controller_Action {
             'countfeeds'     => $feedModel->count(Zend_Registry::get('session')->currentPriorityStart, 
                                                   Zend_Registry::get('session')->currentPriorityEnd,
                                                   Zend_Registry::get('session')->view)
-        ));
+        );
+        
+        if($isJson==true) {
+            unset($result['html']);
+            $result['messages'] = $listHelper->getMessages();
+            $result['moremessages'] = $listHelper->hasMoreMessages();
+            $result['multimedia'] = $listHelper->getMultimedia();
+            $result['moremultimedia'] = $listHelper->hasMoreMultimedia();
+        }
+        
+        $this->_helper->json($result);
     }
     
     
@@ -88,8 +106,15 @@ class ItemController extends Zend_Controller_Action {
      * @return void
      */
     public function listmoreAction() {
+        // load current settings
+        $settingsModel = new application_models_settings();
+        $currentSettings = array();
+        foreach($settingsModel->fetchAll() as $setting)
+            $currentSettings[$setting->name] = $setting->value;
+    
         // read settings
-        $settings = $this->getRequest()->getPost();
+        $settings = $this->getRequest()->getParams();
+        $settings = array_merge($currentSettings,$settings);
         
         // get items
         $result = $this->listItems($settings);
@@ -268,7 +293,8 @@ class ItemController extends Zend_Controller_Action {
      * @param array $settings current settings
      */
     public function listItems($settings) {
-    
+        $isJson = $this->getRequest()->getParam('json', false);
+        
         // get items
         $listHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('list');
         try {
@@ -280,26 +306,37 @@ class ItemController extends Zend_Controller_Action {
         // create html for message and return as json
         $return = array();
         if($settings['offset']>0 && $settings['view']=='messages') {
-            // render message items
-            $return['messages'] = $this->view->partialLoop(
-                                    'item/message-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(),
-                                    $listHelper->getMessages()
-                                );
-                                
-            // indicates whether more items available or not
-            $return['more']    = $listHelper->hasMoreMessages();
+        
+            if($isJson==true) {
+                $return['messages'] = $listHelper->getMessages();
+                $return['more'] = $listHelper->hasMoreMessages();
+            } else {
+                // render message items
+                $return['messages'] = $this->view->partialLoop(
+                                        'item/message-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(),
+                                        $listHelper->getMessages()
+                                    );
+                                    
+                // indicates whether more items available or not
+                $return['more']    = $listHelper->hasMoreMessages();
+            }
         }
         
         // create html for multimedia and return as json
         if($settings['offset']>0 && $settings['view']=='multimedia') {
-            // render multimedia items
-            $return['multimedia'] = $this->view->partialLoop(
-                                    'item/multimedia-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(),
-                                    $listHelper->getMultimedia()
-                                );
-                                
-            // indicates whether more items available or not                    
-            $return['more'] = $listHelper->hasMoreMultimedia();
+            if($isJson==true) {
+                $return['multimedia'] = $listHelper->getMultimedia();
+                $return['more'] = $listHelper->hasMoreMultimedia();
+            } else {
+                // render multimedia items
+                $return['multimedia'] = $this->view->partialLoop(
+                                        'item/multimedia-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(),
+                                        $listHelper->getMultimedia()
+                                    );
+                                    
+                // indicates whether more items available or not                    
+                $return['more'] = $listHelper->hasMoreMultimedia();
+           }
         }
         
         return $return;
