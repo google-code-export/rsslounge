@@ -33,14 +33,12 @@ rsslounge.events = {
         //
         
         // add new feed
-        $('#feedsmenue .add').unbind('click');
-        $('#feedsmenue .add').click(function() {
+        $('#feedsmenue .add').unbind('click').click(function() {
             rsslounge.dialogs.addEditFeed('');
         });
         
         // date filter
-        $('#feedsmenue .date').unbind('click');
-        $('#feedsmenue .date').click(function () {
+        $('#feedsmenue .date').unbind('click').click(function () {
             // create calendar
             rsslounge.calendar();
         
@@ -57,8 +55,7 @@ rsslounge.events = {
         });
         
         // show all feeds
-        $('#feedsmenue .show').unbind('click');
-        $('#feedsmenue .show').click(function() {
+        $('#feedsmenue .show').unbind('click').click(function() {
             $('#feeds-list h3 a').addClass('up');
             $('#feeds-list ul').slideDown('fast');
 
@@ -67,8 +64,7 @@ rsslounge.events = {
         });
         
         // hide all feeds
-        $('#feedsmenue .hide').unbind('click');
-        $('#feedsmenue .hide').click(function() {
+        $('#feedsmenue .hide').unbind('click').click(function() {
             $('#feeds-list h3 a').removeClass('up');
             $('#feeds-list ul').slideUp('fast');
             
@@ -98,6 +94,8 @@ rsslounge.events = {
             if($(this).hasClass('starred')) {
                 rsslounge.settings.selected = '';
                 rsslounge.settings.starred = 1;
+                $('#unread').selectmenu('value',0);
+                rsslounge.settings.unread = 0;
                 rsslounge.refreshList();
             }
                 
@@ -116,26 +114,20 @@ rsslounge.events = {
         };
         
         // category click
-        $('#feeds-list h3').unbind('touchend');
-        $('#feeds-list h3').bind('touchend', selectCategoryEvent);
-        
-        $('#feeds-list h3').unbind('click');
-        $('#feeds-list h3').click(selectCategoryEvent);
+        $('#feeds-list h3').unbind('touchend').bind('touchend', selectCategoryEvent);
+        $('#feeds-list h3').unbind('click').click(selectCategoryEvent);
         
         // category mousemove: show dropdown button
-        $('#feeds-list h3').unbind('mouseenter');
-        $('#feeds-list h3').mouseenter(function () {
+        $('#feeds-list h3').unbind('mouseenter').mouseenter(function () {
             $(this).children('a').show();
         });
         
-        $('#feeds-list h3').unbind('mouseleave');
-        $('#feeds-list h3').mouseleave(function () {
+        $('#feeds-list h3').unbind('mouseleave').mouseleave(function () {
             $(this).children('a').hide();
         });
         
         // category dropdown click
-        $('#feeds-list h3 a').unbind('click');
-        $('#feeds-list h3 a').click(function () {
+        $('#feeds-list h3 a').unbind('click').click(function () {
             // prevent category click
             rsslounge.dragged = true;
             
@@ -184,34 +176,28 @@ rsslounge.events = {
         };
         
         // feed click
-        $('#feeds-list .feed').unbind('touchend');
-        $('#feeds-list .feed').bind('touchend', selectFeedEvent);
+        $('#feeds-list .feed').unbind('touchend').bind('touchend', selectFeedEvent);
         
-        $('#feeds-list .feed').unbind('click');
-        $('#feeds-list .feed').click(selectFeedEvent);
+        $('#feeds-list .feed').unbind('click').click(selectFeedEvent);
         
         // feed mousover
         if(rsslounge.settings.authenticated==true) {
-            $('#feeds-list ul li').unbind('mouseenter');
-            $('#feeds-list ul li').mouseenter(function () {
+            $('#feeds-list ul li').unbind('mouseenter').mouseenter(function () {
                 $(this).children('.edit').show();
                 $(this).children('.prio').hide();
             });
             
-            $('#feeds-list ul li').unbind('mouseleave');
-            $('#feeds-list ul li').mouseleave(function () {
+            $('#feeds-list ul li').unbind('mouseleave').mouseleave(function () {
                 $(this).children('.edit').hide();
                 $(this).children('.prio').show();
             });
             
             // feed edit
-            $('#feeds-list .edit').unbind('click');
-            $('#feeds-list .edit').click(function () {
+            $('#feeds-list .edit').unbind('click').click(function () {
                 rsslounge.dialogs.addEditFeed('',$(this).parent('li').attr('id'));
             });
             
-            $('#feeds-list .edit').unbind('touchend');
-            $('#feeds-list .edit').bind('touchend',function () {
+            $('#feeds-list .edit').unbind('touchend').bind('touchend',function () {
                 rsslounge.dialogs.addEditFeed('',$(this).parent('li').attr('id'));
             });
         }
@@ -272,14 +258,12 @@ rsslounge.events = {
         //
         
         
-        $('#search').unbind('keydown');
-        $('#search').keydown(function(e) {
+        $('#search').unbind('keydown').keydown(function(e) {
             if(e.which==13)
                 $('#feeds-list .search a').click();
         });
         
-        $('#feeds-list .search a').unbind('click');
-        $('#feeds-list .search a').click(function() {
+        $('#feeds-list .search a').unbind('click').click(function() {
             // set search remove button
             $('div.search .search-term').html($('#search').val());
             $('div.search').show();
@@ -289,20 +273,17 @@ rsslounge.events = {
             rsslounge.refreshList();
         });
         
-        $('div.search a').unbind('click');
-        $('div.search a').click(function() {
+        $('div.search a').unbind('click').click(function() {
             $('div.search').hide();
             rsslounge.settings.search = '';
             rsslounge.refreshList();
         });
         
-        $('#search').unbind('focusin');
-        $('#search').focusin(function(e) {
+        $('#search').unbind('focusin').focusin(function(e) {
             rsslounge.events.focus = $(this);
         });
         
-        $('#search').unbind('focusout');
-        $('#search').focusout(function(e) {
+        $('#search').unbind('focusout').focusout(function(e) {
             rsslounge.events.focus = null;
         });        
         
@@ -364,8 +345,7 @@ rsslounge.events = {
         $('#prio label span').html(rsslounge.settings.currentPriorityStart + ' - ' + rsslounge.settings.currentPriorityEnd);
         
         // toggle main menue (on top right side)
-        $('#menue-button').unbind('click');
-        $('#menue-button').click(function () {
+        $('#menue-button').unbind('click').click(function () {
             if($('#menue').is(':visible'))
                 $('#menue').slideUp('medium');
             else
@@ -380,8 +360,7 @@ rsslounge.events = {
         //
         
         // edit categories
-        $('#menue .categories').unbind('click');
-        $('#menue .categories').click(function() {
+        $('#menue .categories').unbind('click').click(function() {
             $('#menue').slideToggle('medium');
             rsslounge.dialogs.editCategories();
         });
@@ -405,26 +384,22 @@ rsslounge.events = {
             });
         
         // opml export
-        $('#opml-export').unbind('click');
-        $('#opml-export').click(function() {
+        $('#opml-export').unbind('click').click(function() {
             window.open('opml/export');
         });
         
         // settings
-        $('#menue .settings').unbind('click');
-        $('#menue .settings').click(function() {
+        $('#menue .settings').unbind('click').click(function() {
             rsslounge.dialogs.editSettings();
         });
         
         // errors
-        $('#errormessages').unbind('click');
-        $('#errormessages').click(function() {
+        $('#errormessages').unbind('click').click(function() {
             rsslounge.dialogs.showErrors();
         });
         
         // about
-        $('#menue .about').unbind('click');
-        $('#menue .about').click(function() {
+        $('#menue .about').unbind('click').click(function() {
             rsslounge.dialogs.showAbout();
         });
         
@@ -537,15 +512,13 @@ rsslounge.events = {
      */
     images: function() {
         // select image on click
-        $('#images div').unbind('mouseenter');
-        $('#images div').mouseenter(function() {
+        $('#images div').unbind('mouseenter').mouseenter(function() {
             $('#images div.selected, #messages li.selected').removeClass('selected');
             $(this).addClass('selected');
         });
     
         // mark image as read
-        $('.mark-image').unbind('click');
-        $('.mark-image').click(function () {
+        $('.mark-image').unbind('click').click(function () {
             // clone settings
             var settings = jQuery.extend(true, {}, rsslounge.settings);
             settings.view = 'multimedia';
@@ -619,13 +592,11 @@ rsslounge.events = {
         
         
         // starr image
-        $('.starr-image').unbind('click');
-        $('.starr-image').click(rsslounge.starItem);
+        $('.starr-image').unbind('click').click(rsslounge.starItem);
         
         
         // more button on images
-        $('#images div.more').unbind('click');
-        $('#images div.more').click(function () {
+        $('#images div.more').unbind('click').click(function () {
             $(this).addClass('loading');
             
             // increment offset
@@ -669,29 +640,25 @@ rsslounge.events = {
      */
     messages: function() {    
         // hide and show item content
-        $('#messages h2:not(.opened)').unbind('click');
-        $('#messages h2:not(.opened)').click(function () {
+        $('#messages h2:not(.opened)').unbind('click').click(function () {
             var content = $(this).parent('li').children(".content");
             content.slideToggle('medium');
             rsslounge.showImages(content);
         });
         
-        $('#messages li').unbind('click');
-        $('#messages li').click(function () {
+        $('#messages li').unbind('click').click(function () {
             $('#images div.selected, #messages li.selected').removeClass('selected');
             $(this).addClass('selected');
         });
         
         // select message on link click
-        $('#messages li .link').unbind('click');
-        $('#messages li .link').click(function() {
+        $('#messages li .link').unbind('click').click(function() {
             $('#images div.selected, #messages li.selected').removeClass('selected');
             $(this).parent('li').addClass('selected');
         });
         
         // mark a single message
-        $('.mark-message').unbind('click');
-        $('.mark-message').click(function () {
+        $('.mark-message').unbind('click').click(function () {
         
             // clone settings
             var settings = jQuery.extend(true, {}, rsslounge.settings);
@@ -758,13 +725,11 @@ rsslounge.events = {
         
         
         // starr a single message
-        $('.starr-message').unbind('click');
-        $('.starr-message').click(rsslounge.starItem);
+        $('.starr-message').unbind('click').click(rsslounge.starItem);
         
         
         // more button on bottom (messages)
-        $('#messages li.more').unbind('click');
-        $('#messages li.more').click(function () {
+        $('#messages li.more').unbind('click').click(function () {
             $(this).addClass('loading');
             
             // increment offset
