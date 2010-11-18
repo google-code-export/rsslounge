@@ -191,6 +191,7 @@ class application_models_items extends application_models_base {
      */
     public function countStarred($settings) {
         // prepare select
+        unset($settings['unread']);
         $select = $this->prepareSelect($settings, $settings['view']);
         
         // set count statement
