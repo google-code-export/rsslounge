@@ -69,6 +69,8 @@ class UpdateController extends Zend_Controller_Action {
      * @return void
      */
     public function finishAction() {
+        $logger = Zend_Registry::get('logger');
+        
         // set lastrefresh if timeout is already 0
         $updater = Zend_Controller_Action_HelperBroker::getStaticHelper('updater');
         if($updater->timeout()==0) {
