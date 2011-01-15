@@ -227,8 +227,13 @@ class OpmlController extends Zend_Controller_Action {
      * @param string $outline the current outline simplexml element
      */
     protected function readFeed($outline) {
+        if(isset($outline['text']))
+            $title = (string)$outline['text'];
+        else
+            $title = (string)$outline['title'];
+            
         return array(
-            'title' => (string)$outline['text'],
+            'title' => $title,
             'link'  => (string)$outline['xmlUrl']
         );
     }
