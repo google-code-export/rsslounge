@@ -1,7 +1,7 @@
 Used libraries:
 ---------------
 
-Zend Framework 1.10.0
+Zend Framework 1.11.2
 http://framework.zend.com/
 
 SimplePie 1.2
@@ -10,10 +10,10 @@ http://simplepie.org/
 WideImage 9.09.04
 http://wideimage.sourceforge.net/
 
-jQuery 1.4
+jQuery 1.4.4
 http://jquery.com/
 
-jQuery UI 1.8.1
+jQuery UI 1.8.9
 http://jqueryui.com/
 
 jQuery Impromptu 2.8

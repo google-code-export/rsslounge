@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `position` (`position`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8_generali_ci AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `feeds` (
   KEY `dirtyicon` (`dirtyicon`),
   KEY `lastrefresh` (`lastrefresh`),
   KEY `error` (`error`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8_generali_ci AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   KEY `unread` (`unread`),
   KEY `starred` (`starred`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8_generali_ci AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `feed` (`feed`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8_generali_ci AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `name` varchar(200) NOT NULL,
   `value` text NOT NULL,
   KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_generali_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 CREATE TABLE IF NOT EXISTS `version` (
   `version` varchar(100) NOT NULL,
   KEY `version` (`version`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_generali_ci;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(255) NOT NULL,
   `password` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_generali_ci AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
 DELETE FROM `users`;
 

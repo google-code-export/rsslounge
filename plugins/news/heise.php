@@ -104,7 +104,7 @@ class plugins_news_heise extends plugins_rss_feed {
                     $innerHTML .= @$tmp_doc->saveHTML();
                 } 
                 
-                return $innerHTML;
+                return utf8_encode($innerHTML);
             } catch(Exception $e) { // return default content
                 return current($this->items)->get_content();
             }

@@ -110,7 +110,7 @@ class SettingsTest extends PHPUnit_Framework_TestCase {
         $this->checkWrongValue('deleteItems', -3);
         $this->checkWrongValue('imagesPosition', 'middle');
         $this->checkWrongValue('imagesPosition', 33);
-        $this->checkWrongValue('language', 'fr');
+        $this->checkWrongValue('language', 'vv');
         $this->checkWrongValue('language', 333);
         $this->checkWrongValue('refresh', 'a');
         $this->checkWrongValue('refresh', -3);
