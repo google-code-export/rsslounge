@@ -1,17 +1,34 @@
 -- alte Tabellen loeschen
-DROP TABLE IF EXISTS `categories`, `feeds`, `items`, `messages`, `settings`, `version`, `b8wordlist`;
+DROP TABLE IF EXISTS `categories`, `feeds`, `items`, `messages`, `settings`, `version`;
 
 
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Datenbank: `rsslounge`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `categories`
+--
+
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `position` (`position`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `feeds`
+--
+
 CREATE TABLE IF NOT EXISTS `feeds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source` varchar(200) NOT NULL,
@@ -35,9 +52,14 @@ CREATE TABLE IF NOT EXISTS `feeds` (
   KEY `dirtyicon` (`dirtyicon`),
   KEY `lastrefresh` (`lastrefresh`),
   KEY `error` (`error`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `items`
+--
+
 CREATE TABLE IF NOT EXISTS `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
@@ -54,9 +76,14 @@ CREATE TABLE IF NOT EXISTS `items` (
   KEY `unread` (`unread`),
   KEY `starred` (`starred`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=636 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `messages`
+--
+
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `feed` int(11) NOT NULL,
@@ -65,28 +92,53 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `feed` (`feed`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `settings`
+--
+
 CREATE TABLE IF NOT EXISTS `settings` (
   `name` varchar(200) NOT NULL,
   `value` text NOT NULL,
   KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `version`
+--
+
 CREATE TABLE IF NOT EXISTS `version` (
   `version` varchar(100) NOT NULL,
   KEY `version` (`version`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `users`
+--
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=1 ;
+
+DELETE FROM `users`;
+
+--
+-- Daten für Tabelle `version`
+--
+
+INSERT INTO `version` (`version`) VALUES ('2');
+
+
 
 
 -- Daten

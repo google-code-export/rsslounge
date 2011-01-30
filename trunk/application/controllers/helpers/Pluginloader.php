@@ -68,8 +68,9 @@ class Helper_Pluginloader extends Zend_Controller_Action_Helper_Abstract {
             $this->plugins = $this->loadClass(Zend_Registry::get('config')->plugins->path, 'rsslounge_source');
             
             // load additinal language files
-            foreach($this->searchDir(Zend_Registry::get('config')->plugins->path, 'locale') as $plugin => $dir)
+            foreach($this->searchDir(Zend_Registry::get('config')->plugins->path, 'locale') as $plugin => $dir) {
                 Zend_Registry::get('language')->addTranslation($dir, null, array('scan' => Zend_Translate::LOCALE_DIRECTORY, 'delimiter' => "|"));
+            }
             Zend_Registry::get('language')->setLocale(new Zend_Locale(Zend_Registry::get('session')->language));
         }
     }

@@ -14,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      *
      * @var string
      */
-    public $version = "1.6";
+    public $version = "1.7";
     
     
     /**
@@ -218,14 +218,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * @return void
      */
     protected function _initLanguage() {
+        // auto route all languages to english
+        $dirs = array_filter(glob(APPLICATION_PATH . '/locale/*'), 'is_dir');
+        $route = array();
+        foreach($dirs as $dir)
+            $route[ substr($dir, strlen($dir)-2,2) ] = 'en';
+            
         $this->language = new Zend_Translate(
             'csv', 
             APPLICATION_PATH . '/locale', 
             'en', 
             array(
                 'scan' => Zend_Translate::LOCALE_DIRECTORY, 
-                'delimiter' => "|"
+                'delimiter' => "|",
+                'route'     => $route
             ));
+        
+        
         
         // save language object for further use
         Zend_Registry::set('language',$this->language);
