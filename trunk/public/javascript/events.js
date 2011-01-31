@@ -773,7 +773,7 @@ rsslounge.events = {
      */
     shortcuts: function() {    
         // switch and open next
-        $(document).bind('keydown', 'space', function() {
+        shortcut.add('Space', function() {
             if(rsslounge.events.shortcuts_enabled()) {
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
@@ -785,7 +785,7 @@ rsslounge.events = {
         });
         
         // switch and open prev
-        $(document).bind('keydown', 'Shift+space', function() {
+        shortcut.add('Shift+Space', function() {
             if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
@@ -796,7 +796,7 @@ rsslounge.events = {
         
         
         // switch next
-        $(document).bind('keydown', 'n', function() {
+        shortcut.add('n', function() {
             if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': false,
@@ -806,7 +806,7 @@ rsslounge.events = {
         });
         
         // switch prev
-        $(document).bind('keydown', 'p', function() {
+        shortcut.add('p', function() {
             if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': false,
@@ -816,7 +816,7 @@ rsslounge.events = {
         });
         
         // switch and open next
-        $(document).bind('keydown', 'j', function() {
+        shortcut.add('j', function() {
             if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
@@ -826,7 +826,7 @@ rsslounge.events = {
         });
         
         // switch and open prev
-        $(document).bind('keydown', 'k', function() {
+        shortcut.add('k', function() {
             if(rsslounge.events.shortcuts_enabled())
                 rsslounge.events.shortcuts_next({
                     'open_next': true,
@@ -841,11 +841,11 @@ rsslounge.events = {
             if(rsslounge.events.shortcuts_enabled() && current.length!=0)
                 current.children('.content').slideToggle('medium');
         };
-        $(document).bind('keydown', 'return', openclose);
-        $(document).bind('keydown', 'o', openclose);
+        shortcut.add('Return', openclose);
+        shortcut.add('o', openclose);
         
         // mark/unmark
-        $(document).bind('keydown', 'm', function() {
+        shortcut.add('m', function() {
             var current = $('#messages li.selected .mark-message, #images div.selected .mark-image');
             
             if(rsslounge.events.shortcuts_enabled())
@@ -853,13 +853,13 @@ rsslounge.events = {
         });
         
         // star/unstar
-        $(document).bind('keydown', 's', function() {
+        shortcut.add('s', function() {
             if(rsslounge.events.shortcuts_enabled())
                 $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
         });
         
         // open target
-        $(document).bind('keydown', 'v', function() {
+        shortcut.add('v', function() {
             if(rsslounge.events.shortcuts_enabled()) {
                 if(rsslounge.settings.newWindow==true)
                     window.open($('#messages li.selected .link, #images div.selected .link').attr('href'));
@@ -869,13 +869,13 @@ rsslounge.events = {
         });
         
         // mark all as read
-        $(document).bind('keydown', 'ctrl+m', function() {
+        shortcut.add('Ctrl+m', function() {
             if(rsslounge.events.shortcuts_enabled())
                 $('#markall').click();
         });
         
         // unstarr all
-        $(document).bind('keydown', 'ctrl+s', function() {
+        shortcut.add('Ctrl+s', function() {
             if(rsslounge.events.shortcuts_enabled()) {
                 $('#unstarrall').click();
                 return false;
@@ -883,7 +883,7 @@ rsslounge.events = {
         });
         
         // new feed
-        $(document).bind('keydown', 'ctrl+n', function() {
+        shortcut.add('Ctrl+n', function() {
             if(rsslounge.events.shortcuts_enabled()) {
                 $('.add').click();
                 return false;
@@ -1007,34 +1007,5 @@ rsslounge.events = {
      */
     shortcuts_enabled: function() {
         return $.prompt.getCurrentState().length==0 && rsslounge.events.focus==null;
-    },
-    
-    
-    
-    touchHandler: function(event) {
-    var touches = event.changedTouches,
-        first = touches[0],
-        type = "";
-    
-    switch(event.type)
-    {
-        case "touchstart": type ="mousedown"; break;
-        case "touchmove":  type="mousemove"; break;        
-        case "touchend":   type="mouseup"; break;
-        default: return;
     }
-        
-    //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
-    //           screenX, screenY, clientX, clientY, ctrlKey, 
-    //           altKey, shiftKey, metaKey, button, relatedTarget);
-    
-    var simulatedEvent = document.createEvent("MouseEvent");
-    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
-                              first.screenX, first.screenY, 
-                              first.clientX, first.clientY, false, 
-                              false, false, false, 0/*left*/, null);
-                                                                            
-    first.target.dispatchEvent(simulatedEvent);
-    event.preventDefault();
-}
 };
