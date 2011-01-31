@@ -34,8 +34,8 @@
     <script type="text/javascript" src="javascript/jquery.tipsy.js"></script>
     <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/tipsy.css" />
     
-    <!-- js hotkeys -->
-    <script type="text/javascript" src="javascript/jquery.hotkeys.js"></script>
+    <!-- OpenJS shortcut -->
+    <script type="text/javascript" src="javascript/shortcut-2.01.B.js"></script>
     
     <!-- ui.selectmenu -->
     <script type="text/javascript" src="javascript/ui.selectmenu.js"></script>
@@ -51,11 +51,13 @@
 
     <!-- base initialization -->
     <script type="text/javascript">
-        // rss lounge settings
-        rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
+        $(document).ready(function(){
+            // rss lounge settings
+            rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
         
-        // initialize js
-        rsslounge.init('<?PHP echo $this->newfeed ?>');
+            // initialize js
+            rsslounge.init('<?PHP echo $this->newfeed ?>');
+        });
     </script>
 </head>
 
