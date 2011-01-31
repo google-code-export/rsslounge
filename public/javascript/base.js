@@ -28,53 +28,50 @@ var rsslounge = {
      * initialize all events
      */
     init: function(newfeed) {
-        $(document).ready(function(){
+        // register events
+        rsslounge.events.init();
+
+        // register shortcuts
+        rsslounge.events.shortcuts();
+        
+        // set timeout for ajax refresh
+        if(rsslounge.settings.authenticated==true)
+            rsslounge.refresh.timeout(rsslounge.settings.timeout);
+        
+        // set visible feeds
+        rsslounge.setFeedVisibility();
+        
+        // select current category or feed
+        if(rsslounge.settings.starred==1)
+            $('#feeds-list .starred').addClass('active');
+        else if(rsslounge.settings.selected.length==0)
+            $('#cat_0').addClass('active');
+        else
+            $('#'+rsslounge.settings.selected).addClass('active');
+        
+        // preload images
+        rsslounge.preloadImages(
+            'stylesheets/images/mark.png',
+            'stylesheets/images/mark-inactive.png',
+            'stylesheets/images/star.png',
+            'stylesheets/images/star-inactive.png',
+            'stylesheets/images/dropup.png',
+            'stylesheets/images/dropdown.png',
+            'stylesheets/images/edit.png',
+            'stylesheets/images/ajax-loader.gif'
+        );
+        
+        // config jGrowl
+        $.jGrowl.defaults.position = 'bottom-right';
+        $.jGrowl.defaults.life = 7000;
        
-            // register events
-            rsslounge.events.init();
-    
-            // register shortcuts
-            rsslounge.events.shortcuts();
-            
-            // set timeout for ajax refresh
-            if(rsslounge.settings.authenticated==true)
-                rsslounge.refresh.timeout(rsslounge.settings.timeout);
-            
-            // set visible feeds
-            rsslounge.setFeedVisibility();
-            
-            // select current category or feed
-            if(rsslounge.settings.starred==1)
-                $('#feeds-list .starred').addClass('active');
-            else if(rsslounge.settings.selected.length==0)
-                $('#cat_0').addClass('active');
-            else
-                $('#'+rsslounge.settings.selected).addClass('active');
-            
-            // preload images
-            rsslounge.preloadImages(
-                'stylesheets/images/mark.png',
-                'stylesheets/images/mark-inactive.png',
-                'stylesheets/images/star.png',
-                'stylesheets/images/star-inactive.png',
-                'stylesheets/images/dropup.png',
-                'stylesheets/images/dropdown.png',
-                'stylesheets/images/edit.png',
-                'stylesheets/images/ajax-loader.gif'
-            );
-            
-            // config jGrowl
-            $.jGrowl.defaults.position = 'bottom-right';
-            $.jGrowl.defaults.life = 7000;
-           
-            // resize
-            $(window).bind("resize", rsslounge.resize);
-            rsslounge.resize();
-           
-            // open new feed dialog
-            if($.trim(newfeed).length!=0 && rsslounge.settings.authenticated==true)
-                rsslounge.dialogs.addEditFeed(newfeed);
-        });
+        // resize
+        $(window).bind("resize", rsslounge.resize);
+        rsslounge.resize();
+       
+        // open new feed dialog
+        if($.trim(newfeed).length!=0 && rsslounge.settings.authenticated==true)
+            rsslounge.dialogs.addEditFeed(newfeed);
     },
     
     
