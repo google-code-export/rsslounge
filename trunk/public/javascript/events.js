@@ -772,6 +772,8 @@ rsslounge.events = {
      * register shortcuts
      */
     shortcuts: function() {    
+        var options = {"disable_in_input": true};
+        
         // switch and open next
         shortcut.add('Space', function() {
             if(rsslounge.events.shortcuts_enabled()) {
@@ -782,7 +784,7 @@ rsslounge.events = {
                 });
                 return false;
             }
-        });
+        }, options);
         
         // switch and open prev
         shortcut.add('Shift+Space', function() {
@@ -792,7 +794,7 @@ rsslounge.events = {
                     'close_current': true,
                     'down': false
                 });
-        });
+        }, options);
         
         
         // switch next
@@ -803,7 +805,7 @@ rsslounge.events = {
                     'close_current': true,
                     'down': true
                 });
-        });
+        }, options);
         
         // switch prev
         shortcut.add('p', function() {
@@ -813,7 +815,7 @@ rsslounge.events = {
                     'close_current': true,
                     'down': false
                 });
-        });
+        }, options);
         
         // switch and open next
         shortcut.add('j', function() {
@@ -823,7 +825,7 @@ rsslounge.events = {
                     'close_current': true,
                     'down': true
                 });
-        });
+        }, options);
         
         // switch and open prev
         shortcut.add('k', function() {
@@ -833,7 +835,7 @@ rsslounge.events = {
                     'close_current': true,
                     'down': false
                 });
-        });
+        }, options);
         
         // open/close article
         openclose = function() {
@@ -841,8 +843,8 @@ rsslounge.events = {
             if(rsslounge.events.shortcuts_enabled() && current.length!=0)
                 current.children('.content').slideToggle('medium');
         };
-        shortcut.add('Return', openclose);
-        shortcut.add('o', openclose);
+        shortcut.add('Return', openclose, options);
+        shortcut.add('o', openclose, options);
         
         // mark/unmark
         shortcut.add('m', function() {
@@ -850,13 +852,13 @@ rsslounge.events = {
             
             if(rsslounge.events.shortcuts_enabled())
                 current.click();
-        });
+        }, options);
         
         // star/unstar
         shortcut.add('s', function() {
             if(rsslounge.events.shortcuts_enabled())
                 $('#messages li.selected .starr-message, #images div.selected .starr-image').click();
-        });
+        }, options);
         
         // open target
         shortcut.add('v', function() {
@@ -866,13 +868,13 @@ rsslounge.events = {
                 else
                     document.location = $('#messages li.selected .link, #images div.selected .link').attr('href');
             }
-        });
+        }, options);
         
         // mark all as read
         shortcut.add('Ctrl+m', function() {
             if(rsslounge.events.shortcuts_enabled())
                 $('#markall').click();
-        });
+        }, options);
         
         // unstarr all
         shortcut.add('Ctrl+s', function() {
@@ -880,7 +882,7 @@ rsslounge.events = {
                 $('#unstarrall').click();
                 return false;
             }
-        });
+        }, options);
         
         // new feed
         shortcut.add('Ctrl+n', function() {
@@ -888,7 +890,7 @@ rsslounge.events = {
                 $('.add').click();
                 return false;
             }
-        });
+        }, options);
     },
     
     
