@@ -10,7 +10,7 @@ http://simplepie.org/
 WideImage 9.09.04
 http://wideimage.sourceforge.net/
 
-jQuery 1.4.4
+jQuery 1.5
 http://jquery.com/
 
 jQuery UI 1.8.9
