@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -41,6 +41,10 @@
 			
 			$width = $image->getWidth();
 			$height = $image->getHeight();
+			
+			if ($new->isTransparent())
+				imagefilledrectangle($new->getHandle(), 0, 0, $width, $height, $new->getTransparentColor());
+			
 			for ($x = 0; $x < $width; $x++)
 			{
 				imagecopy(
@@ -54,4 +58,3 @@
 			return $new;
 		}
 	}
-?>

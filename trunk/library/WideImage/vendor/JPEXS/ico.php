@@ -962,4 +962,3 @@ function jpexs_inttoword($n)
  return chr($n & 255).chr(($n >> 8) & 255);
  };
 
-?>

@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -105,10 +105,9 @@
 			if ($dim['width'] <= 0 || $dim['height'] <= 0)
 				throw new WideImage_Operation_InvalidResizeDimensionException("Both dimensions must be larger than 0.");
 			
-			$new = WideImage_TrueColorImage::create($dim['width'], $dim['height']);
-			
 			if ($img->isTransparent())
 			{
+				$new = WideImage_PaletteImage::create($dim['width'], $dim['height']);
 				$new->copyTransparencyFrom($img);
 				imagecopyresized(
 						$new->getHandle(), 
@@ -122,6 +121,7 @@
 			}
 			else
 			{
+				$new = WideImage_TrueColorImage::create($dim['width'], $dim['height']);
 				$new->alphaBlending(false);
 				$new->saveAlpha(true);
 				imagecopyresampled(
@@ -138,4 +138,3 @@
 			return $new;
 		}
 	}
-?>

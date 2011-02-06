@@ -7,7 +7,7 @@ http://framework.zend.com/
 SimplePie 1.2
 http://simplepie.org/
 
-WideImage 9.09.04
+WideImage 10.07.31
 http://wideimage.sourceforge.net/
 
 jQuery 1.5

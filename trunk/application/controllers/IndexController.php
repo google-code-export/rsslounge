@@ -36,6 +36,10 @@ class IndexController extends Zend_Controller_Action {
      * @return void
      */
     public function indexAction() {
+        // prepare icon cache
+        if(Zend_Registry::get('config')->cache->iconcaching==1)
+            Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->generateIconImage();
+    
         // stop if ie is current browser
         $browser = @get_browser();
         if(isset($browser->browser) && get_browser()->browser == 'IE' && get_browser()->majorver == 6)
@@ -165,6 +169,8 @@ class IndexController extends Zend_Controller_Action {
                             $categoriesModel->select()->order('position ASC') 
                         );
         
+        $feedPositions = Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->getFeedsIconPosition();
+        
         // read feeds and count items of the loaded categories
         $feedsModel = new application_models_feeds();
         foreach($categoriesDb as $cat) {
@@ -176,6 +182,7 @@ class IndexController extends Zend_Controller_Action {
             foreach($feedRowset as $feed) {
                 $newfeed = $feed->toArray();
                 $newfeed['unread'] = isset($unreadFeed[$feed->id]) ? $unreadFeed[$feed->id] : 0;
+                $newfeed['iconposition'] = $feedPositions[$feed->id];
                 $newcat['feeds'][] = $newfeed;
             }
         
