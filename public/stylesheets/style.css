@@ -990,7 +990,15 @@ div.search a {
         #messages > li .link span{
             color:#999;
         }
-        
+    
+    #messages .icon-message {
+        display:block;
+        width:16px;
+        height:16px;
+        float:left;
+        margin-right:3px;
+    }
+    
     #messages .starr-message,
     #messages .mark-message {
         display:block;
