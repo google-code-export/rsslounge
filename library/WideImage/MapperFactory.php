@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -66,7 +66,7 @@
 			{
 				$mapperFileName = WideImage::path() . 'Mapper/' . $format . '.php';
 				if (file_exists($mapperFileName))
-					require_once($mapperFileName);
+					require_once $mapperFileName;
 			}
 			
 			if (class_exists($mapperClassName, false))
@@ -112,4 +112,3 @@
 				return substr($uri, $p + 1);
 		}
 	}
-?>

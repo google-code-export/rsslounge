@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -30,6 +30,11 @@
 	/**
 	 * @package Exceptions
 	 */
+	class WideImage_InvalidFontFileException extends WideImage_Exception {}
+	
+	/**
+	 * @package Exceptions
+	 */
 	class WideImage_InvalidCanvasMethodException extends WideImage_Exception {}
 	
 	/**
@@ -53,9 +58,44 @@
 		}
 		
 		/**
+		 * Creates and sets the current font
+		 * 
+		 * The supported font types are: TTF, PS, and GDF.
+		 * Font type is detected from the extension. If the $file parameter doesn't have an extension, TTF font is presumed.
+		 * 
+		 * Note: not all parameters are supported by all fonts.
+		 * 
+		 * @param string $file Font file name (string)
+		 * @param int $size Font size (supported for TTF and PS fonts, ignored for GDF)
+		 * @param int $color Text color
+		 * @param int $bgcolorBackground color (supported only for PS font, ignored for TTF and PS)
+		 * @return object One of the WideImage_Font_* objects
+		 */
+		function useFont($file, $size = 12, $color = 0, $bgcolor = null)
+		{
+			$p = strrpos($file, '.');
+			if ($p === false || $p < strlen($file) - 4)
+				$ext = 'ttf';
+			else
+				$ext = strtolower(substr($file, $p + 1));
+			
+			if ($ext == 'ttf')
+				$font = new WideImage_Font_TTF($file, $size, $color);
+			elseif ($ext == 'ps')
+				$font = new WideImage_Font_PS($file, $size, $color, $bgcolor);
+			elseif ($ext == 'gdf')
+				$font = new WideImage_Font_GDF($file, $color);
+			else
+				throw new WideImage_InvalidFontFileException("'$file' appears to be an invalid font file.");
+			
+			$this->setFont($font);
+			return $font;
+		}
+		
+		/**
 		 * Write text on the image at specified position
 		 * 
-		 * You must set a font with a call to wiCanvas::setFont() prior to writing text to the image.
+		 * You must set a font with a call to WideImage_Canvas::setFont() prior to writing text to the image.
 		 * 
 		 * @param int $x Left
 		 * @param int $y Top
@@ -99,4 +139,3 @@
 				throw new WideImage_InvalidCanvasMethodException("Function doesn't exist: image{$method}.");
 		}
 	}
-?>

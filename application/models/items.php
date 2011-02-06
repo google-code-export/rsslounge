@@ -267,7 +267,7 @@ class application_models_items extends application_models_base {
         
         // base select statement
         $select = $db->select()
-                     ->from( array( 'i' => $p.'items' ), array('id','title','content','unread','starred','datetime','link') )
+                     ->from( array( 'i' => $p.'items' ), array('id','title','content','unread','starred','datetime','link','feed') )
                      ->join( array( 'f' => $p.'feeds' ), 'i.feed = f.id', array('name','icon') )
                      ->join( array( 'c' => $p.'categories' ), 'c.id=f.category', array() );
                      

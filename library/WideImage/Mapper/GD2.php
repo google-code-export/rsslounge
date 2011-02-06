@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -39,4 +39,3 @@
 			imagegd2($handle, null, $chunk_size, $type);
 		}
 	}
-?>

@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -22,7 +22,7 @@
     * @package Internal/Mappers
   **/
 	
-	include_once(WideImage::path() . '/vendor/JPEXS/bmp.php');
+	include_once WideImage::path() . '/vendor/JPEXS/bmp.php';
 	
 	/**
 	 * Mapper support for BMP
@@ -47,4 +47,3 @@
 				imagebmp($handle, $uri);
 		}
 	}
-?>

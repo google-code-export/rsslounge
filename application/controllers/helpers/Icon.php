@@ -11,6 +11,83 @@
 class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
 
     /**
+     * generate one big image containing all icons
+     * instead of loading hundreds of icons, just
+     * one file is necessary
+     *
+     * @return string target path
+     */
+    public function generateIconImage() {
+        $target = Zend_Registry::get('config')->favicons->path . Zend_Registry::get('config')->cache->icons;
+        if(file_exists($target))
+            return $target;
+    
+        // get all feeds
+        $feedModel = new application_models_feeds();
+        $feeds = $feedModel->fetchAll( $feedModel->select()->order('id ASC') );
+        
+        // generate big feed image
+        $bigIconImage = imagecreatetruecolor(16,16*$feeds->count());
+        imagealphablending($bigIconImage,false);
+        imagesavealpha($bigIconImage,true);
+        
+        // insert icons into feed image
+        $count = 0;
+        // $reporting = error_reporting();
+        // error_reporting(0);
+        foreach($feeds as $feed) {
+            
+            $icon = false;
+            
+            // load icon file
+            if(file_exists(Zend_Registry::get('config')->favicons->path . $feed->icon)) {
+                $icon = $this->loadIconFileFromFilesystem(Zend_Registry::get('config')->favicons->path . $feed->icon);
+                    
+            // no icon file? load default icon
+            } else if(strpos($feed->icon,'plugins')!==false) {
+                $lastslash = strrpos($feed->icon, '/');
+                $file = substr($feed->icon, 0, $lastslash) . '/public' . substr($feed->icon, $lastslash);
+                $icon = $this->loadIconFileFromFilesystem(APPLICATION_PATH.'/../'.$file);
+            }
+            
+            // no default icon: create empty image
+            if($icon===false)
+                $icon = $this->loadIconFileFromFilesystem(APPLICATION_PATH.'/../plugins/rss/public/icon.ico');
+            
+            // resize and copy
+            imagecopyresampled($bigIconImage, $icon, 0, $count*16, 0, 0, 16, 16, imagesx($icon), imagesy($icon));
+            
+            // merge
+            imagedestroy($icon);
+            
+            $count++;
+        }
+        
+        // error_reporting($reporting);    
+        
+        header('Content-type: image/png');
+        imagepng($bigIconImage, $target);
+        return $target;
+    }
+    
+    
+    /**
+     * return feed positions
+     *
+     * @return array of feed positions
+     */
+    public function getFeedsIconPosition() {
+        $feedsModel = new application_models_feeds();
+        $feeds = $feedsModel->fetchAll( $feedsModel->select()->order('id ASC') );
+        $feedPositions = array();
+        $count = 0;
+        foreach($feeds as $feed)
+            $feedPositions[$feed->id] = $count++;
+        return $feedPositions;
+    }
+    
+    
+    /**
      * loads icon using given url and stores it in a given path
      *
      * -> first search on given url (for <link rel="... tag)
@@ -147,5 +224,26 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
         
         return false;
     }
-
+    
+    
+    /**
+     * load local icon file from filesystem as wideimage
+     * @return WideImage_TrueColorImage
+     * @param string $source of the ico file
+     */
+    protected function loadIconFileFromFilesystem($source) {
+        $fileContent = file_get_contents($source);
+        $tmp_image = @imagecreatefromstring($fileContent);
+        
+        if($tmp_image!==false)
+            return $tmp_image;
+        
+        $ico = new floIcon();
+        $ico->readICO($source);
+        if(count($ico->images)>0)
+            return $ico->images[0]->getImageResource();
+    
+        return false;
+        
+    }
 }

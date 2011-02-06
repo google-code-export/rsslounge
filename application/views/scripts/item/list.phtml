@@ -13,7 +13,10 @@
         if($this->search)
             for($i=0;$i<count($this->messages);$i++)
                 $this->messages[$i]['search'] = $this->search;
-                
+        
+        if(Zend_Registry::get('config')->cache->iconcaching==1)
+            Zend_Registry::set('feedpositions', Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->getFeedsIconPosition());
+            
         echo $this->partialLoop(
             'item/message-item.'.Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->getViewSuffix(), 
             $this->messages

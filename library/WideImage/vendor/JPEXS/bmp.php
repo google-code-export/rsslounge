@@ -534,4 +534,3 @@ function jpexs_inttobyte($n)
 	return chr($n);
 };
 
-?>

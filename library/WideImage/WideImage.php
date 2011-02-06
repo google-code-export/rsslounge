@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -22,21 +22,20 @@
     * @package WideImage
   **/
 	
-	require_once(WideImage::path() . 'Exception.php');
-	require_once(WideImage::path() . 'Image.php');
-	require_once(WideImage::path() . 'TrueColorImage.php');
-	require_once(WideImage::path() . 'PaletteImage.php');
+	require_once WideImage::path() . 'Exception.php';
 	
-	require_once(WideImage::path() . 'Coordinate.php');
-	require_once(WideImage::path() . 'Canvas.php');
-	require_once(WideImage::path() . 'PaletteImage.php');
-	require_once(WideImage::path() . 'TrueColorImage.php');
-	require_once(WideImage::path() . 'MapperFactory.php');
-	require_once(WideImage::path() . 'OperationFactory.php');
+	require_once WideImage::path() . 'Image.php';
+	require_once WideImage::path() . 'TrueColorImage.php';
+	require_once WideImage::path() . 'PaletteImage.php';
 	
-	require_once(WideImage::path() . 'Font/TTF.php');
-	require_once(WideImage::path() . 'Font/GDF.php');
-	require_once(WideImage::path() . 'Font/PS.php');
+	require_once WideImage::path() . 'Coordinate.php';
+	require_once WideImage::path() . 'Canvas.php';
+	require_once WideImage::path() . 'MapperFactory.php';
+	require_once WideImage::path() . 'OperationFactory.php';
+	
+	require_once WideImage::path() . 'Font/TTF.php';
+	require_once WideImage::path() . 'Font/GDF.php';
+	require_once WideImage::path() . 'Font/PS.php';
 	
 	/**
 	 * @package Exceptions
@@ -55,6 +54,16 @@
 	 */
 	class WideImage
 	{
+		const SIDE_TOP_LEFT = 1;
+		const SIDE_TOP = 2;
+		const SIDE_TOP_RIGHT = 4;
+		const SIDE_RIGHT = 8;
+		const SIDE_BOTTOM_RIGHT = 16;
+		const SIDE_BOTTOM = 32;
+		const SIDE_BOTTOM_LEFT = 64;
+		const SIDE_LEFT = 128;
+		const SIDE_ALL = 255;
+		
 		protected static $path = null;
 		
 		/**
@@ -64,7 +73,7 @@
 		 */
 		static function version()
 		{
-			return '9.09.04';
+			return '10.07.31';
 		}
 		
 		/**
@@ -80,32 +89,31 @@
 		}
 		
 		/**
-		 * Loads an image from a string, file, or a valid image handle. This function
+		 * Loads an image from a file, URL, upload field, binary string, or a valid image handle. This function
 		 * analyzes the input and decides whether to use WideImage::loadFromHandle(),
-		 * WideImage::loadFromFile() or WideImage::loadFromString().
-		 * 
-		 * The second parameter hints the image format when loading from file/url. 
-		 * In most cases, however, hinting isn't needed, because WideImage 
-		 * loads the image with imagecreatefromstring().
+		 * WideImage::loadFromFile(), WideImage::loadFromUpload() or WideImage::loadFromString().
 		 * 
 		 * <code>
-		 * $img = WideImage::load('http://url/image.png');
-		 * $img = WideImage::load('/path/to/image.png', 'jpeg');
-		 * $img = WideImage::load($image_resource);
-		 * $img = WideImage::load($string);
+		 * $img = WideImage::load('http://url/image.png'); // image URL
+		 * $img = WideImage::load('/path/to/image.png'); // local file path
+		 * $img = WideImage::load('img'); // upload field name
+		 * $img = WideImage::load($image_resource); // a GD resource
+		 * $img = WideImage::load($string); // binary string containing image data
 		 * </code>
 		 * 
-		 * @param mixed $source File name, url, binary string, or GD image resource
-		 * @param string $format Hint for image format
+		 * @param mixed $source File name, url, upload field name, binary string, or a GD image resource
+		 * @param string $format *DEPRECATED* Hint for image format
 		 * @return WideImage_Image WideImage_PaletteImage or WideImage_TrueColorImage instance
 		 */
 		static function load($source, $format = null)
 		{
 			$predictedSourceType = '';
 			
+			// Creating image via a valid resource
 			if (!$predictedSourceType && self::isValidImageHandle($source))
 				$predictedSourceType = 'Handle';
 			
+			// Check for binary string
 			if (!$predictedSourceType)
 			{
 				// search first $binLength bytes (at a maximum) for ord<32 characters (binary image data)
@@ -120,9 +128,11 @@
 					}
 			}
 			
+			// Uploaded image (array uploads not supported)
 			if (isset($_FILES[$source]) && isset($_FILES[$source]['tmp_name']))
 				$predictedSourceType = 'Upload';
 			
+			// Otherwise, must be a file or an URL
 			if (!$predictedSourceType)
 				$predictedSourceType = 'File';
 			
@@ -134,7 +144,7 @@
 		 * format by specifying the second parameter.
 		 * 
 		 * @param string $uri File or url
-		 * @param string $format Format hint, usually not needed
+		 * @param string $format *DEPRECATED* Format hint, usually not needed
 		 * @return WideImage_Image WideImage_PaletteImage or WideImage_TrueColorImage instance
 		 */
 		static function loadFromFile($uri, $format = null)
@@ -213,6 +223,28 @@
 		}
 		
 		/**
+		 * Factory method for creating a palette image
+		 * 
+		 * @param int $width
+		 * @param int $height
+		 */
+		static function createPaletteImage($width, $height)
+		{
+			return WideImage_PaletteImage::create($width, $height);
+		}
+		
+		/**
+		 * Factory method for creating a true-color image
+		 * 
+		 * @param int $width
+		 * @param int $height
+		 */
+		static function createTrueColorImage($width, $height)
+		{
+			return WideImage_TrueColorImage::create($width, $height);
+		}
+		
+		/**
 		 * Check whether the given handle is a valid GD resource
 		 * 
 		 * @param mixed $handle The variable to check
@@ -233,6 +265,4 @@
 			if (!self::isValidImageHandle($handle))
 				throw new WideImage_InvalidImageHandleException("{$handle} is not a valid image handle.");
 		}
-		
 	}
-?>

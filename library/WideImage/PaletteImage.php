@@ -1,7 +1,7 @@
 <?php
 	/**
  * @author Gasper Kozak
- * @copyright 2007, 2008, 2009
+ * @copyright 2007-2010
 
     This file is part of WideImage.
 		
@@ -105,7 +105,7 @@
 		{
 			$width = $this->getWidth();
 			$height = $this->getHeight();
-			$new = WideImage_TrueColorImage::create($width, $height);
+			$new = WideImage::createTrueColorImage($width, $height);
 			if ($this->isTransparent())
 				$new->copyTransparencyFrom($this);
 			imageCopy($new->getHandle(), $this->handle, 0, 0, 0, 0, $width, $height);
@@ -133,4 +133,3 @@
 			return WideImage_Image::loadFromString($this->asString('png'));
 		}
 	}
-?>
