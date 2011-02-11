@@ -161,6 +161,12 @@ class FeedController extends Zend_Controller_Action {
             // set new priorities
             $newSettings = $this->resetPriorities();
             
+            // disable icon caching if user added a feed
+            Zend_Registry::get('config')->cache->iconcaching=0;
+            
+            // renew iconcache
+            Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->resetIconImage();
+            
             // build result
             $result = array(
                 'success'    => true,
@@ -214,6 +220,9 @@ class FeedController extends Zend_Controller_Action {
         $return = array();
                 
         if($result===true) {
+            // renew iconcache
+            Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->resetIconImage();
+        
             // count unread items per category
             $return['categories'] = Zend_Controller_Action_HelperBroker::getStaticHelper('itemcounter')->unreadItemsCategories();
             

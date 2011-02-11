@@ -157,6 +157,9 @@ rsslounge.dialogs = {
                         // update settings (new slider max and min)
                         rsslounge.updateSettings(response.settings);
                         
+                        // disable icon caching
+                        rsslounge.settings.iconcache = 'disabled';
+                        
                         // refresh items
                         rsslounge.refreshList();
                         
@@ -229,6 +232,9 @@ rsslounge.dialogs = {
                     
                         // update settings (new slider max and min)
                         rsslounge.updateSettings(response.settings);
+                        
+                        // disable icon caching
+                        rsslounge.settings.iconcache = 'disabled';
                         
                         // refresh items
                         rsslounge.refreshList();

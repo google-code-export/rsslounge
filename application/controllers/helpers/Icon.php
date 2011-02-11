@@ -10,6 +10,8 @@
  */
 class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
 
+    protected $iconPositions = false;
+
     /**
      * generate one big image containing all icons
      * instead of loading hundreds of icons, just
@@ -18,6 +20,9 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
      * @return string target path
      */
     public function generateIconImage() {
+        if(Zend_Registry::get('config')->cache->iconcaching!=1)
+            return "";
+        
         $target = Zend_Registry::get('config')->favicons->path . Zend_Registry::get('config')->cache->icons;
         if(file_exists($target))
             return $target;
@@ -65,11 +70,23 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
         
         // error_reporting($reporting);    
         
-        header('Content-type: image/png');
+        //header('Content-type: image/png');
         imagepng($bigIconImage, $target);
         return $target;
     }
     
+    
+    /**
+     * renew icon image
+     *
+     * @return string target path
+     */
+    public function resetIconImage() {
+        $target = Zend_Registry::get('config')->favicons->path . Zend_Registry::get('config')->cache->icons;
+        if(file_exists($target))
+            unlink($target);
+        return $this->generateIconImage();
+    }
     
     /**
      * return feed positions
@@ -77,13 +94,16 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
      * @return array of feed positions
      */
     public function getFeedsIconPosition() {
-        $feedsModel = new application_models_feeds();
-        $feeds = $feedsModel->fetchAll( $feedsModel->select()->order('id ASC') );
-        $feedPositions = array();
-        $count = 0;
-        foreach($feeds as $feed)
-            $feedPositions[$feed->id] = $count++;
-        return $feedPositions;
+        if($this->iconPositions == false) {
+            $feedsModel = new application_models_feeds();
+            $feeds = $feedsModel->fetchAll( $feedsModel->select()->order('id ASC') );
+            $feedPositions = array();
+            $count = 0;
+            foreach($feeds as $feed)
+                $feedPositions[$feed->id] = $count++;
+            $this->iconPositions = $feedPositions;
+        }
+        return $this->iconPositions;
     }
     
     
