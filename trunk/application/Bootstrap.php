@@ -64,7 +64,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     public function __construct($app) {
         parent::__construct($app);
         Zend_Registry::set('bootstrap',$this);
-        Zend_Registry::set('config', new Zend_Config($this->getOptions()));
+        Zend_Registry::set('config', new Zend_Config($this->getOptions(),true));
         Zend_Registry::set('version', $this->version);
     }
     

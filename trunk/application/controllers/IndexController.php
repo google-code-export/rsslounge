@@ -37,8 +37,7 @@ class IndexController extends Zend_Controller_Action {
      */
     public function indexAction() {
         // prepare icon cache
-        if(Zend_Registry::get('config')->cache->iconcaching==1)
-            Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->generateIconImage();
+        Zend_Controller_Action_HelperBroker::getStaticHelper('icon')->generateIconImage();
     
         // stop if ie is current browser
         $browser = @get_browser();
