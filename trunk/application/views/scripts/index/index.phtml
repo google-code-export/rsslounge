@@ -9,13 +9,43 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="big-favicon.png" />
     
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/ui-lightness/jquery-ui-1.8.9.custom.css" />
-    <link rel="stylesheet" href="stylesheets/datepicker/datepicker.css" type="text/css" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/impromptu.css" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/jquery.jgrowl.css" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/tipsy.css" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/ui.selectmenu.css" />
-    <link rel="stylesheet" media="screen, handheld, projection, tv" href="stylesheets/style.css" />
+    <?PHP
+        echo $this->minifycss( array(
+            "stylesheets/jquery-ui-1.8.9.custom.css",
+            "stylesheets/datepicker.css",
+            "stylesheets/impromptu.css",
+            "stylesheets/jquery.jgrowl.css",
+            "stylesheets/tipsy.css",
+            "stylesheets/ui.selectmenu.css",
+            "stylesheets/style.css"
+        ));
+    ?>
+    
+    <?PHP
+        echo $this->minifyjs( array(
+            "javascript/jquery-1.5.min.js",
+            "javascript/jquery-ui-1.8.9.custom.min.js",
+            "javascript/addtouch.js",
+            "javascript/datepicker.js",
+            "javascript/jquery-impromptu.2.8.min.js",
+            "javascript/jquery.jgrowl_minimized.js",
+            "javascript/ajaxupload.3.5.js",
+            "javascript/jquery.tipsy.js",
+            "javascript/shortcut-2.01.B.js",
+            "javascript/ui.selectmenu.js",
+            "javascript/base.js",
+            "javascript/events.js",
+            "javascript/dialogs.js",
+            "javascript/refresh.js",
+            "javascript/locale/" . Zend_Registry::get('session')->language . ".js"
+        ));
+        
+    ?>
+    
+    <script type="text/javascript">
+        rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
+        rsslounge.init('<?PHP echo $this->newfeed ?>');       
+    </script>
 </head>
 
 <body class="<?PHP echo ($this->isIpad) ? 'ipad' : ''; ?>">
@@ -159,30 +189,5 @@
         icons by <a href="http://dryicons.com/">dryicons.com</a>
     </div>
 </div>
-
-    <script type="text/javascript" src="javascript/head.min.0.8.js"></script>
-    <script type="text/javascript">
-    head.js(
-        "javascript/jquery-1.5.min.js",
-        "javascript/jquery-ui-1.8.9.custom.min.js",
-        "javascript/addtouch.js",
-        "javascript/datepicker.js",
-        "javascript/jquery-impromptu.2.8.min.js",
-        "javascript/jquery.jgrowl_minimized.js",
-        "javascript/ajaxupload.3.5.js",
-        "javascript/jquery.tipsy.js",
-        "javascript/shortcut-2.01.B.js",
-        "javascript/ui.selectmenu.js",
-        "javascript/base.js",
-        "javascript/events.js",
-        "javascript/dialogs.js",
-        "javascript/refresh.js",
-        "javascript/locale/<?PHP echo Zend_Registry::get('session')->language ?>.js",
-        function() {
-            rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
-            rsslounge.init('<?PHP echo $this->newfeed ?>');
-        }
-    );
-    </script>
 </body>
 </html>

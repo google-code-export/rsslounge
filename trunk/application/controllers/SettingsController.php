@@ -85,6 +85,11 @@ class SettingsController extends Zend_Controller_Action {
             $result = $settingsModel->save($newSettings);
         }
         
+        // delete cached js files (for language settings)
+        $target = Zend_Registry::get('config')->pub->path . 'javascript/' . Zend_Registry::get('config')->cache->minifiedjsfile;
+        if(file_exists($target));
+            unlink($target);
+        
         // return result (errors or success)
         $this->_helper->json($result);
     }
