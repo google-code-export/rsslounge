@@ -42,3 +42,9 @@ http://www.filamentgroup.com/lab/jquery_ui_selectmenu_an_aria_accessible_plugin_
 
 head.js 0.8
 http://headjs.com/
+
+JSMin 1.1.1
+https://github.com/rgrove/jsmin-php/blob/master/jsmin.php
+
+CSSMin 2.0.1.0064
+http://code.google.com/p/cssmin/

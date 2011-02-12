@@ -104,7 +104,7 @@ class Helper_List extends Zend_Controller_Action_Helper_Abstract {
             throw new Exception(Zend_Registry::get('language')->translate('an error occured'));
         
         // disable icon caching if user added or deleted a feed
-        if($settings['iconcache']=='disabled')
+        if(isset($settings['iconcache']) && $settings['iconcache']=='disabled')
             Zend_Registry::get('config')->cache->iconcaching=0;
         
         // load messages
