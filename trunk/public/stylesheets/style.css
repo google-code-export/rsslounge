@@ -196,7 +196,7 @@ div#header {
         left:100%;
         top:8px;
         margin-left:-80px;
-        background:url(images/menue.png) no-repeat;
+        background:url(images/icons.png) 0px -200px no-repeat;
         width:32px;
         height:32px;
     }
@@ -417,7 +417,7 @@ div#header {
         border-bottom:0;
         width:130px;
         margin-left:20px;
-        background:url(images/add_feed.png) 8px 1px no-repeat;
+        background:url(images/icons.png) 1px -119px no-repeat;
         padding:2px;
         padding-top:0;
         padding-left:35px;
@@ -437,7 +437,7 @@ div#header {
     
     #feedsmenue .date{
         margin-left:-46px;
-        background-image:url(images/calendar.png);
+        background:url(images/icons.png) -10px -360px no-repeat;
     }
     
     #feedsmenue .date.active {
@@ -450,12 +450,12 @@ div#header {
     
     #feedsmenue .show {
         margin-left:-30px;
-        background-image:url(images/down_arrow.png);
+        background:url(images/icons.png) -7px -65px no-repeat;
     }
     
     #feedsmenue .hide {
         margin-left:-16px;
-        background-image:url(images/up_arrow.png);
+        background:url(images/icons.png) -7px -7px no-repeat;
     }
 
 
@@ -498,7 +498,9 @@ div#header {
             -moz-border-radius: 4px;
             -webkit-border-radius: 4px;
             
-            background:url(images/category.png) 4px 7px no-repeat;
+            background-image:url(images/icons.png);
+            background-position:0px -506px;
+            background-repeat:no-repeat;
         }
         
             #feeds-list h3.active,
@@ -508,11 +510,13 @@ div#header {
             }
             
             #feeds-list h3.starred {
-                background-image:url(images/starred.png);
+                background-image:url(images/icons.png);
+                background-position:0px -290px;
             }
             
             #feeds-list h3.all {
-                background-image:url(images/all.png);
+                background-image:url(images/icons.png);
+                background-position:0px -415px;
             }
             
             #feeds-list h3.dropphover {
@@ -526,7 +530,7 @@ div#header {
                 #feeds-list h3 a { /* dropdown on categories */
                     position:absolute;
                     display:none;
-                    background:url(images/dropdown.png) no-repeat;
+                    background:url(images/icons.png) -11px -832px no-repeat;
                     width:17px;
                     height:16px;
                     left:100%;
@@ -539,7 +543,7 @@ div#header {
                     }
                     
                     #feeds-list h3 a.up {
-                        background-image:url(images/dropup.png);
+                        background:url(images/icons.png) -10px -806px no-repeat;
                     }
                     
                 #feeds-list h3 span.items {
@@ -613,7 +617,7 @@ div#header {
                     display:none;
                     height:16px;
                     width:16px;
-                    background:url(images/edit.png) no-repeat;
+                    background:url(images/icons.png) -10px -240px no-repeat;
                     left:215px;
                     margin-top:-15px;
                 }
@@ -644,7 +648,7 @@ div#header {
                 display:block;
                 width:16px;
                 height:16px;
-                background:url(images/search.png);
+                background:url(images/icons.png) -10px -456px no-repeat;
                 position:absolute;
                 top:6px;
                 left:100%;
@@ -680,7 +684,7 @@ div.search {
 }
 
 div.search a {
-    background:url(images/remove-search.gif) no-repeat;
+    background:url(images/icons.png) -10px -778px no-repeat;
     width:15px;
     height:15px;
 }
@@ -895,7 +899,7 @@ div.search a {
     }
     
     #images div a.starr-image {
-        background:url(images/star-inactive.png);
+        background:url(images/icons.png) -10px -713px no-repeat;
         width:16px;
         height:16px;
         float:left;
@@ -911,11 +915,11 @@ div.search a {
         }
         
         #images div a.active {
-            background:url(images/star.png);
+            background:url(images/icons.png) -10px -745px no-repeat;
         }
 
     #images div a.mark-image {
-        background:url(images/mark.png);
+        background:url(images/icons.png) -9px -652px no-repeat;
         width:16px;
         height:16px;
         float:left;
@@ -923,7 +927,7 @@ div.search a {
     }
     
         #images div a.mark-image.active {
-            background:url(images/mark-inactive.png);
+            background:url(images/icons.png) -9px -682px no-repeat;
         }
         
     #images hr {
@@ -1004,7 +1008,7 @@ div.search a {
         display:block;
         width:16px;
         height:16px;
-        background:url(images/star-inactive.png);
+        background:url(images/icons.png) -10px -713px no-repeat;
         float:left;
         margin-right:3px;
     }
@@ -1017,15 +1021,15 @@ div.search a {
         }
         
         #messages .starr-message.active {
-            background:url(images/star.png);
+            background:url(images/icons.png) -10px -745px no-repeat;
         }
         
         #messages .mark-message {
-            background:url(images/mark.png);
+            background:url(images/icons.png) -9px -652px no-repeat;
         }
     
         #messages .mark-message.active {
-            background:url(images/mark-inactive.png);
+            background:url(images/icons.png) -9px -682px no-repeat;
         }
         
     
@@ -1104,7 +1108,9 @@ div.search a {
 /* ============ Add Feed ============ */
 
 .jqimessage h1.feed-add {
-    background-image:url(images/add.png);
+    background-image:url(images/icons.png);
+    background-position:0px -142px;
+    background-repeat:no-repeat;
 }
 
 #feed-source {
@@ -1214,14 +1220,14 @@ div.search a {
             display:block;
             float:left;
             cursor:pointer;
-            background:url(images/prio-add.png);
+            background:url(images/icons.png) -8px -119px no-repeat;
             width:16px;
             height:16px;
             margin-top:5px;
         }
         
         #feed-data li .prio-sub {
-            background:url(images/prio-sub.png);
+            background:url(images/icons.png) -9px -585px no-repeat;
         }
         
         #feed-data li .error {
@@ -1240,7 +1246,9 @@ div.search a {
 /* ============ Edit Categories ============ */
 
 .jqimessage h1.categories-edit {
-    background-image:url(images/categories-edit.png);
+    background-image:url(images/icons.png);
+    background-position:0px -263px;
+    background-repeat:no-repeat;
 }
 
 #categories-list {
@@ -1283,7 +1291,7 @@ div.search a {
         display:inline-block;
         height:16px;
         width:16px;
-        background:url(images/edit.png) no-repeat;
+        background:url(images/icons.png) -9px -238px no-repeat;
     }
 
         #categories-list .accept span,
@@ -1293,11 +1301,11 @@ div.search a {
         }
         
     #categories-list .accept {
-        background:url(images/accept.png) no-repeat;
+        background:url(images/icons.png) -7px -333px no-repeat;
     }
     
     #categories-list .delete {
-        background:url(images/delete.png) no-repeat;
+        background:url(images/icons.png) -9px -488px no-repeat;
     }
 
     #categories-list .add {
@@ -1306,7 +1314,7 @@ div.search a {
         margin-top:10px;
         cursor:pointer;
         padding-left:20px;
-        background:url(images/prio-add.png) no-repeat;
+        background:url(images/icons.png) -7px -118px no-repeat;
     }
     
     
@@ -1315,7 +1323,9 @@ div.search a {
 /* ============ Settings ============ */
 
 .jqimessage h1.settings {
-    background-image:url(images/settings.png);
+    background-image:url(images/icons.png);
+    background-position:0 -172px;
+    background-repeat:no-repeat;
 }
 
 #settings-nav {
@@ -1335,12 +1345,12 @@ div.search a {
     }
     
     #settings-nav  .settings-nav-up {
-        background-image:url(images/up_arrow_big.png);
+        background:url(images/icons.png) -9px -32px no-repeat;
         display:none;
     }
     
     #settings-nav .settings-nav-down {
-        background-image:url(images/down_arrow_big.png);
+        background:url(images/icons.png) -9px -89px no-repeat;
     }
 
 #settings-data {
@@ -1396,7 +1406,9 @@ div.search a {
 /* ============ Errormessages ============ */
 
 .jqimessage h1.errormessages {
-    background-image:url(images/errormessages.png);
+    background-image:url(images/icons.png);
+    background-position:0 -612px;
+    background-repeat:no-repeat;
 }
 
 #errormessages {
@@ -1427,7 +1439,9 @@ div.search a {
 /* ============ About ============ */
 
 .jqimessage h1.about {
-    background-image:url(images/info.png);
+    background-image:url(images/icons.png);
+    background-position:0 -543px;
+    background-repeat:no-repeat;
 }
 
 #about {
