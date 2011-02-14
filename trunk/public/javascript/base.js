@@ -51,16 +51,7 @@ var rsslounge = {
                 $('#'+rsslounge.settings.selected).addClass('active');
             
             // preload images
-            rsslounge.preloadImages(
-                'stylesheets/images/mark.png',
-                'stylesheets/images/mark-inactive.png',
-                'stylesheets/images/star.png',
-                'stylesheets/images/star-inactive.png',
-                'stylesheets/images/dropup.png',
-                'stylesheets/images/dropdown.png',
-                'stylesheets/images/edit.png',
-                'stylesheets/images/ajax-loader.gif'
-            );
+            rsslounge.preloadImages('stylesheets/images/ajax-loader.gif');
             
             // config jGrowl
             $.jGrowl.defaults.position = 'bottom-right';

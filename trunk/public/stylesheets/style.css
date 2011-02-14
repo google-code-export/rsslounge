@@ -982,8 +982,8 @@ div.search a {
         }
 
         #messages > li.selected {
-            padding:3px;
-            padding-bottom:4px;
+            padding:4px;
+            padding-bottom:5px;
             border:2px solid #f6a828;
         }
         
