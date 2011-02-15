@@ -204,6 +204,24 @@ class application_models_items extends application_models_base {
     
     
     /**
+     * marks all given items as read
+     *
+     * @return void
+     * @param array $ids
+     */
+    public function markAsRead($ids) {
+        $p = Zend_Registry::get('config')->resources->db->prefix;
+        $sql = "UPDATE ".$p."items SET unread=0 WHERE 1=0";
+        
+        foreach($ids as $id) {
+            if(is_numeric($id))
+                $sql = $sql . " OR id=" . ((int)$id);
+        }
+        $this->getAdapter()->query($sql);
+    }
+    
+    
+    /**
      * cleanup all orphaned thumbnails
      *
      * @return void

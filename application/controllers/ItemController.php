@@ -175,18 +175,9 @@ class ItemController extends Zend_Controller_Action {
         if(!is_array($items))
             $items = array();
             
-        $items = array_unique($items);
-        
         // mark items as read
         $itemModel = new application_models_items();
-        foreach($items as $id) {
-            $item = $itemModel->find($id);
-            if($item->count()>0) {
-                $item->current()->unread = 0;
-                $item->current()->save();
-            }
-        }
-        
+        $itemModel->markAsRead($items);
         unset($items);
         
         // count items of all categories
