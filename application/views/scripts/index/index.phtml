@@ -20,32 +20,6 @@
             "stylesheets/style.css"
         ));
     ?>
-    
-    <?PHP
-        echo $this->minifyjs( array(
-            "javascript/jquery-1.5.min.js",
-            "javascript/jquery-ui-1.8.9.custom.min.js",
-            "javascript/addtouch.js",
-            "javascript/datepicker.js",
-            "javascript/jquery-impromptu.2.8.min.js",
-            "javascript/jquery.jgrowl_minimized.js",
-            "javascript/ajaxupload.3.5.js",
-            "javascript/jquery.tipsy.js",
-            "javascript/shortcut-2.01.B.js",
-            "javascript/ui.selectmenu.js",
-            "javascript/base.js",
-            "javascript/events.js",
-            "javascript/dialogs.js",
-            "javascript/refresh.js",
-            "javascript/locale/" . Zend_Registry::get('session')->language . ".js"
-        ));
-        
-    ?>
-    
-    <script type="text/javascript">
-        rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
-        rsslounge.init('<?PHP echo $this->newfeed ?>');       
-    </script>
 </head>
 
 <body class="<?PHP echo ($this->isIpad) ? 'ipad' : ''; ?>">
@@ -189,5 +163,30 @@
         icons by <a href="http://dryicons.com/">dryicons.com</a>
     </div>
 </div>
+
+<?PHP
+    echo $this->minifyjs( array(
+        "javascript/jquery-1.5.min.js",
+        "javascript/jquery-ui-1.8.9.custom.min.js",
+        "javascript/addtouch.js",
+        "javascript/datepicker.js",
+        "javascript/jquery-impromptu.2.8.min.js",
+        "javascript/jquery.jgrowl_minimized.js",
+        "javascript/ajaxupload.3.5.js",
+        "javascript/jquery.tipsy.js",
+        "javascript/shortcut-2.01.B.js",
+        "javascript/ui.selectmenu.js",
+        "javascript/base.js",
+        "javascript/events.js",
+        "javascript/dialogs.js",
+        "javascript/refresh.js",
+        "javascript/locale/" . Zend_Registry::get('session')->language . ".js"
+    ));
+    
+?>    
+<script type="text/javascript">
+    rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;
+    rsslounge.init('<?PHP echo $this->newfeed ?>');       
+</script>
 </body>
 </html>
