@@ -7,6 +7,8 @@ data/cache is not writeable|Verzeichnis data/cache ist schreibgesch&uuml;tzt
 data/favicons is not writeable|Verzeichnis data/favicons ist schreibgesch&uuml;tzt
 data/thumbnails is not writeable|Verzeichnis data/thumbnails ist schreibgesch&uuml;tzt
 data/logs is not writeable|Verzeichnis data/logs ist schreibgesch&uuml;tzt
+public/stylesheets is not writeable|Verzeichnis public/stylesheets ist schreibgesch&uuml;tzt
+public/javascript is not writeable|Verzeichnis public/javascript ist schreibgesch&uuml;tzt
 the Apache Module mod_rewrite is not enabled|das Apache Modul mod_rewrite ist nicht aktiviert
 you need at least php version 5.2.4|es ist mindestens php version 5.2.4 erforderlich
 rsslounge needs the '%s' extension|rsslounge ben&ouml;tigt die '%s' Erweiterung
@@ -35,6 +37,8 @@ data/favicons writeable|Verzeichnis data/favicons beschreibbar
 data/thumbnails writeable|Verzeichnis data/thumbnails beschreibbar
 data/logs writeable|Verzeichnis data/logs beschreibbar
 config writeable|Verzeichnis config beschreibbar
+public/stylesheets writeable|Verzeichnis public/stylesheets beschreibbar
+public/javascript writeable|Verzeichnis public/javascript beschreibbar
 Username|Benutzername
 Password|Passwort
 again Password|erneut Passwort
