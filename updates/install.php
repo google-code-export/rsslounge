@@ -56,6 +56,10 @@
         $errors['data/thumbnails'] = $locale->translate('data/thumbnails is not writeable');
     if(!is_writable(APPLICATION_PATH . '/../data/logs/'))
         $errors['data/logs'] = $locale->translate('data/logs is not writeable');
+    if(!is_writable(APPLICATION_PATH . '/../public/javascript/'))
+        $errors['public/javascript'] = $locale->translate('public/javascript is not writeable');
+    if(!is_writable(APPLICATION_PATH . '/../public/stylesheets/'))
+        $errors['public/stylesheets'] = $locale->translate('public/stylesheets is not writeable');
     if(substr(PHP_VERSION,0,1)<5 || (substr(PHP_VERSION,0,1)==5 && substr(PHP_VERSION,2,1)<2))
         $errors['php'] = $locale->translate('you need at least php version 5.2.4');
     
@@ -289,10 +293,18 @@
                 
                 <?PHP if(!isset($errors['config'])) : ?>
                     <li class="success"><label><?PHP echo $locale->translate('config writeable'); ?>:</label> <span><?PHP echo $locale->translate('success') ?></span></li>
+                <?PHP endif; ?>    
+                
+                <?PHP if(!isset($errors['public/javascript'])) : ?>
+                    <li class="success"><label><?PHP echo $locale->translate('public/javascript writeable'); ?>:</label> <span><?PHP echo $locale->translate('success') ?></span></li>
+                <?PHP endif; ?>
+                
+                <?PHP if(!isset($errors['public/stylesheets'])) : ?>
+                    <li class="success"><label><?PHP echo $locale->translate('public/stylesheets writeable'); ?>:</label> <span><?PHP echo $locale->translate('success') ?></span></li>
                 <?PHP endif; ?>
             </ul>
             
-            
+        
             <!-- 2. language -->
             <h2><?PHP echo $locale->translate('2. Select a language');?></h2>
             
