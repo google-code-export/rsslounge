@@ -1,12 +1,28 @@
 #labels Featured
 =Changelog=
 
+==Version 1.7==
+
+  * New language: French
+  * New language: Spain
+  * New language: Czech
+  * New icon caching (all favicons will be collected and loaded in one image file)
+  * Minify and compression of JavaScript and CSS files
+  * Performance improvements (speedup page loading)
+  * Selecting starred items will now remove unread filter
+  * New json interface (currently undocumented)
+  * Bugfix: missing logger definition in opml import (issue 42)
+  * Bugfix: fix OPML import bug: opml files which uses "title" instead of "text" for the feed item title will now be fetched correctly
+  * Bugfix: set default charset of database to utf8
+  * Bugfix: fix heise plugin (works now with utf8 encoded database)
+  * Bugfix: icon file type detection (issue 58)
+
 ==Version 1.6==
 
-  * new header design
+  * New header design
   * Bugfix: login works now correct
-  * select images on mouseover
-  * prevent get_browser error if no browsercap.ini is set
+  * Select images on mouseover
+  * Prevent get_browser error if no browsercap.ini is set
 
 ==Version 1.5==
 

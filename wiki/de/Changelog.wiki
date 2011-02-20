@@ -1,6 +1,22 @@
 #labels Featured
 =Changelog=
 
+==Version 1.7==
+
+  * Neue Sprache: Französisch
+  * Neue Sprache: Spanisch
+  * Neue Sprache: Tschechisch
+  * Neues Icon Caching (alle FavIcons werden gesammelt und in einer Datei geladen)
+  * Minimieren und Komprimieren von JavaScript und CSS Dateien
+  * Verbesserung der Performance (Beschleunigung des Seitenaufbaus)
+  * Wählen von markierten Einträgen entfernt automatisch den ungelesen Filter
+  * Neue JSON Schnittstelle (aktuell undokumentiert)
+  * Bugfix: fehlende logger Definition im OPML Import (issue 42)
+  * Bugfix: OPML import Fehler behoben: Dateien die "title" anstelle von "text" als Feed Titel verwenden werden nun erkannt
+  * Bugfix: standard Zeichensatz für die Datenbank auf UTF8 gesetzt
+  * Bugfix: heise Plugin arbeitet nun mit UTF8 Datenbanken
+  * Bugfix: Detektion des FavIcon Datentyps (issue 58)
+
 ==Version 1.6==
 
   * neues Design für den Seitenheader
