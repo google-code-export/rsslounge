@@ -230,7 +230,7 @@
     <link rel="stylesheet" media="screen, handheld, projection, tv" href="public/stylesheets/style.css" />
     <link rel="stylesheet" media="screen, handheld, projection, tv" href="public/stylesheets/install.css" />
     
-    <script type="text/javascript" src="javascript/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery-1.5.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('#install').attr('action',document.location);

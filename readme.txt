@@ -1,7 +1,7 @@
 rsslounge aggregator
 http://rsslounge.aditu.de
 tobias.zeising@aditu.de
-Version 1.6
+Version 1.7
 
 -------
 english
@@ -10,7 +10,7 @@ english
 INSTALLATION
 
 1. upload all files of this folder (IMPORTANT: also upload the invisible .htaccess files)
-2. make the directories config, data/cache, data/favicons, data/logs and data/thumbnails writeable
+2. make the directories config, data/cache, data/favicons, data/logs, data/thumbnails, public/javascript and public/stylesheets writeable
 3. open rsslounge in your browser and follow install instructions
 
 For updating rsslounge feeds via cronjob point your cronjob to open 
@@ -37,7 +37,7 @@ deutsch
 INSTALLATION
 
 1. lade alle Dateien dieses Ordners hoch (WICHTIG: auch die unsichtbaren .htaccess Dateien hochladen)
-2. setze die Schreibrechte für die Verzeichnisse config, data/cache, data/favicons, data/logs und data/thumbnails
+2. setze die Schreibrechte für die Verzeichnisse config, data/cache, data/favicons, data/logs, data/thumbnails, public/javascript und public/stylesheets
 3. öffne rsslounge im Browser und folge den weiteren Anweisungen
 
 Um die Feeds von rsslounge mittels Cronjob zu aktualisieren, einfach einen cronjob anlegen, der die URL

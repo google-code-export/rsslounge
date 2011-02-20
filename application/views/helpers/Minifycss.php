@@ -18,7 +18,7 @@ class Zend_View_Helper_Minifycss {
      * @param array $stylesheets with css files
      */
     public function minifycss($stylesheets) {
-        if(Zend_Registry::get('config')->cache->minifycss==1) {
+        if(Zend_Registry::get('config')->cache->enable==1 && Zend_Registry::get('config')->cache->minifycss==1) {
             // check file
             $target = Zend_Registry::get('config')->pub->path . 'stylesheets/' . Zend_Registry::get('config')->cache->minifiedcssfile;
             $targeturl = 'stylesheets/' . Zend_Registry::get('config')->cache->minifiedcssfile;
