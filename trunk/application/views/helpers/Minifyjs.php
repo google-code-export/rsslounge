@@ -18,7 +18,7 @@ class Zend_View_Helper_Minifyjs {
      * @param array $javascripts with js files
      */
     public function minifyjs($javascripts) {
-        if(Zend_Registry::get('config')->cache->minifyjs==1) {
+        if(Zend_Registry::get('config')->cache->enable==1 && Zend_Registry::get('config')->cache->minifyjs==1) {
             // check file
             $target = Zend_Registry::get('config')->pub->path . 'javascript/' . Zend_Registry::get('config')->cache->minifiedjsfile;
             $targeturl = 'javascript/' . Zend_Registry::get('config')->cache->minifiedjsfile;

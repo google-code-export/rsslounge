@@ -7,7 +7,7 @@
     alt="<?PHP echo $this->lastrefresh ?>"
     id="feed_<?PHP echo $this->id ?>">
     <div class="feed-img">
-        <?PHP if(Zend_Registry::get('config')->cache->iconcaching==1) : ?>
+        <?PHP if(Zend_Registry::get('config')->cache->enable==1 && Zend_Registry::get('config')->cache->iconcaching==1) : ?>
         <div style="background:url(<?PHP echo Zend_Registry::get('config')->favicons->url . Zend_Registry::get('config')->cache->icons?>);
                     background-position:0 -<?PHP echo $this->iconposition*16?>px;
                     margin-right:5px;

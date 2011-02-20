@@ -20,7 +20,7 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
      * @return string target path
      */
     public function generateIconImage() {
-        if(Zend_Registry::get('config')->cache->iconcaching!=1)
+        if(Zend_Registry::get('config')->cache->enable!=1 || Zend_Registry::get('config')->cache->iconcaching!=1)
             return "";
         
         $target = Zend_Registry::get('config')->favicons->path . Zend_Registry::get('config')->cache->icons;
@@ -147,12 +147,6 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
      * @param string $path the target path
      */    
     public function loadIconFile($url, $path) {
-        // read filetype
-        $type = substr($url, strrpos($url, '.')+1);
-        
-        // target filename
-        $target = md5($url) . '.' . $type;
-        
         // get icon from source
         $data = @file_get_contents($url);
         if($data===false)
@@ -166,10 +160,26 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
         if(strlen($data)==0)
             return false;
         
+        // get filetype
+        $type = strtolower(substr($url, strrpos($url, '.')+1));
+        if($type!='jpg' && $type!='png' && $type!='ico' && $type!='gif') {
+            $tmp = $path . md5($url);
+            file_put_contents($tmp, $data);
+            $imgInfo = @getimagesize($file); 
+            unlink($tmp);
+            if(strtolower($imgInfo['mime'])=='image/png')
+                $type = 'png';
+            elseif(strtolower($imgInfo['mime'])=='image/jpeg')
+                $type = 'jpg';
+            elseif(strtolower($imgInfo['mime'])=='image/gif')
+                $type = 'gif';
+            else
+                $type = 'ico';
+        }
+        
         // write icon in file
-        $fp = fopen($path . $target,"wb");
-        $count = fwrite($fp,$data);
-        fclose($fp);
+        $target = md5($url) . '.' . $type;
+        file_put_contents($path . $target, $data);
         
         return $target;
     }
