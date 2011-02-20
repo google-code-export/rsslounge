@@ -58,7 +58,14 @@ folgende Zeile unter "RewriteEngine on" ein:
     RewriteBase /path/to/rsslounge/
     }}}
     
-    
+
+=Icons werden nicht mehr angezeigt=
+
+rsslounge versucht alle Favicons in eine einzelne Bilddatei zu sammeln. Das reduziert die Anzahl an http Request erheblich. Allerdings schlägt die Konvertierung bei einigen Icons fehl. Das Sammeln aller icons in eine Bilddatei kann mit einem Konfigurationsparameter in der config/config.ini Datei deaktiviert werden:
+   {{{cache.iconcaching = 0}}}
+rsslounge bindet die Favicons dann direkt ein (ohne das Erzeugen einer einzelnen Bilddatei).
+
+
 =Installation unter lighttpd=
 
 Benutzer von lighttpd müssen die rewrite Regeln in der lighttpd Konfiguration setzen:

@@ -57,7 +57,14 @@ following line bellow "RewriteEngine on"
     RewriteEngine on
     RewriteBase /path/to/rsslounge/
     }}}
-    
+
+
+=I don't see icons=
+
+rsslounge tries to collect all favicons of your feeds in one single image file. This reduce the http requests on loading rsslounge dramaticaly. But the conversion of some ico files failed. You can disable the favicon collection by setting following parameter in the config/config.ini file:
+   {{{cache.iconcaching = 0}}}
+Then rsslounge will include the favicons directly (without generating one single image file).
+
     
 =Installation on lighttpd=
 

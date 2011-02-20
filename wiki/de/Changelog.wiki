@@ -6,7 +6,7 @@
   * Neue Sprache: Französisch
   * Neue Sprache: Spanisch
   * Neue Sprache: Tschechisch
-  * Neues Icon Caching (alle FavIcons werden gesammelt und in einer Datei geladen)
+  * Neues Icon Caching (alle Favicons werden gesammelt und in einer Datei geladen)
   * Minimieren und Komprimieren von JavaScript und CSS Dateien
   * Verbesserung der Performance (Beschleunigung des Seitenaufbaus)
   * Wählen von markierten Einträgen entfernt automatisch den ungelesen Filter
