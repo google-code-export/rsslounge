@@ -165,16 +165,26 @@ class Helper_Icon extends Zend_Controller_Action_Helper_Abstract {
         if($type!='jpg' && $type!='png' && $type!='ico' && $type!='gif') {
             $tmp = $path . md5($url);
             file_put_contents($tmp, $data);
-            $imgInfo = @getimagesize($file); 
+            $imgInfo = @getimagesize($tmp); 
             unlink($tmp);
-            if(strtolower($imgInfo['mime'])=='image/png')
+            if(strtolower($imgInfo['mime'])=='image/vnd.microsoft.icon')
+                $type = 'ico';
+            elseif(strtolower($imgInfo['mime'])=='image/png')
                 $type = 'png';
             elseif(strtolower($imgInfo['mime'])=='image/jpeg')
                 $type = 'jpg';
             elseif(strtolower($imgInfo['mime'])=='image/gif')
                 $type = 'gif';
-            else
-                $type = 'ico';
+            elseif($imgInfo == false){
+                $icoDir = unpack('sidReserved/sidType/sidCount', substr($data, 0, 6));
+                // http://msdn.microsoft.com/en-us/library/ms997538.aspx#CodeSnippetContainerCode0
+                // as descripted in comments
+                if ($icoDir['idReserved']!=0 || $icoDir['idType']!=1 || $icoDir['idCount']<1) return false;
+            } else {
+                // do not store other formats
+                return false;
+            }
+
         }
         
         // write icon in file
