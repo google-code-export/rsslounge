@@ -1,9 +1,9 @@
 ﻿#labels Featured
 =Installation=
 
-# Uploader tous les fichiers de l'archive ZIP
-# Mettre une autorisation en écriture sur les répertoires {{{config, data/cache, data/favicons and data/thumbnails}}} (utilisez votre client FTP et changez les droits des répertoires)
-# ouvrir rsslounge dans votre navigateur et suivez les instructions d'installation
+  # Uploader tous les fichiers de l'archive ZIP
+  # Mettre une autorisation en écriture sur les répertoires {{{config, data/cache, data/favicons and data/thumbnails}}} (utilisez votre client FTP et changez les droits des répertoires)
+  # ouvrir rsslounge dans votre navigateur et suivez les instructions d'installation
 
 
 =Import OPML=
