@@ -1,8 +1,8 @@
-#labels Featured
-=Mise à jour=
+ï»¿#labels Featured
+=Mise Ã  jour=
 
-# Sauvegardez votre base de données et votre répertoire "data"
-# (IMPORTANT: Ne supprimez pas le répertoire "data") Effacez tous les vieux fichiers et répertoires (en incluant "config") à l'exclusion de "data"
-# Uploadez tous les noueaux fichiers à l'exception du répertoire data (IMPORTANT: Uploadez aussi les fichiers .htaccess invisibles)
+# Sauvegardez votre base de donnÃ©es et votre rÃ©pertoire "data"
+# (IMPORTANT: Ne supprimez pas le rÃ©pertoire "data") Effacez tous les vieux fichiers et rÃ©pertoires (en incluant "config") Ã  l'exclusion de "data"
+# Uploadez tous les noueaux fichiers Ã  l'exception du rÃ©pertoire data (IMPORTANT: Uploadez aussi les fichiers .htaccess invisibles)
 # Ouvrez rsslounge dans votre naviigateur et suivez les instructions d'installation
-# Utilisez votre ancienne connexion à la base de données, la nouvelle version de rsslounge mettra à jour l'ancienne base de données automatiquement
+# Utilisez votre ancienne connexion Ã  la base de donnÃ©es, la nouvelle version de rsslounge mettra Ã  jour l'ancienne base de donnÃ©es automatiquement

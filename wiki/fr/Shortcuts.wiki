@@ -1,20 +1,20 @@
-#labels Featured
+ï»¿#labels Featured
 =Raccourcis=
 
 Since Version 1.3 rsslounge supports shortcuts, which are nearly simmilar to the google reader shortcuts.
 
 || *Raccourci* || *Action* ||
-|| espace || ouvre l'item suivant/ferme le précédent ||
-|| maj+espace || ouvre l'item précédent ||
-|| n || sélectionne l'item suivant mais ne l'ouvre pas ||
-|| p || sélectionne l'item précédent mais ne l'ouvre pas ||
-|| j || sélectionne l'item suivant et l'ouvre ||
-|| k || sélectionne l'item précédent et l'ouvre ||
+|| espace || ouvre l'item suivant/ferme le prÃ©cÃ©dent ||
+|| maj+espace || ouvre l'item prÃ©cÃ©dent ||
+|| n || sÃ©lectionne l'item suivant mais ne l'ouvre pas ||
+|| p || sÃ©lectionne l'item prÃ©cÃ©dent mais ne l'ouvre pas ||
+|| j || sÃ©lectionne l'item suivant et l'ouvre ||
+|| k || sÃ©lectionne l'item prÃ©cÃ©dent et l'ouvre ||
 || enter || ouvre ferme un item ||
 || o || ouvre ferme un item ||
 || m || marque un item comme lu/non lu ||
 || s || marque l'item comme favori / non favori ||
-|| v || ouvre l'url cible dans une nouvelle fenêtre/un nouvel onglet ||
+|| v || ouvre l'url cible dans une nouvelle fenÃªtre/un nouvel onglet ||
 || ctrl+m || marque tous les items comme lus ||
-|| ctrl+s || enlève la marque 'favori' de tous les items ||
+|| ctrl+s || enlÃ¨ve la marque 'favori' de tous les items ||
 || ctrl+n || ajouter un nouveau flux ||

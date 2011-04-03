@@ -1,56 +1,56 @@
-#labels Featured
+ï»¿#labels Featured
 =Installation=
 
 # Uploader tous les fichiers de l'archive ZIP
-# Mettre une autorisation en écriture sur les répertoires {{{config, data/cache, data/favicons and data/thumbnails}}} (utilisez votre client FTP et changez les droits des répertoires)
+# Mettre une autorisation en Ã©criture sur les rÃ©pertoires {{{config, data/cache, data/favicons and data/thumbnails}}} (utilisez votre client FTP et changez les droits des rÃ©pertoires)
 # ouvrir rsslounge dans votre navigateur et suivez les instructions d'installation
 
 
 =Import OPML=
 
-La plupart des agrégateurs de flux RSS permettent un export OPML. Vous pouvez exporter tous vos flux dans un seul fichier XML. Ce fichier peut être importé dans rsslounge. Ouvrez le menu dans l'en-tête (à droite) et choississez "Import OPML". rsslounge importera alors vos flux et rechargera la page. Après cela, il mettra à jour vos flux. Cette première mise à jour demande un peu plus de temps que les suivantes.
+La plupart des agrÃ©gateurs de flux RSS permettent un export OPML. Vous pouvez exporter tous vos flux dans un seul fichier XML. Ce fichier peut Ãªtre importÃ© dans rsslounge. Ouvrez le menu dans l'en-tÃªte (Ã  droite) et choississez "Import OPML". rsslounge importera alors vos flux et rechargera la page. AprÃ¨s cela, il mettra Ã  jour vos flux. Cette premiÃ¨re mise Ã  jour demande un peu plus de temps que les suivantes.
 
-*Important:* Les icônes seront enregistrées après la première mise à jour des flux!
+*Important:* Les icÃ´nes seront enregistrÃ©es aprÃ¨s la premiÃ¨re mise Ã  jour des flux!
 
 
-=Mise à jour par tâche programmée (Cronjob)=
+=Mise Ã  jour par tÃ¢che programmÃ©e (Cronjob)=
 
-Pour mettre à jour les flux rsslounge par une tâche cron, faites lui ouvrir 
+Pour mettre Ã  jour les flux rsslounge par une tÃ¢che cron, faites lui ouvrir 
 {{{http://<rsslounge url>/update/silent}}}
 par wget ou curl.
 
 
-=Après l'installation tout à l'air bizarre=
+=AprÃ¨s l'installation tout Ã  l'air bizarre=
 
-Les utilisateurs Mac OS et Linux doivent s'assurer que tous les fichiers ont étés uploadés. Également le fichier .htaccess qui est caché par défaut sur les systèmes basés sur Unix.
+Les utilisateurs Mac OS et Linux doivent s'assurer que tous les fichiers ont Ã©tÃ©s uploadÃ©s. Ã‰galement le fichier .htaccess qui est cachÃ© par dÃ©faut sur les systÃ¨mes basÃ©s sur Unix.
 
 
-=Flux protégés par mot de passe=
+=Flux protÃ©gÃ©s par mot de passe=
 
-Vous pouvez également souscrire à des flux protégés par mot de passe, entrez seulement le nom d'utilisateur et le mot de passe avant l'url:
+Vous pouvez Ã©galement souscrire Ã  des flux protÃ©gÃ©s par mot de passe, entrez seulement le nom d'utilisateur et le mot de passe avant l'url:
 {{{http://user:password@example.com/rss}}}
 
 
-=La page est vide ou l'erreur PHP suivante apparaît=
+=La page est vide ou l'erreur PHP suivante apparaÃ®t=
 {{{PHP Parse error: syntax error, unexpected T_CLASS in /home/bongzone/public_html/rsshat.com/application/models/settings.php on line 1}}}
 Choissisez l'upload en mode binaire dans votre client FTP.
 
 
-=Il y a des problèmes pendant le processus de mise à jour des flux, où puis-je trouver plus d'information de débug?=
+=Il y a des problÃ¨mes pendant le processus de mise Ã  jour des flux, oÃ¹ puis-je trouver plus d'information de dÃ©bug?=
 
-rsslounge propose un mécanisme de journalisation qui peut être activé par le fichier de configuration
+rsslounge propose un mÃ©canisme de journalisation qui peut Ãªtre activÃ© par le fichier de configuration
 {{{config/config.ini}}}
 Changez l'option
 {{{logger.level = ALERT}}}
 en
 {{{logger.level = DEBUG}}}
-Alors vous pourrez trouver des informations détaillées à propos de la tâche programmée (cron) ou de la mise à jour Ajax dans le fichier journal:
+Alors vous pourrez trouver des informations dÃ©taillÃ©es Ã  propos de la tÃ¢che programmÃ©e (cron) ou de la mise Ã  jour Ajax dans le fichier journal:
 {{{data/logs/default}}}
 
 
 =J'obtiens seulement une erreur 500=
 
-Cette erreur survient surtout sur Apache 1. Insérer dans le 
+Cette erreur survient surtout sur Apache 1. InsÃ©rer dans le 
 {{{.htaccess}}}
 La ligne suivante en dessous de "RewriteEngine on"
 {{{
@@ -59,16 +59,16 @@ RewriteBase /path/to/rsslounge/
 }}}
 
 
-=Je ne vois pas les icônes=
+=Je ne vois pas les icÃ´nes=
 
-rsslounge essaie de récupérer les icônes de vos flux dans un unique fichier image. Cela réduit drastiquement les requêtes http au chargement de rsslounge. Mais la conversion de certaines icônes peut échouer. Vous pouvez désactiver la collecte des favicons en réglant le paramètre suivant dans le fichier config/config.ini:
+rsslounge essaie de rÃ©cupÃ©rer les icÃ´nes de vos flux dans un unique fichier image. Cela rÃ©duit drastiquement les requÃªtes http au chargement de rsslounge. Mais la conversion de certaines icÃ´nes peut Ã©chouer. Vous pouvez dÃ©sactiver la collecte des favicons en rÃ©glant le paramÃ¨tre suivant dans le fichier config/config.ini:
 {{{cache.iconcaching = 0}}}
-rssloung incluera alors les favicons directement (sans générer de fichier image unique).
+rssloung incluera alors les favicons directement (sans gÃ©nÃ©rer de fichier image unique).
 
 
 =Installation sur lighttpd=
 
-Pour les utilisateurs de lighttpd vous devez définir les règles de réécriture dans la configuration de lighttpd:
+Pour les utilisateurs de lighttpd vous devez dÃ©finir les rÃ¨gles de rÃ©Ã©criture dans la configuration de lighttpd:
 
 {{{
 url.rewrite-once = (
@@ -83,12 +83,12 @@ url.rewrite-once = (
 )
 }}}
 
-Modifiez les urls en fonction de la structure de vos répertoires
+Modifiez les urls en fonction de la structure de vos rÃ©pertoires
 
 
 =Installation sur nginx=
 
-Pour les utilisateurs de nginx vous devez définir les règles de réécriture dans la configuration:
+Pour les utilisateurs de nginx vous devez dÃ©finir les rÃ¨gles de rÃ©Ã©criture dans la configuration:
 
 {{{
 server {
