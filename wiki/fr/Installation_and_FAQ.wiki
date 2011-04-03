@@ -1,0 +1,125 @@
+#labels Featured
+=Installation=
+
+# Uploader tous les fichiers de l'archive ZIP
+# Mettre une autorisation en écriture sur les répertoires {{{config, data/cache, data/favicons and data/thumbnails}}} (utilisez votre client FTP et changez les droits des répertoires)
+# ouvrir rsslounge dans votre navigateur et suivez les instructions d'installation
+
+
+=Import OPML=
+
+La plupart des agrégateurs de flux RSS permettent un export OPML. Vous pouvez exporter tous vos flux dans un seul fichier XML. Ce fichier peut être importé dans rsslounge. Ouvrez le menu dans l'en-tête (à droite) et choississez "Import OPML". rsslounge importera alors vos flux et rechargera la page. Après cela, il mettra à jour vos flux. Cette première mise à jour demande un peu plus de temps que les suivantes.
+
+*Important:* Les icônes seront enregistrées après la première mise à jour des flux!
+
+
+=Mise à jour par tâche programmée (Cronjob)=
+
+Pour mettre à jour les flux rsslounge par une tâche cron, faites lui ouvrir 
+{{{http://<rsslounge url>/update/silent}}}
+par wget ou curl.
+
+
+=Après l'installation tout à l'air bizarre=
+
+Les utilisateurs Mac OS et Linux doivent s'assurer que tous les fichiers ont étés uploadés. Également le fichier .htaccess qui est caché par défaut sur les systèmes basés sur Unix.
+
+
+=Flux protégés par mot de passe=
+
+Vous pouvez également souscrire à des flux protégés par mot de passe, entrez seulement le nom d'utilisateur et le mot de passe avant l'url:
+{{{http://user:password@example.com/rss}}}
+
+
+=La page est vide ou l'erreur PHP suivante apparaît=
+{{{PHP Parse error: syntax error, unexpected T_CLASS in /home/bongzone/public_html/rsshat.com/application/models/settings.php on line 1}}}
+Choissisez l'upload en mode binaire dans votre client FTP.
+
+
+=Il y a des problèmes pendant le processus de mise à jour des flux, où puis-je trouver plus d'information de débug?=
+
+rsslounge propose un mécanisme de journalisation qui peut être activé par le fichier de configuration
+{{{config/config.ini}}}
+Changez l'option
+{{{logger.level = ALERT}}}
+en
+{{{logger.level = DEBUG}}}
+Alors vous pourrez trouver des informations détaillées à propos de la tâche programmée (cron) ou de la mise à jour Ajax dans le fichier journal:
+{{{data/logs/default}}}
+
+
+=J'obtiens seulement une erreur 500=
+
+Cette erreur survient surtout sur Apache 1. Insérer dans le 
+{{{.htaccess}}}
+La ligne suivante en dessous de "RewriteEngine on"
+{{{
+RewriteEngine on
+RewriteBase /path/to/rsslounge/
+}}}
+
+
+=Je ne vois pas les icônes=
+
+rsslounge essaie de récupérer les icônes de vos flux dans un unique fichier image. Cela réduit drastiquement les requêtes http au chargement de rsslounge. Mais la conversion de certaines icônes peut échouer. Vous pouvez désactiver la collecte des favicons en réglant le paramètre suivant dans le fichier config/config.ini:
+{{{cache.iconcaching = 0}}}
+rssloung incluera alors les favicons directement (sans générer de fichier image unique).
+
+
+=Installation sur lighttpd=
+
+Pour les utilisateurs de lighttpd vous devez définir les règles de réécriture dans la configuration de lighttpd:
+
+{{{
+url.rewrite-once = (
+"^/rsslounge/favicon.ico$" => "/rsslounge/public/favicon.ico", 
+"^/rsslounge/plugins/([^/]+)/(.*)$" => "/rsslounge/plugins/$1/public/$2",
+"^/rsslounge/favicons/(.*)$" => "/rsslounge/data/favicons/$1",
+"^/rsslounge/thumbnails/(.*)$" => "/rsslounge/data/thumbnails/$1",
+"^/rsslounge/javascript/(.*)$" => "/rsslounge/public/javascript/$1", 
+"^/rsslounge/stylesheets/(.*)$" => "/rsslounge/public/stylesheets/$1", 
+"^/rsslounge/public/" => "$0", 
+"^/rsslounge/(.*)" => "/rsslounge/index.php?mod_rewrite=1&$1"
+)
+}}}
+
+Modifiez les urls en fonction de la structure de vos répertoires
+
+
+=Installation sur nginx=
+
+Pour les utilisateurs de nginx vous devez définir les règles de réécriture dans la configuration:
+
+{{{
+server {
+listen 80;
+server_name www.server.com;
+
+root /var/www;
+index index.php index.html index.htm;
+location ~ .php$ {
+root /var/www;
+fastcgi_pass unix:/tmp/php-fpm; # oder einfach 127.0.0.1:9000 je nach Einstellung
+include fastcgi_params;
+fastcgi_param QUERY_STRING mod_rewrite=1&$query_string; # perfomanter als ein rewrite
+fastcgi_index index.php;
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+}
+# rewrites von .htaccess:
+rewrite ^/favicon.ico$ /public/favicon.ico;
+rewrite ^/plugins/([^/]+)/(.*)$ /plugins/$1/public/$2;
+rewrite ^/favicons/(.*)$ /data/favicons/$1;
+rewrite ^/thumbnails/(.*)$ /data/thumbnails/$1;
+rewrite ^/javascript/(.*)$ /public/javascript/$1;
+rewrite ^/stylesheets/(.*)$ /public/stylesheets/$1;
+
+location ~ \.htaccess {
+deny all;
+}
+
+if (!-e $request_filename) {
+rewrite ^.*$ /index.php last;
+}
+
+}
+}}}
