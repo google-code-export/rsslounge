@@ -182,7 +182,6 @@
         "javascript/refresh.js",
         "javascript/locale/" . Zend_Registry::get('session')->language . ".js"
     ));
-    
 ?>    
 <script type="text/javascript">
     rsslounge.settings = <?PHP echo Zend_Json::encode(Zend_Registry::get('session')->getIterator()) ?>;

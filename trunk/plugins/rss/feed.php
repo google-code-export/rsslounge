@@ -161,6 +161,7 @@ class plugins_rss_feed extends rsslounge_source {
         @$this->feed->set_cache_location(Zend_Registry::get('config')->rss->cache->path);
         @$this->feed->set_cache_duration(Zend_Registry::get('config')->rss->cache->timeout);
         @$this->feed->set_feed_url(htmlspecialchars_decode($url));
+        @$this->feed->force_feed(true);
         
         // fetch items
         @$this->feed->init();

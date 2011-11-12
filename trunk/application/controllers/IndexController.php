@@ -8,7 +8,7 @@
  * @license    GPLv3 (http://www.gnu.org/licenses/gpl-3.0.html)
  */
 class IndexController extends Zend_Controller_Action {
-
+    
     /**
      * Initialize controller (set language object, base etc.)
      *
